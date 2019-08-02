@@ -1,0 +1,75 @@
+﻿@model IEnumerable<mvc3.Areas.AdminPanel.Models.urun>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("+Yeni Ürün", "Kaydet")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Resim")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.urunAdi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.kategori.kategoriAdi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.yazar)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.yayinEvi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fiyat)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.aciklama)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item != null)
+        {
+            <tr>
+
+                <td>
+                    <img style="width:100px;height:110px;" src="data:image/png;base64,@Convert.ToBase64String(item.resim.FirstOrDefault().resimAdi)" />
+                </td>
+               
+                <td>
+                    @Html.DisplayFor(modelItem => item.urunAdi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.kategori.kategoriAdi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.yazar)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.yayinEvi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fiyat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.aciklama)
+                </td>
+                <td>
+                    @Html.ActionLink("Değiştir", "Duzenle", new { id = item.urunNo }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Sil", "Sil", new { id = item.urunNo })
+                </td>
+            </tr>
+             }
+        }
+
+    </table>

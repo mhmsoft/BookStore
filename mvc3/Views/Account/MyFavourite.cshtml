@@ -1,0 +1,83 @@
+﻿@model IEnumerable<mvc3.Areas.AdminPanel.Models.Favorim>
+@{
+    ViewBag.Title = "MyFavoriute";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<div class="wishlist-right-area table-responsive">
+    <table class="wish-list-table">
+        <thead>
+            <tr>
+                <th class="t-product-name">Resim</th>
+                <th class="product-details-comment">Kitap Adı & Detayı</th>
+                <th class="product-price-cart">Sepete Ekle</th>
+                <th class="w-product-remove">Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr id="@item.id">
+                    <td class="product-image">
+                        <a href="#">
+                            <img src="@Url.Action("Thumbnail","Shop",new {width=90,height=110,id=item.urun.urunNo,_resimNo=item.urun.resim.FirstOrDefault().resimNo })" alt="">
+                        </a>
+                    </td>
+                    <td class="product-details">
+                        <h4>@item.urun.urunAdi</h4>
+                        <p> @item.urun.aciklama</p>
+                        <textarea placeholder="Please Enter Your Comment"></textarea>
+                    </td>
+                    <td class="product-cart">
+                        <div class="product-cart-details">
+                            <span>₺ @item.urun.fiyat</span>
+                            <input type="number" value="1">
+                            <a href="@Url.Action("Basket","Shop",new {id=item.productId})">Sepete Ekle</a>
+                            <input type="submit" value="ADD TO CART">
+                        </div>
+                        <p>
+                            <a href="#">Edit</a>
+                        </p>
+                    </td>
+                    <td class="product-remove">
+                        <a href="javascript:void(0);" favoriNo="@item.id" id="deleteFavoriute">
+                            <i class="flaticon-delete"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+
+
+        </tbody>
+    </table>
+</div>
+<div class="wishlist-bottom-link">
+    <a class="wishlist-single-link" href="@Url.Action("Index","Shop")">
+        <i class="fa fa-angle-double-left"></i>
+        Anasayfa
+    </a>
+    <div class="shopingcart-bottom-area wishlist-bottom-area pull-right">
+        <a href="#" class="right-shoping-cart">SHARE WISHLIST</a>
+        <a href="#" class="right-shoping-cart">ADD ALL TO CART</a>
+        <a href="#" class="right-shoping-cart">UPDATE WISHLIST</a>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        $(document).on("click", "#deleteFavoriute", function () {
+            
+             var  data = $(this).attr("favoriNo");
+            $.ajax({
+                url: '@Url.Action("deleteFavourite","Account")',
+                type: "POST",
+                data: { id: data },
+                success: function (response) {
+                    $('tr#' + data).fadeOut(1000);
+                }
+            });
+        });
+    });
+</script>

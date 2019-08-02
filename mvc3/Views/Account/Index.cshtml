@@ -1,0 +1,199 @@
+﻿@model mvc3.Models.ViewModel.AccountVM
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+}
+
+<div class="my-account-area section-padding">
+    <div class="container">
+        <div class="section-title2">
+            <h2>Hesap Ayarları</h2>        </div>
+        <div class="row">
+            <div class="addresses-lists">
+                <div class="col-xs-12 col-sm-6 col-lg-6">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        <i class="fa fa-building"></i>
+                                        <span>Kişisel Bilgiler</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                                <div class="panel-body">
+                                    <div class="coupon-info">
+                                        <h1 class="heading-title">Kişisel Profiliniz</h1>
+                                        <p class="coupon-text">Değişklik olduğu zaman profilinizi güncellemeyi unutmayınız.</p>
+                                        <p class="required">*Zorunlu alanlar</p>
+                                        <form action="@Url.Action("Edit","Account")" method="post">
+                                            @Html.AntiForgeryToken()
+                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            <p class="form-row">
+                                                @Html.EditorFor(model => model.firstName, new { htmlAttributes = new { placeholder = "İsim*" } })
+                                                @Html.ValidationMessageFor(model => model.firstName, "", new { @class = "text-danger" })
+                                            </p>
+                                            <p class="form-row">
+                                                @Html.EditorFor(model => model.lastName, new { htmlAttributes = new { placeholder = "Soyisim*" } })
+                                                @Html.ValidationMessageFor(model => model.lastName, "", new { @class = "text-danger" })
+                                            </p>
+                                            <p class="form-row">
+                                                @Html.EditorFor(model => model.email,User.Identity.Name, new { htmlAttributes = new { placeholder = "Email*" } })
+                                                @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                                            </p>
+
+                                            <p class="coupon-text">Şifrenizi dilediğiniz zaman güncelleyebilirsiniz.</p>
+                                            <p class="form-row">
+                                                @Html.EditorFor(model => model.newPassword, new { htmlAttributes = new { placeholder = "Şifre*" } })
+                                                @Html.ValidationMessageFor(model => model.newPassword, "", new { @class = "text-danger" })
+                                            </p>
+                                            <p class="form-row">
+                                                @Html.EditorFor(model => model.comfirmPassword, new { htmlAttributes = new { placeholder = "Şifre Doğrula*" } })
+                                                @Html.ValidationMessageFor(model => model.comfirmPassword, "", new { @class = "text-danger" })
+                                            </p>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <span>
+                                                 @Html.CheckBoxFor(model=>model.subscribe)
+                                                     </span>
+                                                   Yeniliklerimizi takip etmek için bültenimize abone olun
+                                                </label>
+                                            </div>
+                                            <input type="submit" title="Save" class="btn button button-small" value="Kaydet">
+                                               
+                                            
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        <i class="fa fa-building"></i>
+                                        <span>İletişim Bilgileri</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body">
+                                    <div class="coupon-info">
+                                        <h1 class="heading-title">İletişim </h1>
+                                        <p class="coupon-text"></p>
+                                        <p class="required">*Zorunlu Alanlar</p>
+                                        <form action="@Url.Action("Edit","Account")" method="post">
+                                            @Html.AntiForgeryToken()
+                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            @Html.HiddenFor(model=>model.email,User.Identity.Name)
+                                            <p class="form-row">
+                                                @Html.EditorFor(model => model.address, new { htmlAttributes = new { placeholder = "Adres*" } })
+                                                @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
+                                            </p>
+                                            <p class="form-row">
+                                                @Html.EditorFor(model => model.city, new { htmlAttributes = new { placeholder = "Şehir*" } })
+                                                @Html.ValidationMessageFor(model => model.city, "", new { @class = "text-danger" })
+                                            </p>
+
+                                            <p class="form-row">
+                                                @Html.EditorFor(model => model.gsm, new { htmlAttributes = new { placeholder = "Gsm**" } })
+                                                @Html.ValidationMessageFor(model => model.gsm, "", new { @class = "text-danger" })
+                                            </p>
+                                            <p class="required">** En az bir telefon girmeniz gerekir.</p>
+
+
+                                            <input type="submit" title="Save" class="btn button button-small" value="Kaydet">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingThree">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        <i class="fa fa-list-ol"></i>
+                                        <span>My credit slips</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                <div class="panel-body">
+                                    <div class="coupon-info">
+                                        <h1 class="heading-title">Order history </h1>
+                                        <p class="coupon-text">Here are the orders you've placed since your account was created.</p>
+                                        <div class="order-history">
+                                            <p class="alert">You have not placed any orders.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingFour">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                        <i class="fa fa-file-o"></i>
+                                        <span>My addresses</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                <div class="panel-body">
+                                    <div class="coupon-info">
+                                        <h1 class="heading-title">Order history </h1>
+                                        <p class="coupon-text">Here are the orders you've placed since your account was created.</p>
+                                        <div class="order-history">
+                                            <p class="alert">You have not placed any orders.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-lg-6">
+                    <div class="myaccount-link-list">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a href="@Url.Action("MyFavourite","Account")">
+                                        <i class="fa fa-heart"></i>
+                                        <span>Favorilerim</span>
+                                    </a>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a href="cart.html">
+                                        <i class="fa fa-list-ol"></i>
+                                        <span>Order history and details</span>
+                                    </a>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="create-account-button pull-left">
+                    <a href="~/Shop" class="btn button button-small" title="Home">
+                        <span>
+                            <i class="fa fa-chevron-left"></i>
+                            Anasayfa
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

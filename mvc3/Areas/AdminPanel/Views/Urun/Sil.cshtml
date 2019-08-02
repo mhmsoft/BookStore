@@ -1,0 +1,80 @@
+﻿@model mvc3.Areas.AdminPanel.Models.urun
+
+@{
+    ViewBag.Title = "Sil";
+}
+
+<h2>Sil</h2>
+
+<h3>Bu kaydı silmek istiyor musunuz?</h3>
+<div>
+    <h4>urun</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.urunAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.urunAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.yazar)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.yazar)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.yayinEvi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.yayinEvi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fiyat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fiyat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.aciklama)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.stok)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.stok)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.kategori.kategoriAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.kategori.kategoriAdi)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Sil" class="btn btn-default" /> |
+            @Html.ActionLink("Anasayfa", "Index")
+        </div>
+    }
+</div>

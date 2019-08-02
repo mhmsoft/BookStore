@@ -150,10 +150,12 @@ Blog list owl active
 ------------------------------ */  
 	  $( "#slider-range" ).slider({
 	   range: true,
-	   min: 40,
-	   max: 600,
+	   min: 5,
+	   max: 1000,
 	   values: [ 60, 496 ],
-	   slide: function( event, ui ) {
+          slide: function (event, ui) {
+              $("#minPrice").val(ui.values[0]);
+              $("#maxPrice").val(ui.values[1]);
 		$( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
 	   }
 	  });

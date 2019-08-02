@@ -1,0 +1,67 @@
+﻿@model mvc3.Areas.AdminPanel.Models.user
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+}
+
+<div class="login-account section-padding">
+    <div class="container">
+        <div class="row">
+            <!--Register-->
+            <div class="col-md-6 col-sm-6">
+                <form action="@Url.Action("register","User")" class="create-account-form" method="post">
+                    <h2 class="heading-title">
+                        Hesap Oluştur
+                    </h2>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <p class="form-row">
+                        @Html.EditorFor(model => model.email, new { htmlAttributes = new { placeholder = "Email" } })
+
+                    </p>
+                    <p class="form-row">
+
+                        @Html.PasswordFor(model => model.password, new { htmlAttributes = new { placeholder = "Şifre" } })
+                    </p>
+                    <p class="form-row">
+
+                        @Html.PasswordFor(model => model.rePassword, new { htmlAttributes = new { placeholder = "Şifre Tekrarı" } })
+                    </p>
+                    <div class="submit" style="display:inline-block;">
+                        <button name="submitcreate" id="submitcreate" type="submit" class="btn-default">
+                            <span>
+                                <i class="fa fa-user left"></i>
+                                Kaydol
+                            </span>
+                        </button>
+                    </div>
+                    <div class="submit" style="display:inline-block; margin-left:50px;">
+
+                        <span>
+                            <i class="fa fa-user left"></i>
+                            @Html.ActionLink("Giriş", "Login", new { @class = "btn-default" })
+                        </span>
+
+                    </div>
+                </form>
+            </div>
+             <!--Messages/alerts-->
+            <div class="col-md-6 col-sm-6">
+              
+                    @if (ViewBag.status==true)
+                    {
+                        <div class="alert alert-success">
+                            <strong>Tebrikler!</strong>@ViewBag.message
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-danger">
+                            <strong>Uyarı!</strong>@ViewBag.message
+                        </div>
+                    }
+               
+            </div>
+        </div>
+    </div>
+</div>
+

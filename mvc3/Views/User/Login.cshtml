@@ -1,0 +1,72 @@
+﻿@model mvc3.Models.ViewModel.Login
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+}
+<div class="login-account section-padding">
+    <div class="container">
+        <div class="row">
+
+            <!--Login-->
+            <div class="col-md-6 col-sm-6">
+                <form action="@Url.Action("Login","User")" class="create-account-form" method="post">
+                    <h2 class="heading-title">
+                        Üye misin?
+                    </h2>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <p class="form-row">
+                        @Html.EditorFor(model => model.email, new { htmlAttributes = new { placeholder = "Email" } })
+                        @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                    </p>
+                    <p class="form-row">
+                        @Html.EditorFor(model => model.password, new { htmlAttributes = new { placeholder = "Şifre" } })
+                        @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                    </p>
+                    <p class="lost-password form-group">
+                       
+                        @Html.EditorFor(model => model.rememberMe, new { htmlAttributes = new { placeholder = "beni hatırla" } })
+                        <label>Beni Hatırla</label>
+                        <a href="@Url.Action("forgotPassword","User")" rel="nofollow" style="margin-left:50px;">Şifremi Unuttum?</a>
+                    </p>
+                    <div class="submit" style="display:inline-block;">
+                        <button name="submitcreate" id="submitcreate" type="submit" class="btn-default">
+                            <span>
+                                <i class="fa fa-user left"></i>
+                                Giriş
+                            </span>
+                        </button>
+                    </div>
+                    <div class="submit" style="display:inline-block; margin-left:50px;">
+
+                        <span>
+                            <i class="fa fa-user left"></i>
+                            @Html.ActionLink("Kaydol", "Index", new { @class = "btn-default" })
+                        </span>
+
+                    </div>
+                </form>
+            </div>
+            <!--Messages/alerts-->
+            <div class="col-md-6 col-sm-6">
+                @if (ViewBag.status != null && Convert.ToBoolean(ViewBag.status))
+                {
+                    if (ViewBag.status == true)
+                    {
+                        <div class="alert alert-success">
+                            <strong>Tebrikler!</strong>@ViewBag.message
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-danger">
+                            <strong>Uyarı!</strong>@ViewBag.message
+                        </div>
+                    }
+                }
+                </div>
+
+        </div>
+    </div>
+</div>
+
+

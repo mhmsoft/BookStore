@@ -9,6 +9,7 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using PagedList;
 
 namespace mvc3.Controllers
 {
@@ -17,19 +18,49 @@ namespace mvc3.Controllers
         UrunRepository repo = new UrunRepository(new kitapProjesiEntities());
         // GET: Shop
       
-        public ActionResult Index(int? categoryId, string yazar =null)
+        public ActionResult Index(int? categoryId,int?page, int?PageSize ,int?orderBy,int?minPrice,int?maxPrice)
         {
-            if (!string.IsNullOrEmpty(yazar))
-            {
-                return View(repo.Listele(x => x.yazar == yazar).ToList());//ToPagedList(pageNumber, pageSize));
-            }
+            ViewBag.orderBy = new List<SelectListItem>() {
+                new SelectListItem { Text = "Fiyat", Value = "1", Selected = true },
+                new SelectListItem { Text = "İsim", Value = "2" },
+                new SelectListItem { Text = "No", Value = "3" },
+
+            };
+            ViewBag.PageSize = new List<SelectListItem>() {
+                new SelectListItem { Text = "20", Value = "20", Selected = true },
+                new SelectListItem { Text = "10", Value = "10" },
+                new SelectListItem { Text = "5", Value = "5" },
+                new SelectListItem { Text = "2", Value = "2" },
+                new SelectListItem { Text = "1", Value = "1" }
+            };
+
+            //  actif sayfa no
+            int pageNumber = page ?? 1;
+            // her bir sayfada kaç ürün olacağını gösteren
+            int pageSize = PageSize ?? 2;
+
+            var result = repo.Listele();
+
             if (categoryId != null)
             {
-                return View(repo.Listele(x => x.kategoriNo == categoryId).ToList());//ToPagedList(pageNumber, pageSize));
+                result = result.Where(x => x.kategoriNo == categoryId).ToList();
             }
-            else
-            return View(repo.Listele());
+            // fiyat seçilmişse
+            else if (orderBy == 1)
+                result = result.OrderBy(x => x.fiyat).ToList();
+            // ürün adi seçilmişse
+            else if (orderBy == 2)
+                result = result.OrderBy(x => x.urunAdi).ToList();
+            // ürün no seçilmişse
+            else if (orderBy == 3)
+                result = result.OrderBy(x => x.urunNo).ToList();
+            // ürün minprice ve maxprice seçilmişse
+            else if (minPrice != null & maxPrice != null)
+                result = result.Where(x=>x.fiyat>=minPrice && x.fiyat<=maxPrice).ToList();
+
+            return View(result.ToPagedList(pageNumber, pageSize));
         }
+      
         [HttpGet]
         public ActionResult productDetail(int productId)
         {
@@ -40,6 +71,11 @@ namespace mvc3.Controllers
         public ActionResult PartialCategory()
         {
             return PartialView(repo.KategoriListesi());
+        }
+
+        public ActionResult PartialPrice()
+        {
+            return PartialView();
         }
         public ActionResult Thumbnail(int width, int height, int Id, int _resimNo)
         {

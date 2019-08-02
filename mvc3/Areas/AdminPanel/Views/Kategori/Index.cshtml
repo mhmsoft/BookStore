@@ -1,0 +1,58 @@
+﻿@model IEnumerable<mvc3.Areas.AdminPanel.Models.kategori>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Yeni Kategori", "Kaydet")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.resimAdi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.kategoriAdi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.aciklama)
+        </th>
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @if (!string.IsNullOrEmpty(item.resimAdi))
+            {
+                <img style="width:70px;height:60px;" src="~/Areas/AdminPanel/images/Kategori/@item.resimAdi" />
+            }
+
+            else
+            {
+                <img style="width:70px;height:60px;" src="~/Areas/AdminPanel/images/noimage.jpg" />
+            }
+            
+    
+            
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.kategoriAdi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.aciklama)
+        </td>
+
+        <td>
+            @Html.ActionLink("Düzenle", "Duzenle", new { id = item.kategoriNo }) |
+            @Html.ActionLink("Details", "Details", new { id = item.kategoriNo }) |
+            @Html.ActionLink("Sil", "Sil", new { id = item.kategoriNo })
+        </td>
+    </tr>
+}
+
+</table>

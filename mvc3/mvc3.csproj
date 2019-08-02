@@ -52,6 +52,12 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -1086,6 +1092,7 @@
     <Content Include="Content\Admin\bootstrap.css" />
     <Content Include="Content\Admin\bootstrap.min.css" />
     <Content Include="Content\Admin\Site.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site\css\animate.css" />
     <Content Include="Content\Site\css\bootstrap.min.css" />
     <Content Include="Content\Site\css\flaticon.css" />
@@ -1166,6 +1173,7 @@
     <Content Include="Content\Site\js\main.js" />
     <Content Include="Content\Site\js\owl.carousel.min.js" />
     <Content Include="Content\Site\js\plugins.js" />
+    <Content Include="Content\Site\js\simplemore.js" />
     <Content Include="Content\Site\js\vendor\jquery-1.12.0.min.js" />
     <Content Include="Content\Site\js\vendor\modernizr-2.8.3.min.js" />
     <Content Include="Content\Site\js\waypoints.min.js" />
@@ -1265,9 +1273,12 @@
     <Compile Include="Areas\AdminPanel\AdminPanelAreaRegistration.cs" />
     <Compile Include="Areas\AdminPanel\Controllers\KategoriController.cs" />
     <Compile Include="Areas\AdminPanel\Controllers\UrunController.cs" />
+    <Compile Include="Areas\AdminPanel\Models\Favorim.cs">
+      <DependentUpon>kitap.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\AdminPanel\Models\Interface\IIslem.cs" />
     <Compile Include="Areas\AdminPanel\Models\kategori.cs">
-      <DependentUpon>xyz.tt</DependentUpon>
+      <DependentUpon>kitap.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\AdminPanel\Models\kitap.Context.cs">
       <AutoGen>True</AutoGen>
@@ -1284,13 +1295,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>kitap.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Areas\AdminPanel\Models\Repository\FavoriuteRepository.cs" />
     <Compile Include="Areas\AdminPanel\Models\Repository\KategoriRepository.cs" />
     <Compile Include="Areas\AdminPanel\Models\Repository\UrunRepository.cs" />
+    <Compile Include="Areas\AdminPanel\Models\Repository\UserRepository.cs" />
     <Compile Include="Areas\AdminPanel\Models\resim.cs">
-      <DependentUpon>xyz.tt</DependentUpon>
+      <DependentUpon>kitap.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\AdminPanel\Models\role.cs">
+      <DependentUpon>kitap.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\AdminPanel\Models\Security\Crypto.cs" />
     <Compile Include="Areas\AdminPanel\Models\urun.cs">
-      <DependentUpon>xyz.tt</DependentUpon>
+      <DependentUpon>kitap.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\AdminPanel\Models\user.cs">
+      <DependentUpon>kitap.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\AdminPanel\Models\xyz.Context.cs">
       <AutoGen>True</AutoGen>
@@ -1308,12 +1328,19 @@
       <DependentUpon>xyz.edmx</DependentUpon>
     </Compile>
     <Compile Include="Areas\AdminPanel\Models\yorum.cs">
-      <DependentUpon>xyz.tt</DependentUpon>
+      <DependentUpon>kitap.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Role\Role.cs" />
+    <Compile Include="Models\ViewModel\AccountVM.cs" />
+    <Compile Include="Models\ViewModel\forgotPassword.cs" />
+    <Compile Include="Models\ViewModel\Login.cs" />
+    <Compile Include="Models\ViewModel\resetPassword.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1399,6 +1426,18 @@
     <Content Include="Views\Shared\_Layout2.cshtml" />
     <Content Include="Views\Shop\productDetail.cshtml" />
     <Content Include="Views\Shop\PartialCategory.cshtml" />
+    <Content Include="Views\Shop\PartialPrice.cshtml" />
+    <Content Include="Views\Shared\_Layout3.cshtml" />
+    <Content Include="Views\Shared\Footer.cshtml" />
+    <Content Include="Views\Shared\Header.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\User\ForgotPassword.cshtml" />
+    <Content Include="Views\User\ResetPassword.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Account\MyFavourite.cshtml" />
+    <Content Include="Views\Account\PartialCategory.cshtml" />
+    <Content Include="Views\Account\PartialPrice.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1410,7 +1449,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\AdminPanel\images\Kategori\" />
     <Folder Include="Areas\AdminPanel\images\Urun\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -1,0 +1,136 @@
+﻿@model mvc3.Areas.AdminPanel.Models.urun
+
+@{
+    ViewBag.Title = "Duzenle";
+}
+
+<h2>Duzenle</h2>
+
+@using (Html.BeginForm("Duzenle", "Urun", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>urun</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.urunNo)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.kategoriNo, "kategoriNo", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select name="kategoriNo" id="kategoriNo" class="form-control">
+                    @foreach (var item in ViewBag.Kategoriler)
+                    {
+                        <option value="@item.kategoriNo" @(item.kategoriNo == @Model.kategoriNo ? "selected" : null)>@item.kategoriAdi</option>
+                    }
+                </select>
+
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.urunAdi, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.urunAdi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.urunAdi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.yazar, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.yazar, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.yazar, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.yayinEvi, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.yayinEvi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.yayinEvi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.fiyat, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.fiyat, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.fiyat, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.aciklama, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.aciklama, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.aciklama, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.stok, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.stok, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.stok, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Resim/Resimler", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var item in Model.resim)
+                {
+                    if (item != null)
+                    {
+                    <div id="@item.resimNo" style="display:inline; margin:5px;">
+                        <img style="width:100px;height:90px;" src="data:image/png;base64,@Convert.ToBase64String(@item.resimAdi)" />
+                        <a href="javascript:void(0);" id="Link_Sil" resim_id="@item.resimNo">Sil</a>
+                    </div>
+                    }
+                }
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Resim", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" id="resim" name="resim" multiple />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+
+    $(function () {
+
+        $(document).on('click','#Link_Sil',function () {
+              var  data = $(this).attr("resim_id");
+                //alert(data);
+                $.ajax({
+                    url:'@Url.Action("resimSil","Urun")',
+                    data: { resimId: data },
+                    type: "POST",
+                    success: function (response) {
+                        alert(response);
+                        $('div#'+data).remove();
+                    }
+
+
+                }); // ajax end
+            });// document end
+        });//function End
+
+</script>

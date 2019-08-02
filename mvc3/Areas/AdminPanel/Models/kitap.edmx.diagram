@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7ea4cd290cc34f728fe92a55d3b8d956" Name="Diagram1">
+        <EntityTypeShape EntityType="kitapProjesiModel.kategori" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="kitapProjesiModel.urun" Width="1.5" PointX="3" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="kitapProjesiModel.yorum" Width="1.5" PointX="5.25" PointY="3.625" IsExpanded="true" />
+        <AssociationConnector Association="kitapProjesiModel.FK__urun__kategoriNo__1273C1CD" ManuallyRouted="false" />
+        <AssociationConnector Association="kitapProjesiModel.FK__yorum__urunNo__182C9B23" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="kitapProjesiModel.resim" Width="1.5" PointX="5.25" PointY="0.75" />
+        <AssociationConnector Association="kitapProjesiModel.FK_UrunNo" />
+        <EntityTypeShape EntityType="kitapProjesiModel.role" Width="1.5" PointX="0.75" PointY="8.5" />
+        <EntityTypeShape EntityType="kitapProjesiModel.user" Width="1.5" PointX="3" PointY="7" />
+        <AssociationConnector Association="kitapProjesiModel.FK__user__roleId__25869641" />
+        <EntityTypeShape EntityType="kitapProjesiModel.Favorim" Width="1.5" PointX="5.25" PointY="6.75" />
+        <AssociationConnector Association="kitapProjesiModel.FK__Favorim__product__37A5467C" />
+        <AssociationConnector Association="kitapProjesiModel.FK__Favorim__userId__3B75D760" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

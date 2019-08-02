@@ -1661,7 +1661,7 @@ p.form-row-phone {
   margin-right: 0;
 }
 .left-item img {
-  width: 100%;
+    /*width: 100%;*/
 }
 .single-shop-product {
   border: 1px solid #dddddd;

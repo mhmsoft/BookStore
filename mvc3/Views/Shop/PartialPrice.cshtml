@@ -1,0 +1,17 @@
+﻿<div class="info-widget">
+    <div class="price-filter">
+        <div id="slider-range"></div>
+        <div class="price-slider-amount">
+            <form method="post" action="@Url.Action("/")">
+                <input type="text" id="amount" name="price" placeholder="Add Your Price" />
+                <input type="hidden" id="minPrice" name="minPrice" placeholder="Add Your Price" />
+                <input type="hidden" id="maxPrice" name="maxPrice" placeholder="Add Your Price" />
+                <div class="widget-buttom">
+                    <input type="submit" value="Ara" />
+                    <input type="reset" value="Temizle" />
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
