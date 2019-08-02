@@ -12,18 +12,16 @@ namespace mvc3.Areas.AdminPanel.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class role
+    public partial class indirim
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public role()
-        {
-            this.user = new HashSet<user>();
-        }
+        public int indirimNo { get; set; }
+        public string indirim1 { get; set; }
+        public string aciklama { get; set; }
+        public Nullable<decimal> indirimTutar { get; set; }
+        public Nullable<System.DateTime> indirimBaslangic { get; set; }
+        public Nullable<System.DateTime> indirimBitis { get; set; }
+        public Nullable<int> musteriNo { get; set; }
     
-        public int roleId { get; set; }
-        public string roleName { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<user> user { get; set; }
+        public virtual user user { get; set; }
     }
 }

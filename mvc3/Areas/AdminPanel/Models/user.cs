@@ -14,9 +14,12 @@ namespace mvc3.Areas.AdminPanel.Models
     
     public partial class user
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public user()
         {
-            this.Favorim = new HashSet<Favorim>();
+            this.favorim = new HashSet<favorim>();
+            this.indirim = new HashSet<indirim>();
+            this.siparis = new HashSet<siparis>();
         }
     
         public int userId { get; set; }
@@ -36,10 +39,15 @@ namespace mvc3.Areas.AdminPanel.Models
         public Nullable<System.DateTime> loginTime { get; set; }
         public Nullable<bool> isMailVerified { get; set; }
         public Nullable<int> roleId { get; set; }
-        public string city { get; set; }
         public Nullable<bool> subscribe { get; set; }
+        public string city { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<favorim> favorim { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<indirim> indirim { get; set; }
         public virtual role role { get; set; }
-        public virtual ICollection<Favorim> Favorim { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<siparis> siparis { get; set; }
     }
 }

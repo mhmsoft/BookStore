@@ -12,18 +12,20 @@ namespace mvc3.Areas.AdminPanel.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class role
+    public partial class siparis
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public role()
+        public siparis()
         {
-            this.user = new HashSet<user>();
+            this.siparisDetay = new HashSet<siparisDetay>();
         }
     
-        public int roleId { get; set; }
-        public string roleName { get; set; }
+        public int siparisNo { get; set; }
+        public Nullable<int> musteriNo { get; set; }
+        public Nullable<System.DateTime> siparisTarihi { get; set; }
     
+        public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<user> user { get; set; }
+        public virtual ICollection<siparisDetay> siparisDetay { get; set; }
     }
 }

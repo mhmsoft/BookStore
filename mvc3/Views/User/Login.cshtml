@@ -48,9 +48,8 @@
             </div>
             <!--Messages/alerts-->
             <div class="col-md-6 col-sm-6">
-                @if (ViewBag.status != null && Convert.ToBoolean(ViewBag.status))
-                {
-                    if (ViewBag.status == true)
+               
+                    @if (ViewBag.status == true)
                     {
                         <div class="alert alert-success">
                             <strong>Tebrikler!</strong>@ViewBag.message
@@ -58,11 +57,14 @@
                     }
                     else
                     {
-                        <div class="alert alert-danger">
-                            <strong>Uyarı!</strong>@ViewBag.message
-                        </div>
+                        if (ViewBag.message != null)
+                        {
+                            <div class="alert alert-danger">
+                                <strong>Uyarı!</strong>@ViewBag.message
+                            </div>
+                        }
                     }
-                }
+
                 </div>
 
         </div>

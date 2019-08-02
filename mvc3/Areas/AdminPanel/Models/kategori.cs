@@ -14,6 +14,7 @@ namespace mvc3.Areas.AdminPanel.Models
     
     public partial class kategori
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public kategori()
         {
             this.urun = new HashSet<urun>();
@@ -24,6 +25,7 @@ namespace mvc3.Areas.AdminPanel.Models
         public string aciklama { get; set; }
         public string resimAdi { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<urun> urun { get; set; }
     }
 }

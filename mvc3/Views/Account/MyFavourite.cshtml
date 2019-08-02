@@ -1,4 +1,4 @@
-﻿@model IEnumerable<mvc3.Areas.AdminPanel.Models.Favorim>
+﻿@model IEnumerable<mvc3.Areas.AdminPanel.Models.favorim>
 @{
     ViewBag.Title = "MyFavoriute";
     Layout = "~/Views/Shared/_Layout1.cshtml";
@@ -26,18 +26,19 @@
                     <td class="product-details">
                         <h4>@item.urun.urunAdi</h4>
                         <p> @item.urun.aciklama</p>
-                        <textarea placeholder="Please Enter Your Comment"></textarea>
+                        <textarea id="comment" name="comment" placeholder="Please Enter Your Comment"> </textarea>
+                        <input type="hidden" id="user" value="@User.Identity.Name" /> ;
+                        <input type="submit" id="addComment" product="@item.productId" value="Yorumu Kaydet" />
+
                     </td>
                     <td class="product-cart">
                         <div class="product-cart-details">
                             <span>₺ @item.urun.fiyat</span>
-                            <input type="number" value="1">
-                            <a href="@Url.Action("Basket","Shop",new {id=item.productId})">Sepete Ekle</a>
-                            <input type="submit" value="ADD TO CART">
+                            <input type="number" id="quantity" value="1">
+                           
+                            <input type="submit"  id="addBasket" product="@item.productId" value="Sepete ekle">
                         </div>
-                        <p>
-                            <a href="#">Edit</a>
-                        </p>
+                       
                     </td>
                     <td class="product-remove">
                         <a href="javascript:void(0);" favoriNo="@item.id" id="deleteFavoriute">
@@ -66,9 +67,39 @@
 
 <script type="text/javascript">
     $(function () {
-
-        $(document).on("click", "#deleteFavoriute", function () {
+        $("#addComment").click(function () {
+             alert();
+             var userName= $("#user").val();
+             var comment = $("#comment").val();
+             var productId = $(this).attr("product");
+             $.ajax({
+                url: '@Url.Action("yorumKaydet","Urun")',
+                  type: "POST",
+                  data: { _urunNo: productId, _yorumcu: userName, _yorum: comment },
+                  success: function (response) {
+                      alert(response);
+                      location.reload();
+                }
+            });
             
+
+         });
+
+         $(document).on("click", "#addBasket", function () {
+
+             var data = $(this).attr("product");
+             var quantity = $("#quantity").val();
+            $.ajax({
+                url: '@Url.Action("addCard","Shop")',
+                type: "POST",
+                data: { productId: data,quantity:quantity },
+                success: function (response) {
+                    alert(JSON.stringify(response));
+                }
+            });
+        });
+        $(document).on("click", "#deleteFavoriute", function () {
+
              var  data = $(this).attr("favoriNo");
             $.ajax({
                 url: '@Url.Action("deleteFavourite","Account")',

@@ -82,5 +82,20 @@ namespace mvc3.Areas.AdminPanel.Models.Repository
         {
             return _context.urun.AsNoTracking().Where(where).ToList();
         }
+        public string yorumKaydet(yorum yorum)
+        {
+            if (yorum != null)
+            {
+                _context.yorum.Add(yorum);
+                _context.SaveChanges();
+                return "yorumunuz kaydedildi.";
+            }
+            else
+                return "yorum kaydedilemedi.";
+        }
+        public List<yorum> Yorumlar(int productId)
+        {
+            return _context.yorum.AsNoTracking().Where(x=>x.urunNo==productId).ToList();
+        }
     }
 }

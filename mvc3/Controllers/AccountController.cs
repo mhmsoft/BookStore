@@ -126,7 +126,7 @@ namespace mvc3.Controllers
             if (count==0)
             {
                 var product = repoProduct.Bul(productId);
-                Favorim newFavori = new Favorim()
+                favorim newFavori = new favorim()
                 {
                     productId = productId,
                     userId = userId

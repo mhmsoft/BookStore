@@ -7,50 +7,52 @@ using mvc3.Areas.AdminPanel.Models.Interface;
 
 namespace mvc3.Areas.AdminPanel.Models.Repository
 {
-    public class FavoriuteRepository : IIslem<Favorim>
+    public class FavoriuteRepository : IIslem<favorim>
     {
         private kitapProjesiEntities _context;
         public FavoriuteRepository(kitapProjesiEntities Context)
         {
             _context = Context;
         }
-        public Favorim Bul(int id)
+        public favorim Bul(int id)
         {
-            return _context.Favorim.Find(id);
+            return _context.favorim.Find(id);
         }
 
-        public void Guncelle(Favorim entity)
+        public void Guncelle(favorim entity)
         {
             if (entity != null)
             {
-                Favorim eski = Bul(entity.id);
+                favorim eski = Bul(entity.id);
                 _context.Entry(eski).State = EntityState.Detached;
                 _context.Entry(entity).State = EntityState.Modified;
                 _context.SaveChanges();
             }
         }
 
-        public void Kaydet(Favorim entity)
+        public void Kaydet(favorim entity)
         {
             if (entity != null)
             {
-                _context.Favorim.Add(entity);
+                _context.favorim.Add(entity);
                 _context.SaveChanges();
             }
         }
 
-        public List<Favorim> Listele()
+        public List<favorim> Listele()
         {
-            return _context.Favorim.ToList();
+            return _context.favorim.ToList();
         }
 
-        public void Sil(Favorim entity)
+        public void Sil(favorim entity)
         {
             if (entity != null)
             {
-                _context.Favorim.Remove(entity);
+                _context.favorim.Remove(entity);
                 _context.SaveChanges();
             }
         }
+
+       
     }
 }

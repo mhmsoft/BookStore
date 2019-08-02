@@ -1,0 +1,91 @@
+﻿@model IEnumerable<mvc3.Areas.AdminPanel.Models.yorum>
+    <div class="card">
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid" />
+                            <p class="text-secondary text-center"></p>
+                        </div>
+                        <div class="col-md-10">
+                            <p>
+                                <strong>@item.yorumcu</strong>
+                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                                <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+
+                            </p>
+                            <div class="clearfix"></div>
+                            <p>@item.yorumAdi </p>
+                            <p>
+                                <a class="float-right btn btn-outline-primary ml-2"> <i class="fa fa-reply"></i> Reply</a>
+                                <a class="float-right btn text-white btn-danger"> <i class="fa fa-heart"></i> Like</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+                   
+
+
+
+
+                        <input type="hidden" id="_urunNo" value="@Model.FirstOrDefault().urunNo" />
+
+                        <!-- Comment -->
+                        <div class="form-group">
+                            <label for="replyFormComment">Yorum</label>
+                            <textarea id="_yorum" class="form-control" rows="5"></textarea>
+                        </div>
+
+                        <!-- Name -->
+                        <label for="replyFormName">İsim</label>
+                        <input type="email" id="isim" class="form-control">
+                        <br>
+
+                        <!-- Email -->
+                        <label for="replyFormEmail">Eposta</label>
+                        <input type="email" id="_yorumcu" class="form-control" value="@(User.Identity.IsAuthenticated ? User.Identity.Name : "" )">
+
+
+                        <div class="text-center mt-4">
+                            <button class="btn btn-info btn-md" id="addComment" type="submit">Gönder</button>
+                        </div>
+
+                        <!-- Default form reply -->
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    $(function () {
+         $(document).on("click", "#addComment", function () {
+             var userName=  $("#_yorumcu").val();;
+             var comment = $("#_yorum").val();
+             var productId = $("#_urunNo").val();
+              $.ajax({
+                url: '@Url.Action("yorumKaydet","Urun")',
+                  type: "POST",
+                  data: { _urunNo: productId, _yorumcu: userName, _yorum: comment },
+                  success: function (response) {
+                      alert(response);
+                      location.reload();
+                }
+            });
+
+
+         });
+    });
+</script>

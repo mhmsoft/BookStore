@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\G EGITMEN\Desktop\mvc3\mvc3\Areas\AdminPanel\Models\xyz.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\mhmsoft\Downloads\mvc-son\mvc3\mvc3\Areas\AdminPanel\Models\KitapProjeModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

@@ -35,8 +35,8 @@
                                 i++;
                                 var active = i == 1 ? "active" : "";
                                 <div role="tabpanel" class="tab-pane @active" id="@i">
-                                    <a class="venobox" href="@Url.Action("Thumbnail", "Shop", new { width = 250, height = 300, Id =Model.urunNo,_resimNo=item.resimNo })" data-gall="gallery" title="">
-                                        <img src="@Url.Action("Thumbnail", "Shop", new { width = 250, height = 300, Id =Model.urunNo,_resimNo=item.resimNo })" alt="">
+                                    <a class="venobox" href="@Url.Action("Thumbnail", "Shop", new { width = 250, height = 300, Id = Model.urunNo, _resimNo = item.resimNo })" data-gall="gallery" title="">
+                                        <img src="@Url.Action("Thumbnail", "Shop", new { width = 250, height = 300, Id = Model.urunNo, _resimNo = item.resimNo })" alt="">
                                     </a>
                                 </div>
                             }
@@ -50,7 +50,7 @@
 
                                 <li role="presentation">
                                     <a href="#@i" aria-controls="@i" role="tab" data-toggle="tab">
-                                        <img src="@Url.Action("Thumbnail", "Shop", new { width = 100, height = 100, Id =Model.urunNo,_resimNo=item.resimNo })" alt="">
+                                        <img src="@Url.Action("Thumbnail", "Shop", new { width = 100, height = 100, Id = Model.urunNo, _resimNo = item.resimNo })" alt="">
                                     </a>
                                 </li>
 
@@ -150,11 +150,10 @@
                                 </table>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="reviews">
-                                <div id="product-comments-block-tab">
-                                    <a href="#" class="comment-btn"><span>Be the first to write your review!</span></a>
-                                </div>
-                            </div>
-                        </div>
+                                  
+                                @Html.Partial("PartialComment",Model.yorum)
+                            </div>   
+                         </div>           
                     </div>
                 </div>
             </div>

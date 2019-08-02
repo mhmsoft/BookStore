@@ -12,7 +12,7 @@ namespace mvc3.Areas.AdminPanel.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Favorim
+    public partial class favorim
     {
         public int id { get; set; }
         public Nullable<int> productId { get; set; }

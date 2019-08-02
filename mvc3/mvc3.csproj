@@ -104,25 +104,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\AdminPanel\images\noimage.jpg" />
-    <Content Include="Areas\AdminPanel\Models\kitap.Context.tt">
+    <Content Include="Areas\AdminPanel\Models\KitapProjeModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>kitap.edmx</DependentUpon>
-      <LastGenOutput>kitap.Context.cs</LastGenOutput>
+      <DependentUpon>KitapProjeModel.edmx</DependentUpon>
+      <LastGenOutput>KitapProjeModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Areas\AdminPanel\Models\kitap.tt">
+    <Content Include="Areas\AdminPanel\Models\KitapProjeModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>kitap.edmx</DependentUpon>
-      <LastGenOutput>kitap.cs</LastGenOutput>
-    </Content>
-    <Content Include="Areas\AdminPanel\Models\xyz.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>xyz.edmx</DependentUpon>
-      <LastGenOutput>xyz.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Areas\AdminPanel\Models\xyz.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>xyz.edmx</DependentUpon>
-      <LastGenOutput>xyz.cs</LastGenOutput>
+      <DependentUpon>KitapProjeModel.edmx</DependentUpon>
+      <LastGenOutput>KitapProjeModel.cs</LastGenOutput>
     </Content>
     <Content Include="Content\Admin\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Content\Admin\bootstrap\css\bootstrap-theme.min.css" />
@@ -1211,13 +1201,6 @@
     <Content Include="Areas\AdminPanel\Views\Kategori\Kaydet.cshtml" />
     <Content Include="Areas\AdminPanel\Views\Kategori\Sil.cshtml" />
     <Content Include="Areas\AdminPanel\Views\Kategori\Duzenle.cshtml" />
-    <EntityDeploy Include="Areas\AdminPanel\Models\kitap.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>kitap.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Areas\AdminPanel\Models\kitap.edmx.diagram">
-      <DependentUpon>kitap.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\AdminPanel\Views\Urun\Index.cshtml" />
     <Content Include="Areas\AdminPanel\Views\Urun\Kaydet.cshtml" />
     <Content Include="Areas\AdminPanel\Views\Urun\Sil.cshtml" />
@@ -1234,12 +1217,12 @@
     <Content Include="Content\Site\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\Site\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\Site\fonts\glyphicons-halflings-regular.woff2" />
-    <EntityDeploy Include="Areas\AdminPanel\Models\xyz.edmx">
+    <EntityDeploy Include="Areas\AdminPanel\Models\KitapProjeModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>xyz.Designer.cs</LastGenOutput>
+      <LastGenOutput>KitapProjeModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Areas\AdminPanel\Models\xyz.edmx.diagram">
-      <DependentUpon>xyz.edmx</DependentUpon>
+    <Content Include="Areas\AdminPanel\Models\KitapProjeModel.edmx.diagram">
+      <DependentUpon>KitapProjeModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -1273,62 +1256,56 @@
     <Compile Include="Areas\AdminPanel\AdminPanelAreaRegistration.cs" />
     <Compile Include="Areas\AdminPanel\Controllers\KategoriController.cs" />
     <Compile Include="Areas\AdminPanel\Controllers\UrunController.cs" />
-    <Compile Include="Areas\AdminPanel\Models\Favorim.cs">
-      <DependentUpon>kitap.tt</DependentUpon>
+    <Compile Include="Areas\AdminPanel\Models\favorim.cs">
+      <DependentUpon>KitapProjeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\AdminPanel\Models\indirim.cs">
+      <DependentUpon>KitapProjeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\AdminPanel\Models\Interface\IIslem.cs" />
     <Compile Include="Areas\AdminPanel\Models\kategori.cs">
-      <DependentUpon>kitap.tt</DependentUpon>
+      <DependentUpon>KitapProjeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\AdminPanel\Models\kitap.Context.cs">
+    <Compile Include="Areas\AdminPanel\Models\KitapProjeModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>kitap.Context.tt</DependentUpon>
+      <DependentUpon>KitapProjeModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\AdminPanel\Models\kitap.cs">
+    <Compile Include="Areas\AdminPanel\Models\KitapProjeModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>kitap.tt</DependentUpon>
+      <DependentUpon>KitapProjeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\AdminPanel\Models\kitap.Designer.cs">
+    <Compile Include="Areas\AdminPanel\Models\KitapProjeModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>kitap.edmx</DependentUpon>
+      <DependentUpon>KitapProjeModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Areas\AdminPanel\Models\Repository\FavoriuteRepository.cs" />
     <Compile Include="Areas\AdminPanel\Models\Repository\KategoriRepository.cs" />
     <Compile Include="Areas\AdminPanel\Models\Repository\UrunRepository.cs" />
     <Compile Include="Areas\AdminPanel\Models\Repository\UserRepository.cs" />
     <Compile Include="Areas\AdminPanel\Models\resim.cs">
-      <DependentUpon>kitap.tt</DependentUpon>
+      <DependentUpon>KitapProjeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\AdminPanel\Models\role.cs">
-      <DependentUpon>kitap.tt</DependentUpon>
+      <DependentUpon>KitapProjeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\AdminPanel\Models\Security\Crypto.cs" />
+    <Compile Include="Areas\AdminPanel\Models\siparis.cs">
+      <DependentUpon>KitapProjeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\AdminPanel\Models\siparisDetay.cs">
+      <DependentUpon>KitapProjeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\AdminPanel\Models\urun.cs">
-      <DependentUpon>kitap.tt</DependentUpon>
+      <DependentUpon>KitapProjeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\AdminPanel\Models\user.cs">
-      <DependentUpon>kitap.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\AdminPanel\Models\xyz.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>xyz.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\AdminPanel\Models\xyz.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>xyz.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\AdminPanel\Models\xyz.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>xyz.edmx</DependentUpon>
+      <DependentUpon>KitapProjeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\AdminPanel\Models\yorum.cs">
-      <DependentUpon>kitap.tt</DependentUpon>
+      <DependentUpon>KitapProjeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
@@ -1438,6 +1415,7 @@
     <Content Include="Views\Account\MyFavourite.cshtml" />
     <Content Include="Views\Account\PartialCategory.cshtml" />
     <Content Include="Views\Account\PartialPrice.cshtml" />
+    <Content Include="Views\Shop\PartialComment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

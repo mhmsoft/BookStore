@@ -16,7 +16,7 @@ namespace mvc3.Areas.AdminPanel.Controllers
         KategoriRepository repo = new KategoriRepository(db);
 
         
-        [Authorize(Roles = "user")]
+        
         public ActionResult Index()
         {
             return View(repo.Listele());

@@ -16,7 +16,7 @@ namespace mvc3.Areas.AdminPanel.Models
     public partial class kitapProjesiEntities : DbContext
     {
         public kitapProjesiEntities()
-            : base("name=kitapProjesiEntities")
+            : base("name=kitapProjesiEntities3")
         {
         }
     
@@ -25,12 +25,15 @@ namespace mvc3.Areas.AdminPanel.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<favorim> favorim { get; set; }
+        public virtual DbSet<indirim> indirim { get; set; }
         public virtual DbSet<kategori> kategori { get; set; }
-        public virtual DbSet<urun> urun { get; set; }
-        public virtual DbSet<yorum> yorum { get; set; }
         public virtual DbSet<resim> resim { get; set; }
         public virtual DbSet<role> role { get; set; }
+        public virtual DbSet<siparis> siparis { get; set; }
+        public virtual DbSet<siparisDetay> siparisDetay { get; set; }
+        public virtual DbSet<urun> urun { get; set; }
         public virtual DbSet<user> user { get; set; }
-        public virtual DbSet<Favorim> Favorim { get; set; }
+        public virtual DbSet<yorum> yorum { get; set; }
     }
 }

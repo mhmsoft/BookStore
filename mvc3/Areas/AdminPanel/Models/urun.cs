@@ -14,11 +14,13 @@ namespace mvc3.Areas.AdminPanel.Models
     
     public partial class urun
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public urun()
         {
-            this.yorum = new HashSet<yorum>();
+            this.favorim = new HashSet<favorim>();
             this.resim = new HashSet<resim>();
-            this.Favorim = new HashSet<Favorim>();
+            this.siparisDetay = new HashSet<siparisDetay>();
+            this.yorum = new HashSet<yorum>();
         }
     
         public int urunNo { get; set; }
@@ -30,9 +32,14 @@ namespace mvc3.Areas.AdminPanel.Models
         public Nullable<int> stok { get; set; }
         public Nullable<int> kategoriNo { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<favorim> favorim { get; set; }
         public virtual kategori kategori { get; set; }
-        public virtual ICollection<yorum> yorum { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<resim> resim { get; set; }
-        public virtual ICollection<Favorim> Favorim { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<siparisDetay> siparisDetay { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<yorum> yorum { get; set; }
     }
 }
