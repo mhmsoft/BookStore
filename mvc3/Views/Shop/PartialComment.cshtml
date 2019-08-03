@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<mvc3.Areas.AdminPanel.Models.yorum>
     <div class="card">
-        @if (Model != null)
+        @if (Model.Any())
         {
             foreach (var item in Model)
             {
@@ -62,10 +62,6 @@
 
 
 
-                    </div>
-                </div>
-            </div>
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
@@ -76,7 +72,7 @@
              var comment = $("#_yorum").val();
              var productId = $("#_urunNo").val();
               $.ajax({
-                url: '@Url.Action("yorumKaydet","Urun")',
+                url: '@Url.Action("yorumKaydet","Shop")',
                   type: "POST",
                   data: { _urunNo: productId, _yorumcu: userName, _yorum: comment },
                   success: function (response) {

@@ -26,7 +26,6 @@ namespace mvc3.Areas.AdminPanel.Models
         }
     
         public virtual DbSet<favorim> favorim { get; set; }
-        public virtual DbSet<indirim> indirim { get; set; }
         public virtual DbSet<kategori> kategori { get; set; }
         public virtual DbSet<resim> resim { get; set; }
         public virtual DbSet<role> role { get; set; }
@@ -35,5 +34,6 @@ namespace mvc3.Areas.AdminPanel.Models
         public virtual DbSet<urun> urun { get; set; }
         public virtual DbSet<user> user { get; set; }
         public virtual DbSet<yorum> yorum { get; set; }
+        public virtual DbSet<indirim> indirim { get; set; }
     }
 }

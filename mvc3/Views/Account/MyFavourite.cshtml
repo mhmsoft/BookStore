@@ -27,7 +27,7 @@
                         <h4>@item.urun.urunAdi</h4>
                         <p> @item.urun.aciklama</p>
                         <textarea id="comment" name="comment" placeholder="Please Enter Your Comment"> </textarea>
-                        <input type="hidden" id="user" value="@User.Identity.Name" /> ;
+                        <input type="hidden" id="user" value="@User.Identity.Name" /> 
                         <input type="submit" id="addComment" product="@item.productId" value="Yorumu Kaydet" />
 
                     </td>
@@ -67,22 +67,19 @@
 
 <script type="text/javascript">
     $(function () {
-        $("#addComment").click(function () {
-             alert();
+        $("#addComment").click(function () {             
              var userName= $("#user").val();
              var comment = $("#comment").val();
              var productId = $(this).attr("product");
              $.ajax({
-                url: '@Url.Action("yorumKaydet","Urun")',
+                  url: '@Url.Action("yorumKaydet","Shop")',
                   type: "POST",
                   data: { _urunNo: productId, _yorumcu: userName, _yorum: comment },
                   success: function (response) {
                       alert(response);
-                      location.reload();
+                     
                 }
             });
-            
-
          });
 
          $(document).on("click", "#addBasket", function () {
@@ -94,15 +91,15 @@
                 type: "POST",
                 data: { productId: data,quantity:quantity },
                 success: function (response) {
-                    alert(JSON.stringify(response));
+                    //alert(JSON.stringify(response));
                 }
             });
         });
-        $(document).on("click", "#deleteFavoriute", function () {
 
+        $(document).on("click", "#deleteFavoriute", function () {
              var  data = $(this).attr("favoriNo");
             $.ajax({
-                url: '@Url.Action("deleteFavourite","Account")',
+                url: '@Url.Action("DeleteFavourite", "Account")',
                 type: "POST",
                 data: { id: data },
                 success: function (response) {

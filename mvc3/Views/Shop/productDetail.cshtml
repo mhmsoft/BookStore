@@ -150,7 +150,14 @@
                                 </table>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="reviews">
-                                  
+                                @if (Model.yorum.Count == 0)
+                                {
+                                    Model.yorum.Add(
+                                        new mvc3.Areas.AdminPanel.Models.yorum(){ urunNo = Model.urunNo }
+                                         );
+                                }
+
+
                                 @Html.Partial("PartialComment",Model.yorum)
                             </div>   
                          </div>           

@@ -96,22 +96,8 @@ namespace mvc3.Areas.AdminPanel.Controllers
         {
              return repo.resimsil(resimId);
         }
-        [HttpPost]
-        public string yorumKaydet(int _urunNo,string _yorumcu,string _yorum)
-        {
-            yorum model = new yorum()
-            {
-                yorumcu=_yorumcu,
-                yorumAdi=_yorum,
-                yorumTarihi=DateTime.Now,
-                urunNo=_urunNo
-            };
-           return repo.yorumKaydet(model);
 
-        }
-        public PartialViewResult yorumlar(int productId)
-        {
-            return  PartialView(repo.Yorumlar(productId));
-        }
+
+        
     }
 }

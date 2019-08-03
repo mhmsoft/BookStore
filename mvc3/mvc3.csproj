@@ -1285,6 +1285,7 @@
     <Compile Include="Areas\AdminPanel\Models\Repository\KategoriRepository.cs" />
     <Compile Include="Areas\AdminPanel\Models\Repository\UrunRepository.cs" />
     <Compile Include="Areas\AdminPanel\Models\Repository\UserRepository.cs" />
+    <Compile Include="Areas\AdminPanel\Models\Repository\yorumRepository.cs" />
     <Compile Include="Areas\AdminPanel\Models\resim.cs">
       <DependentUpon>KitapProjeModel.tt</DependentUpon>
     </Compile>
@@ -1315,6 +1316,7 @@
     </Compile>
     <Compile Include="Models\Role\Role.cs" />
     <Compile Include="Models\ViewModel\AccountVM.cs" />
+    <Compile Include="Models\ViewModel\BasketItem.cs" />
     <Compile Include="Models\ViewModel\forgotPassword.cs" />
     <Compile Include="Models\ViewModel\Login.cs" />
     <Compile Include="Models\ViewModel\resetPassword.cs" />

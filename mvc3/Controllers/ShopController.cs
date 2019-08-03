@@ -10,15 +10,17 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using PagedList;
+using mvc3.Models.ViewModel;
 
 namespace mvc3.Controllers
 {
     public class ShopController : Controller
     {
         UrunRepository repo = new UrunRepository(new kitapProjesiEntities());
+        yorumRepository repoYorum = new yorumRepository(new kitapProjesiEntities());
         // GET: Shop
-      
-        public ActionResult Index(int? categoryId,int?page, int?PageSize ,int?orderBy,int?minPrice,int?maxPrice)
+
+        public ActionResult Index(int? categoryId, int? page, int? PageSize, int? orderBy, int? minPrice, int? maxPrice)
         {
             ViewBag.orderBy = new List<SelectListItem>() {
                 new SelectListItem { Text = "Fiyat", Value = "1", Selected = true },
@@ -56,11 +58,11 @@ namespace mvc3.Controllers
                 result = result.OrderBy(x => x.urunNo).ToList();
             // ürün minprice ve maxprice seçilmişse
             else if (minPrice != null & maxPrice != null)
-                result = result.Where(x=>x.fiyat>=minPrice && x.fiyat<=maxPrice).ToList();
+                result = result.Where(x => x.fiyat >= minPrice && x.fiyat <= maxPrice).ToList();
 
             return View(result.ToPagedList(pageNumber, pageSize));
         }
-      
+
         [HttpGet]
         public ActionResult productDetail(int productId)
         {
@@ -102,5 +104,73 @@ namespace mvc3.Controllers
 
         }
 
+
+        [HttpPost]
+        public string yorumKaydet(int _urunNo, string _yorumcu, string _yorum)
+        {
+            yorum model = new yorum()
+            {
+                yorumcu = _yorumcu,
+                yorumAdi = _yorum,
+                yorumTarihi = DateTime.Now,
+                urunNo = _urunNo
+            };
+            return repoYorum.yorumKaydet(model);
+        }
+
+        [NonAction]
+        private int isExistInCard(int id)
+        {
+            List<BasketItem> card = (List<BasketItem>)Session["card"];
+            for (int i = 0; i < card.Count; i++)
+                if (card[i].product.urunNo.Equals(id))
+                    return i;
+            return -1;
+        }
+        
+        public ActionResult AddCard(int productId, int quantity)
+        {
+            // id si verilebn ürünü getir.
+            urun _product = repo.Bul(productId);
+            // eğer session içi boşsa
+            if (Session["card"] == null)
+            {
+                List<BasketItem> Card = new List<BasketItem>();
+                Card.Add(new BasketItem()
+                {
+                    Id = Guid.NewGuid(),
+                    product = _product,
+                    quantity = quantity,
+                    DateCreated = DateTime.Now
+                });
+                Session["card"] = Card;
+            }
+            else
+            {
+                List<BasketItem> card = (List<BasketItem>)Session["card"];
+                // sepette eklenen ürünün  sepetteki sıra numarasına bakılır. varsa sepetteki sıra no gönderilir, yoksa -1 değeri gönderilir.
+                int index = isExistInCard(productId);
+                // sepette eklenen ürün varsa
+                if (index != -1)
+                {
+                    // sadece adedini gelen quantity kadar arttıracak.
+                    card[index].quantity += quantity;
+                }
+                // sepette girilen ürün yoksa 
+                else
+                    // sepete ekle
+                    card.Add(new BasketItem
+                    {
+                        Id = Guid.NewGuid(),
+                        product = _product,
+                        quantity = quantity,
+                        DateCreated = DateTime.Now
+                    });
+                Session["card"] = card;
+            }
+            return RedirectToAction("Index");
+           // return Json( (List<BasketItem>) Session["card"], JsonRequestBehavior.AllowGet);
+
+        }
     }
 }
