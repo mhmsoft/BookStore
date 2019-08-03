@@ -1,4 +1,5 @@
-﻿<!doctype html>
+﻿@using mvc3.Models.ViewModel
+<!doctype html>
 <html class="no-js" lang="">
 <head>
     <meta charset="utf-8">
@@ -42,6 +43,10 @@
     <script src="~/Content/Site/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 <body>
+    <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
     <div class="header-area">
         <div class="container">
             <div class="row">
@@ -59,66 +64,64 @@
                                 <a href="~/Account"><i class="flaticon-people"></i></a>
                             </li>
                             <li class="shoping-cart">
-                                <a href="#">
-                                    <i class="flaticon-shop"></i>
-                                    <span>2</span>
-                                </a>
-                                <div class="add-to-cart-product">
-                                    <div class="cart-product">
-                                        <div class="cart-product-image">
-                                            <a href="single-product.html">
-                                                <img src="img/shop/1.jpg" alt="">
+                                @if (Session["Card"] == null)
+                                {
+                                    <a href="@Url.Action("Basket","Shop")">
+                                        <i class="flaticon-shop"></i>
+                                        <span></span>
+                                    </a>
+                                }
+                                else
+                                {
+                                    List<BasketItem> sepet = (List<BasketItem>)Session["Card"];
+
+                                    <a href="@Url.Action("Basket","Shop")">
+                                        <i class="flaticon-shop"></i>
+                                        <span>@sepet.Sum(x => x.quantity)</span>
+                                    </a>
+                                    <div class="add-to-cart-product">
+                                        @foreach (var item in sepet)
+                                        {
+                                            <div class="cart-product">
+                                                <div class="cart-product-image">
+                                                    <a href="@Url.Action("productDetail","Shop", new { productId = item.product.urunNo })">
+                                                        <img src="@Url.Action("Thumbnail","Shop",new { width=104,height=104,Id=item.product.urunNo,_resimNo=item.product.resim.FirstOrDefault().resimNo})" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="cart-product-info">
+                                                    <p>
+                                                        <span>@item.quantity</span>
+                                                        x
+                                                        <a href="@Url.Action("productDetail","Shop", new { productId = item.product.urunNo })">@item.product.urunAdi</a>
+                                                    </p>
+                                                    <a href="@Url.Action("productDetail","Shop", new { productId = item.product.urunNo })">@item.product.yazar</a>
+                                                    <span class="cart-price">₺ @item.product.fiyat</span>
+                                                </div>
+                                                <div class="cart-product-remove">
+                                                    <i class="fa fa-times"></i>
+                                                </div>
+                                            </div>
+                                        }
+
+
+                                        <div class="total-cart-price">
+                                            <div class="cart-product-line fast-line">
+                                                <span>Teslimat</span>
+                                                <span class="free-shiping">₺ 5</span>
+                                            </div>
+                                            <div class="cart-product-line">
+                                                <span>Toplam</span>
+                                                <span class="total">₺ @(sepet.Sum(x => x.product.fiyat * x.quantity) + 5m)</span>
+                                            </div>
+                                        </div>
+                                        <div class="cart-checkout">
+                                            <a href="@Url.Action("Checkout","Shop")">
+                                                Öde
+                                                <i class="fa fa-chevron-right"></i>
                                             </a>
                                         </div>
-                                        <div class="cart-product-info">
-                                            <p>
-                                                <span>1</span>
-                                                x
-                                                <a href="single-product.html">East of eden</a>
-                                            </p>
-                                            <a href="single-product.html">S, Orange</a>
-                                            <span class="cart-price">$ 140.00</span>
-                                        </div>
-                                        <div class="cart-product-remove">
-                                            <i class="fa fa-times"></i>
-                                        </div>
                                     </div>
-                                    <div class="cart-product">
-                                        <div class="cart-product-image">
-                                            <a href="single-product.html">
-                                                <img src="img/shop/1.jpg" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="cart-product-info">
-                                            <p>
-                                                <span>1</span>
-                                                x
-                                                <a href="single-product.html">East of eden</a>
-                                            </p>
-                                            <a href="single-product.html">S, Orange</a>
-                                            <span class="cart-price">$ 140.00</span>
-                                        </div>
-                                        <div class="cart-product-remove">
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                    </div>
-                                    <div class="total-cart-price">
-                                        <div class="cart-product-line fast-line">
-                                            <span>Shipping</span>
-                                            <span class="free-shiping">$10.50</span>
-                                        </div>
-                                        <div class="cart-product-line">
-                                            <span>Total</span>
-                                            <span class="total">$ 140.00</span>
-                                        </div>
-                                    </div>
-                                    <div class="cart-checkout">
-                                        <a href="checkout.html">
-                                            Check out
-                                            <i class="fa fa-chevron-right"></i>
-                                        </a>
-                                    </div>
-                                </div>
+                                }
                             </li>
                         </ul>
                     </div>
@@ -138,69 +141,70 @@
                     <div class="header-right">
                         <ul>
                             <li>
-                                <a href="~/Account"><i class="flaticon-people"></i></a>
+                                @if (User.Identity.IsAuthenticated)
+                                {  <a href="~/Account"><i style="background-color:#00ff21" class="flaticon-people"></i></a>}
+                                else
+                                {<a href="~/Account"><i class="flaticon-people"></i></a>}
                             </li>
                             <li class="shoping-cart">
-                                <a href="#">
-                                    <i class="flaticon-shop"></i>
-                                    <span>2</span>
-                                </a>
-                                <div class="add-to-cart-product">
-                                    <div class="cart-product">
-                                        <div class="cart-product-image">
-                                            <a href="single-product.html">
-                                                <img src="img/shop/1.jpg" alt="">
+                                @if (Session["Card"] == null)
+                                {
+                                    <a href="@Url.Action("Basket","Shop")">
+                                        <i class="flaticon-shop"></i>
+                                        <span></span>
+                                    </a>
+                                }
+                                else
+                                {
+                                    List<BasketItem> sepet = (List<BasketItem>)Session["Card"];
+
+                                    <a href="@Url.Action("Basket","Shop")">
+                                        <i class="flaticon-shop"></i>
+                                        <span>@sepet.Sum(x => x.quantity)</span>
+                                    </a>
+                                    <div class="add-to-cart-product">
+                                        @foreach (var item in sepet)
+                                        {
+                                            <div class="cart-product">
+                                                <div class="cart-product-image">
+                                                    <a href="@Url.Action("productDetail","Shop", new { productId = item.product.urunNo })">
+                                                        <img src="@Url.Action("Thumbnail","Shop",new { width=104,height=104,Id=item.product.urunNo,_resimNo=item.product.resim.FirstOrDefault().resimNo})" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="cart-product-info">
+                                                    <p>
+                                                        <span>@item.quantity</span>
+                                                        x
+                                                        <a href="@Url.Action("productDetail","Shop", new { productId = item.product.urunNo })">@item.product.urunAdi</a>
+                                                    </p>
+                                                    <a href="@Url.Action("productDetail","Shop", new { productId = item.product.urunNo })">@item.product.yazar</a>
+                                                    <span class="cart-price">₺ @item.product.fiyat</span>
+                                                </div>
+                                                <div class="cart-product-remove">
+                                                    <i class="fa fa-times"></i>
+                                                </div>
+                                            </div>
+                                        }
+
+
+                                        <div class="total-cart-price">
+                                            <div class="cart-product-line fast-line">
+                                                <span>Teslimat</span>
+                                                <span class="free-shiping">₺ 5</span>
+                                            </div>
+                                            <div class="cart-product-line">
+                                                <span>Toplam</span>
+                                                <span class="total">₺ @(sepet.Sum(x => x.product.fiyat * x.quantity) + 5m)</span>
+                                            </div>
+                                        </div>
+                                        <div class="cart-checkout">
+                                            <a href="@Url.Action("Checkout","Shop")">
+                                                Öde
+                                                <i class="fa fa-chevron-right"></i>
                                             </a>
                                         </div>
-                                        <div class="cart-product-info">
-                                            <p>
-                                                <span>1</span>
-                                                x
-                                                <a href="single-product.html">East of eden</a>
-                                            </p>
-                                            <a href="single-product.html">S, Orange</a>
-                                            <span class="cart-price">$ 140.00</span>
-                                        </div>
-                                        <div class="cart-product-remove">
-                                            <i class="fa fa-times"></i>
-                                        </div>
                                     </div>
-                                    <div class="cart-product">
-                                        <div class="cart-product-image">
-                                            <a href="single-product.html">
-                                                <img src="img/shop/1.jpg" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="cart-product-info">
-                                            <p>
-                                                <span>1</span>
-                                                x
-                                                <a href="single-product.html">East of eden</a>
-                                            </p>
-                                            <a href="single-product.html">S, Orange</a>
-                                            <span class="cart-price">$ 140.00</span>
-                                        </div>
-                                        <div class="cart-product-remove">
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                    </div>
-                                    <div class="total-cart-price">
-                                        <div class="cart-product-line fast-line">
-                                            <span>Shipping</span>
-                                            <span class="free-shiping">$10.50</span>
-                                        </div>
-                                        <div class="cart-product-line">
-                                            <span>Total</span>
-                                            <span class="total">$ 140.00</span>
-                                        </div>
-                                    </div>
-                                    <div class="cart-checkout">
-                                        <a href="checkout.html">
-                                            Check out
-                                            <i class="fa fa-chevron-right"></i>
-                                        </a>
-                                    </div>
-                                </div>
+                                }
                             </li>
                         </ul>
                     </div>
@@ -228,21 +232,4 @@
         </div>
     </div>
     <!-- Mobile Menu End -->
-    <!-- Breadcrumbs Area Start -->
-    <div class="breadcrumbs-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="breadcrumbs">
 
-                        <ul class="breadcrumbs-list">
-                            <li>
-
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>

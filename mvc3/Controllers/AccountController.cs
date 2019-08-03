@@ -115,7 +115,7 @@ namespace mvc3.Controllers
         }
             
         [HttpPost]
-        public void AddFavourite(int productId)
+        public string AddFavourite(int productId)
         {
             var accountOwner = User.Identity.Name;
             //favori ekleme
@@ -132,8 +132,11 @@ namespace mvc3.Controllers
                     userId = userId
                 };
                 repoFav.Kaydet(newFavori);
+                return "Favorilerime Eklendi";
             }
-           
+            else
+                return "Favorilerime Daha önceden eklemişsiniz";
+
 
         }
     }

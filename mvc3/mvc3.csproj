@@ -1224,6 +1224,7 @@
     <Content Include="Areas\AdminPanel\Models\KitapProjeModel.edmx.diagram">
       <DependentUpon>KitapProjeModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\AdminPanel\Views\Home\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1254,6 +1255,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\AdminPanel\AdminPanelAreaRegistration.cs" />
+    <Compile Include="Areas\AdminPanel\Controllers\HomeController.cs" />
     <Compile Include="Areas\AdminPanel\Controllers\KategoriController.cs" />
     <Compile Include="Areas\AdminPanel\Controllers\UrunController.cs" />
     <Compile Include="Areas\AdminPanel\Models\favorim.cs">
@@ -1418,6 +1420,8 @@
     <Content Include="Views\Account\PartialCategory.cshtml" />
     <Content Include="Views\Account\PartialPrice.cshtml" />
     <Content Include="Views\Shop\PartialComment.cshtml" />
+    <Content Include="Views\Shop\Basket.cshtml" />
+    <Content Include="Views\Shop\Checkout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

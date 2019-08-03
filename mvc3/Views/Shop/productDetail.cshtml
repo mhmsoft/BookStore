@@ -1,216 +1,248 @@
 ﻿@model mvc3.Areas.AdminPanel.Models.urun
-    @{
-        ViewBag.Title = "productDetail";
-        Layout = "~/Views/Shared/_Layout2.cshtml";
-    }
-    <div class="breadcrumbs-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="breadcrumbs">
-                        <h2>PRODUCT DETAILS</h2>
-                        <ul class="breadcrumbs-list">
-                            <li>
-                                <a title="Return to Home" href="index.html">Home</a>
+@{
+    ViewBag.Title = "productDetail";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<div class="breadcrumbs-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="breadcrumbs">
+                    <h2>PRODUCT DETAILS</h2>
+                    <ul class="breadcrumbs-list">
+                        <li>
+                            <a title="Return to Home" href="index.html">Home</a>
+                        </li>
+                        <li>Product Details</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumbs Area Start -->
+<!-- Single Product Area Start -->
+<div class="single-product-area section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-7">
+                <div class="single-product-image-inner">
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        @{int i = 0;}
+                        @foreach (var item in Model.resim)
+                        {
+                            i++;
+                            var active = i == 1 ? "active" : "";
+                            <div role="tabpanel" class="tab-pane @active" id="@i">
+                                <a class="venobox" href="@Url.Action("Thumbnail", "Shop", new { width = 250, height = 300, Id = Model.urunNo, _resimNo = item.resimNo })" data-gall="gallery" title="">
+                                    <img src="@Url.Action("Thumbnail", "Shop", new { width = 250, height = 300, Id = Model.urunNo, _resimNo = item.resimNo })" alt="">
+                                </a>
+                            </div>
+                        }
+                    </div>
+                    <!-- Nav tabs -->
+                    @{i = 0;}
+                    <ul class="product-tabs" role="tablist">
+                        @foreach (var item in Model.resim)
+                        {
+                            i++;
+
+                            <li role="presentation">
+                                <a href="#@i" aria-controls="@i" role="tab" data-toggle="tab">
+                                    <img src="@Url.Action("Thumbnail", "Shop", new { width = 100, height = 100, Id = Model.urunNo, _resimNo = item.resimNo })" alt="">
+                                </a>
                             </li>
-                            <li>Product Details</li>
-                        </ul>
-                    </div>
+
+                        }
+                    </ul>
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- Breadcrumbs Area Start -->
-    <!-- Single Product Area Start -->
-    <div class="single-product-area section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-sm-7">
-                    <div class="single-product-image-inner">
-                        <!-- Tab panes -->
-                        <div class="tab-content">
-                            @{int i = 0;}
-                            @foreach (var item in Model.resim)
-                            {
-                                i++;
-                                var active = i == 1 ? "active" : "";
-                                <div role="tabpanel" class="tab-pane @active" id="@i">
-                                    <a class="venobox" href="@Url.Action("Thumbnail", "Shop", new { width = 250, height = 300, Id = Model.urunNo, _resimNo = item.resimNo })" data-gall="gallery" title="">
-                                        <img src="@Url.Action("Thumbnail", "Shop", new { width = 250, height = 300, Id = Model.urunNo, _resimNo = item.resimNo })" alt="">
-                                    </a>
-                                </div>
-                            }
-                        </div>
-                        <!-- Nav tabs -->
-                        @{i = 0;}
-                        <ul class="product-tabs" role="tablist">
-                            @foreach (var item in Model.resim)
-                            {
-                                i++;
-
-                                <li role="presentation">
-                                    <a href="#@i" aria-controls="@i" role="tab" data-toggle="tab">
-                                        <img src="@Url.Action("Thumbnail", "Shop", new { width = 100, height = 100, Id = Model.urunNo, _resimNo = item.resimNo })" alt="">
-                                    </a>
-                                </li>
-
-                            }
-                        </ul>
+            <div class="col-md-6 col-sm-5">
+                <div class="single-product-details">
+                    <div class="list-pro-rating">
+                        <i class="fa fa-star icolor"></i>
+                        <i class="fa fa-star icolor"></i>
+                        <i class="fa fa-star icolor"></i>
+                        <i class="fa fa-star icolor"></i>
+                        <i class="fa fa-star"></i>
                     </div>
-                </div>
-                <div class="col-md-6 col-sm-5">
-                    <div class="single-product-details">
-                        <div class="list-pro-rating">
-                            <i class="fa fa-star icolor"></i>
-                            <i class="fa fa-star icolor"></i>
-                            <i class="fa fa-star icolor"></i>
-                            <i class="fa fa-star icolor"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <h2>@Model.urunAdi</h2>
-                        <div class="availability">
-                            <span>@(Model.stok > 0 ? "Stokta Var" : "Stok Yok")</span>
-                        </div>
-                        <p>@Model.aciklama </p>
-                        <div class="single-product-price">
-                            <h2>₺@Model.fiyat</h2>
-                        </div>
-                        <div class="product-attributes clearfix">
-                            <span class="pull-left" id="quantity-wanted-p">
-                                <span class="dec qtybutton">-</span>
-                                <input type="text" value="1" class="cart-plus-minus-box">
-                                <span class="inc qtybutton">+</span>
-                            </span>
-                            <span>
-                                <a class="cart-btn btn-default" href="cart.html">
-                                    <i class="flaticon-shop"></i>
-                                    Sepete Ekle
-                                </a>
-                            </span>
-                        </div>
-                        <div class="add-to-wishlist">
-                            <a class="wish-btn" href="cart.html">
-                                <i class="fa fa-heart-o"></i>
-                               Favorilere Ekle
+                    <h2>@Model.urunAdi</h2>
+                    <div class="availability">
+                        <span>@(Model.stok > 0 ? "Stokta Var" : "Stok Yok")</span>
+                    </div>
+                    <p>@Model.aciklama </p>
+                    <div class="single-product-price">
+                        <h2>₺@Model.fiyat</h2>
+                    </div>
+                    <div class="product-attributes clearfix">
+                        <span class="pull-left" id="quantity-wanted-p">
+                            <span class="dec qtybutton">-</span>
+                            <input type="text" value="1" class="cart-plus-minus-box" id="quantity">
+                            <span class="inc qtybutton">+</span>
+                        </span>
+                        <span>
+                            <a class="cart-btn btn-default" href="javascript:void(0);" id="addBasket" product="@Model.urunNo">
+                                <i class="flaticon-shop"></i>
+                                Sepete Ekle
                             </a>
-                        </div>
-                        <div class="single-product-categories">
-                            <label>Kategoriler:</label>
-                            <span>@Model.kategori.kategoriAdi</span>
-                        </div>
-                        <div class="social-share">
-                            <label>Paylaş: </label>
-                            <ul class="social-share-icon">
-                                <li><a href="https://www.facebook.com/sharer/sharer.php?u=@HttpUtility.UrlEncode(Request.UrlReferrer.ToString())" target="_blank""><i class="flaticon-social"></i></a></li>
-                                <li><a href="https://plus.google.com/share?url=@HttpUtility.UrlEncode(Request.UrlReferrer.ToString())"><i class="flaticon-social-1"></i></a></li>
-                                <li><a href="https://www.instagram.com/?url=@HttpUtility.UrlEncode(Request.UrlReferrer.ToString())"><i class="flaticon-social-2"></i></a></li>
-                            </ul>
-                        </div>
-                        <div id="product-comments-block-extra">
-                            <ul class="comments-advices">
-                                <li>
-                                    <a href="#" class="open-comment-form">Görüş bildir</a>
-                                </li>
-                            </ul>
-                        </div>
+                        </span>
                     </div>
+                    <div class="add-to-wishlist">
+                        <a class="wish-btn" href="javascript:void(0);" id="addFavourite" productId="@Model.urunNo">
+                            <i class="fa fa-heart-o"></i>
+                            Favorilere Ekle
+                        </a>
+                    </div>
+                    <div class="single-product-categories">
+                        <label>Kategoriler:</label>
+                        <span>@Model.kategori.kategoriAdi</span>
+                    </div>
+                    <div class="social-share">
+                        <label>Paylaş: </label>
+                        <ul class="social-share-icon">
+
+                            <li><a href="https://www.facebook.com/sharer/sharer.php?u=@Url.Encode(Request.Url.AbsoluteUri)"><i class="flaticon-social"></i></a></li>
+                            <li><a href="https://plus.google.com/share?url=@Url.Encode(Request.Url.AbsoluteUri)"><i class="flaticon-social-1"></i></a></li>
+                            <li><a href="https://www.instagram.com/?url=@Url.Encode(Request.Url.AbsoluteUri)"><i class="flaticon-social-2"></i></a></li>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-9">
-                    <div class="p-details-tab-content">
-                        <div class="p-details-tab">
-                            <ul class="p-details-nav-tab" role="tablist">
-                                <li role="presentation" class="active"><a href="#more-info" aria-controls="more-info" role="tab" data-toggle="tab">Description</a></li>
-                                <li role="presentation"><a href="#data" aria-controls="data" role="tab" data-toggle="tab">Review</a></li>
-                                <li role="presentation"><a href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">Tab</a></li>
-                            </ul>
+        </div>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="p-details-tab-content">
+                    <div class="p-details-tab">
+                        <ul class="p-details-nav-tab" role="tablist">
+                            <li role="presentation"><a href="#more-info" aria-controls="more-info" role="tab" data-toggle="tab">Açıklama</a></li>
+                            <li role="presentation" class="active"><a href="#data" aria-controls="data" role="tab" data-toggle="tab">Özellikler</a></li>
+                            <li role="presentation"><a href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">Yorumlar</a></li>
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="tab-content review">
+                        <div role="tabpanel" class="tab-pane active" id="more-info">
+                            <p>@Model.aciklama</p>
                         </div>
-                        <div class="clearfix"></div>
-                        <div class="tab-content review">
-                            <div role="tabpanel" class="tab-pane active" id="more-info">
-                                <p>@Model.aciklama</p>
-                            </div>
-                            <div role="tabpanel" class="tab-pane" id="data">
-                                <table class="table-data-sheet">
-                                    <tbody>
-                                        <tr class="odd">
-                                            <td>Compositions</td>
-                                            <td>Cotton</td>
-                                        </tr>
-                                        <tr class="even">
-                                            <td>Styles</td>
-                                            <td>Casual</td>
-                                        </tr>
-                                        <tr class="odd">
-                                            <td>Properties</td>
-                                            <td>Short Sleeve</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div role="tabpanel" class="tab-pane" id="reviews">
-                                @if (Model.yorum.Count == 0)
-                                {
-                                    Model.yorum.Add(
-                                        new mvc3.Areas.AdminPanel.Models.yorum(){ urunNo = Model.urunNo }
-                                         );
-                                }
+                        <div role="tabpanel" class="tab-pane" id="data">
+                            <table class="table-data-sheet">
+                                <tbody>
+                                    <tr class="odd">
+                                        <td>Yayın Evi</td>
+                                        <td>@Model.yayinEvi</td>
+                                    </tr>
+                                    <tr class="even">
+                                        <td>Yazar</td>
+                                        <td>@Model.yazar</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="reviews">
+                            @if (Model.yorum.Count == 0)
+                            {
+                                Model.yorum.Add(
+                                    new mvc3.Areas.AdminPanel.Models.yorum() { urunNo = Model.urunNo }
+                                     );
+                            }
 
 
-                                @Html.Partial("PartialComment",Model.yorum)
-                            </div>   
-                         </div>           
+                            @Html.Partial("PartialComment", Model.yorum)
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Single Product Area End -->
-    <!-- Related Product Area Start -->
-    <div class="related-product-area">
-        <h2 class="section-title">İLGİNİZİ ÇEKEBİLİR</h2>
-        <div class="container">
-            <div class="row">
-                <div class="related-product indicator-style">
-                  
-                    <div class="col-md-3">
-                        <div class="single-banner">
-                            <div class="product-wrapper">
-                                <a href="#" class="single-banner-image-wrapper">
-                                    <img alt="" src="img/featured/1.jpg">
-                                    <div class="price"><span>$</span>160</div>
-                                    <div class="rating-icon">
-                                        <i class="fa fa-star icolor"></i>
-                                        <i class="fa fa-star icolor"></i>
-                                        <i class="fa fa-star icolor"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                </a>
-                                <div class="product-description">
-                                    <div class="functional-buttons">
-                                        <a href="#" title="Add to Cart">
-                                            <i class="fa fa-shopping-cart"></i>
-                                        </a>
-                                        <a href="#" title="Add to Wishlist">
-                                            <i class="fa fa-heart-o"></i>
-                                        </a>
-                                        <a href="#" title="Quick View">
-                                            <i class="fa fa-compress"></i>
-                                        </a>
-                                    </div>
+</div>
+<!-- Single Product Area End -->
+<!-- Related Product Area Start -->
+<div class="related-product-area">
+    <h2 class="section-title">İLGİNİZİ ÇEKEBİLİR</h2>
+    <div class="container">
+        <div class="row">
+            <div class="related-product indicator-style">
+
+                <div class="col-md-3">
+                    <div class="single-banner">
+                        <div class="product-wrapper">
+                            <a href="#" class="single-banner-image-wrapper">
+                                <img alt="" src="img/featured/1.jpg">
+                                <div class="price"><span>$</span>160</div>
+                                <div class="rating-icon">
+                                    <i class="fa fa-star icolor"></i>
+                                    <i class="fa fa-star icolor"></i>
+                                    <i class="fa fa-star icolor"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                            </a>
+                            <div class="product-description">
+                                <div class="functional-buttons">
+                                    <a href="#" title="Add to Cart">
+                                        <i class="fa fa-shopping-cart"></i>
+                                    </a>
+                                    <a href="#" title="Add to Wishlist">
+                                        <i class="fa fa-heart-o"></i>
+                                    </a>
+                                    <a href="#" title="Quick View">
+                                        <i class="fa fa-compress"></i>
+                                    </a>
                                 </div>
                             </div>
-                            <div class="banner-bottom text-center">
-                                <a href="#">People of the book</a>
-                            </div>
+                        </div>
+                        <div class="banner-bottom text-center">
+                            <a href="#">People of the book</a>
                         </div>
                     </div>
-                  
                 </div>
+
             </div>
         </div>
     </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
+<script type="text/javascript">
+    $(function () {
+      
+        $(document).on("click", "#addBasket", function () {
+
+            var data = $(this).attr("product");
+            var quantity = $("#quantity").val();
+            alert(quantity);
+            $.ajax({
+                url: '@Url.Action("AddCard", "Shop")',
+                type: "POST",
+                data: { productId: data, quantity: quantity },
+                success: function (response) {
+                    //alert(JSON.stringify(response));
+                    location.reload();
+
+                }
+            });
+        });
+
+
+        $(document).on("click", "#addFavourite", function () {
+
+            var urunNo = $(this).attr("productId");
+           
+            //ajax
+            $.ajax({
+                url: '@Url.Action("AddFavourite", "Account")',
+                type: "POST",
+                data: { productId: urunNo },
+                success: function (response) {
+                    alert(response)
+                }
+
+            });
+
+        });
+    });
+</script>
 

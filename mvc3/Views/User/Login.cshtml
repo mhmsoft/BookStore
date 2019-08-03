@@ -9,7 +9,7 @@
 
             <!--Login-->
             <div class="col-md-6 col-sm-6">
-                <form action="@Url.Action("Login","User")" class="create-account-form" method="post">
+                <form action="@Url.Action("Login","User",new { ReturnUrl = Request.QueryString["ReturnUrl"] })" class="create-account-form" method="post">
                     <h2 class="heading-title">
                         Üye misin?
                     </h2>

@@ -4,6 +4,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout1.cshtml";
 }
+
 <div class="shop-tab-area">
     <div class="shop-tab-list">
         <div class="shop-tab-pill pull-left">
@@ -202,8 +203,8 @@
                 url:'@Url.Action("AddFavourite","Account")',
                 type: "POST",
                 data: { productId: urunNo },
-                success: function() {
-
+                success: function (response) {
+                    alert(response);
                 }
 
             });

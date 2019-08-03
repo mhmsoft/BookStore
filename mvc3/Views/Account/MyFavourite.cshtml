@@ -19,7 +19,7 @@
             {
                 <tr id="@item.id">
                     <td class="product-image">
-                        <a href="#">
+                        <a href="@Url.Action("ProductDetails","Shop",new {productId=item.productId })">
                             <img src="@Url.Action("Thumbnail","Shop",new {width=90,height=110,id=item.urun.urunNo,_resimNo=item.urun.resim.FirstOrDefault().resimNo })" alt="">
                         </a>
                     </td>
@@ -34,8 +34,9 @@
                     <td class="product-cart">
                         <div class="product-cart-details">
                             <span>₺ @item.urun.fiyat</span>
+                            
                             <input type="number" id="quantity" value="1">
-                           
+                             
                             <input type="submit"  id="addBasket" product="@item.productId" value="Sepete ekle">
                         </div>
                        
@@ -87,11 +88,13 @@
              var data = $(this).attr("product");
              var quantity = $("#quantity").val();
             $.ajax({
-                url: '@Url.Action("addCard","Shop")',
+                url: '@Url.Action("AddCard","Shop")',
                 type: "POST",
                 data: { productId: data,quantity:quantity },
                 success: function (response) {
                     //alert(JSON.stringify(response));
+                    location.reload();
+                  
                 }
             });
         });
