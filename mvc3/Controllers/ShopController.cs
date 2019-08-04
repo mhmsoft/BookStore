@@ -199,15 +199,14 @@ namespace mvc3.Controllers
             }
         }
         [HttpPost]
-        public void ClearCard(int productId, int quantity)
+        public void ClearCard()
         {
             Session["card"] = null;
             
         }
         // sepetteki elemanı silme
-        public string deleteItemInCard(int productId)
+        public void deleteItemInCard(int productId)
         {
-            
             List<BasketItem> card = (List<BasketItem>)Session["card"];
             if (card.Exists(x => x.product.urunNo == productId))
             {
@@ -215,10 +214,9 @@ namespace mvc3.Controllers
 
                 card.RemoveAt(index);
                 Session["card"] = card;
-                return "silindi";
+               
             }
-            return "silinemedi";
-
+            
         }
         [Authorize(Roles = "User")]
         public ActionResult Checkout()
@@ -232,54 +230,95 @@ namespace mvc3.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Checkout(user _user, bool?shipbox ,string ad, string soyad, string sirket,string adres,string sehir, int?postakodu,string eposta, string telefon)
+        [Authorize(Roles = "User")]
+        public ActionResult Checkout(user _user, bool?shipbox ,string bilgi,string ad, string soyad, string sirket,string adres,string sehir, int?postakodu,string eposta, string telefon)
         {
             string message = "";
             bool status = false;
             siparis newOrder = new siparis();
-            // farklı adres seçilmişse
-            if (shipbox==true)
-            {
-               
+            // farklı adres seçilmişse(user başkası adına alışveriş yaparsa)
+             if (shipbox==true)
+             {
+                Session["note"] = bilgi;
+                Session["ad"] = ad;
+                Session["soyad"] = soyad;
+                Session["adres"] = adres;
+                Session["sehir"] = sehir;
+                Session["sirket"] = sirket;
+                Session["telefon"] = telefon;
+                Session["postakodu"] = postakodu ?? 0;
+                Session["isGuest"] = true;
+                
                 if (string.IsNullOrEmpty(ad))
+                {
                     message = "isim alanı boş bıraktınız";
+                    ViewBag.message = message;
+                    return View();
+                }
                 else
                     newOrder.firstname = ad;
                 if (string.IsNullOrEmpty(soyad))
+                {
                     message = "Soyisim alanı boş bıraktınız";
+                    ViewBag.message = message;
+                    return View();
+                }
                 else
                     newOrder.lastname = soyad;
                 if (!string.IsNullOrEmpty(sirket))
                     newOrder.company = sirket;
                 if (string.IsNullOrEmpty(adres))
+                {
                     message = "Adres alanı boş bıraktınız";
+                    ViewBag.message = message;
+                    return View();
+                }
+                   
                 else
                     newOrder.address = adres;
                 if (string.IsNullOrEmpty(sehir))
+                {
                     message = "Şehir alanı boş bıraktınız";
+                    ViewBag.message = message;
+                    return View();
+                }  
                 else
                     newOrder.city = sehir;
                 if (postakodu!=null)
                     newOrder.postakodu = postakodu;
                 if (!string.IsNullOrEmpty(eposta))
                     newOrder.email = eposta;
+                if (!string.IsNullOrEmpty(bilgi))
+                    newOrder.note = bilgi;
                 if (string.IsNullOrEmpty(telefon))
+                {
                     message = "Telefon alanı boş bıraktınız";
+                    ViewBag.message = message;
+                    return View();
+                }
+                    
                 else
                     newOrder.phone = telefon;
 
                 newOrder.siparisTarihi = DateTime.Now;
-                newOrder.user.userId = _user.userId;
+                newOrder.musteriNo = _user.userId;
                 // siparisi kaydet
                 repoSiparis.Kaydet(newOrder);
             }
-            // farklı adress seçilmemişse
+            // farklı adress seçilmemişse(normal user alışveriş yaparsa)
             else
             {
-                if(_user!=null)
+                Session.Remove("ad");
+                Session.Remove("soyad");
+                Session.Remove("adres");
+                Session.Remove("sehir");
+                Session.Remove("sirket");
+                Session.Remove("telefon");
+                Session.Remove("postakodu");
+                Session.Remove("note");
+                Session.Remove("isGuest");
+                if (_user!=null)
                 {
-
-                   
                     if (string.IsNullOrEmpty(_user.firstname))
                     {
                         message = "ad alanı boş bırakmayınız";
@@ -293,21 +332,18 @@ namespace mvc3.Controllers
                         ViewBag.message = message;
                         return View();
                     }
-                        
                     if (string.IsNullOrEmpty(_user.address))
                     {
                         message = "adres alanı boş bırakmayınız";
                         ViewBag.message = message;
                         return View();
                     }
-                       
                     if (string.IsNullOrEmpty(_user.phone))
                     {
                         message = "Telefon alanı boş bırakmayınız";
                         ViewBag.message = message;
                         return View();
                     }
-                      
                     if (string.IsNullOrEmpty(_user.city))
                     {
                         message = "sehir alanı boş bırakmayınız";
@@ -325,23 +361,23 @@ namespace mvc3.Controllers
             if (Session["card"] != null)
             {
                 List<BasketItem> Basket = (List<BasketItem>)Session["card"];
-                
+                siparisDetay newOrderDetail = new siparisDetay();
                 foreach (var item in Basket)
                 {
-                    siparisDetay newOrderDetail = new siparisDetay();
+                    
                     newOrderDetail.miktar = item.quantity;
                     newOrderDetail.siparisNo = newOrder.siparisNo;
                     newOrderDetail.urunNo = item.product.urunNo;
                     repoSiparisDetay.Kaydet(newOrderDetail);
                 }
                 SendOrderInfo(repoUser.Listele().Where(x=>x.email==User.Identity.Name).FirstOrDefault().email);
-                message = " Sipariş işlemi tamamlandı. siparişiniz ile ilgili bilgi mailinize gönderilmiştir. <br/>" +
-                  "Ecommerce sayfanızda sipariş detaylarını görebilirisiniz. Detay için aşağıdaki linke tıklayınız" +
-                      "<a href='/Account/MyOrders'></a> ";
+                message = " Sipariş işlemi tamamlandı. siparişiniz ile ilgili bilgi mailinize gönderilmiştir." +
+                           "Bookstore hesabım sayfasında sipariş detaylarını görebilirisiniz.";
 
                 status = true;
 
-
+                // sepeti sil
+                Session.Remove("card");
             }
             ViewBag.status = status;
             ViewBag.message = message;

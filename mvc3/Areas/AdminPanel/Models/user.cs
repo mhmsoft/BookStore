@@ -18,8 +18,8 @@ namespace mvc3.Areas.AdminPanel.Models
         public user()
         {
             this.favorim = new HashSet<favorim>();
-            this.siparis = new HashSet<siparis>();
             this.indirim = new HashSet<indirim>();
+            this.siparis = new HashSet<siparis>();
         }
     
         public int userId { get; set; }
@@ -44,10 +44,10 @@ namespace mvc3.Areas.AdminPanel.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<favorim> favorim { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<indirim> indirim { get; set; }
         public virtual role role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<siparis> siparis { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<indirim> indirim { get; set; }
     }
 }

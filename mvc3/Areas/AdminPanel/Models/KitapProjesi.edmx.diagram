@@ -4,18 +4,20 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="75e94ea6b3284bb7b09c1c1326817cb3" Name="Diagram1">
+      <Diagram DiagramId="4b6e8efa62534d80b0f16738232fddc9" Name="Diagram1">
         <EntityTypeShape EntityType="kitapProjesiModel.favorim" Width="1.5" PointX="5.25" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="kitapProjesiModel.indirim" Width="1.5" PointX="5.25" PointY="18.75" IsExpanded="true" />
         <EntityTypeShape EntityType="kitapProjesiModel.kategori" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="kitapProjesiModel.resim" Width="1.5" PointX="5.25" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="kitapProjesiModel.role" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="kitapProjesiModel.siparis" Width="1.5" PointX="6" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="kitapProjesiModel.siparis" Width="1.5" PointX="6" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="kitapProjesiModel.siparisDetay" Width="1.5" PointX="8.25" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="kitapProjesiModel.urun" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="kitapProjesiModel.user" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="kitapProjesiModel.yorum" Width="1.5" PointX="5.25" PointY="15.125" IsExpanded="true" />
         <AssociationConnector Association="kitapProjesiModel.FK__favorim__product__24927208" ManuallyRouted="false" />
         <AssociationConnector Association="kitapProjesiModel.FK__favorim__userId__25869641" ManuallyRouted="false" />
+        <AssociationConnector Association="kitapProjesiModel.FK__indirim__musteri__3D5E1FD2" ManuallyRouted="false" />
         <AssociationConnector Association="kitapProjesiModel.FK__urun__kategoriNo__1273C1CD" ManuallyRouted="false" />
         <AssociationConnector Association="kitapProjesiModel.FK__resim__urunNo__15502E78" ManuallyRouted="false" />
         <AssociationConnector Association="kitapProjesiModel.FK__user__roleId__1FCDBCEB" ManuallyRouted="false" />
@@ -23,8 +25,6 @@
         <AssociationConnector Association="kitapProjesiModel.siparisFK" ManuallyRouted="false" />
         <AssociationConnector Association="kitapProjesiModel.urunNoFK" ManuallyRouted="false" />
         <AssociationConnector Association="kitapProjesiModel.FK__yorum__urunNo__182C9B23" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="kitapProjesiModel.indirim" Width="1.5" PointX="5.375" PointY="0.5" />
-        <AssociationConnector Association="kitapProjesiModel.FK__indirim__musteri__4316F928" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

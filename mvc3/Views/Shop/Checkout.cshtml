@@ -4,353 +4,314 @@
     ViewBag.Title = "Checkout";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
-<div class="check-out-area section-padding">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                    @using (Html.BeginForm("Checkout", "Shop", FormMethod.Post))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        @Html.HiddenFor(model => model.userId)
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingTwo">
-                                <h4 class="panel-title">
-                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        <span>1</span>
-                                        Teslimat Bilgisi
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
-                                <div class="panel-body">
-                                    <div class="row">
-
-                                        <div class="col-md-6">
-                                            <p class="form-row">
-                                                @Html.EditorFor(model => model.firstname, new { htmlAttributes = new { placeholder = "İsim" } })
-
-                                            </p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p class="form-row">
-                                                @Html.EditorFor(model => model.lastname, new { htmlAttributes = new { placeholder = "Soyad" } })
-                                            </p>
-                                        </div>
-
-                                        <div class="col-md-12">
-                                            <p class="form-row">
-                                                @Html.EditorFor(model => model.address, new { htmlAttributes = new { placeholder = "Adres" } })
-                                            </p>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <p class="form-row">
-                                                @Html.EditorFor(model => model.city, new { htmlAttributes = new { placeholder = "Şehir" } })
-                                            </p>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <p class="form-row">
-                                                @Html.EditorFor(model => model.email, new { htmlAttributes = new { placeholder = "Eposta" } })
-                                            </p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p class="form-row">
-                                                @Html.EditorFor(model => model.phone, new { htmlAttributes = new { placeholder = "Telefon" } })
-                                            </p>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingThree">
-                                <h4 class="panel-title">
-                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                        <span>2</span>
-                                        Shopping Method
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                <div class="panel-body">
-                                    <div class="different-address">
-                                        <div class="ship-different-title">
-                                            <h3>
-                                                <label>Farklı bir Adrese göndermek istiyorum</label>
-                                                <input type="checkbox" id="shipbox" name="shipbox">
-                                            </h3>
-                                        </div>
-                                        <div id="ship-box-info" class="row">
-
-                                            <div class="col-md-6">
-                                                <p class="form-row">
-                                                    <input type="text" id="ad"  name="ad" placeholder="Ad *">
-                                                </p>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p class="form-row">
-                                                    <input type="text" id="soyad" name="soyad" placeholder="Soyad *">
-                                                </p>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <p class="form-row">
-                                                    <input type="text" id="sirket" name="sirket" placeholder="Şirket">
-                                                </p>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <p class="form-row">
-                                                    <input type="text" id="adres" name="adres" placeholder="Adres *">
-                                                </p>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <p class="form-row">
-                                                    <input type="text" id="sehir" name="sehir" placeholder="Şehir *">
-                                                </p>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <p class="form-row">
-                                                    <input type="text" id="postakodu" name="postakodu" placeholder="Posta Kodu">
-                                                </p>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p class="form-row">
-                                                    <input type="text" id="eposta" name="eposta" placeholder="Eposta *">
-                                                </p>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p class="form-row">
-                                                    <input type="text" id="telefon" name="telefon" placeholder="Telefon *">
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="order-notes">
-                                            <label>Order Notes</label>
-                                            <textarea placeholder="Notes about your order, e.g. special notes for delivery." rows="10" cols="30" id="checkout-mess"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- <div class="panel panel-default">
-             <div class="panel-heading" role="tab" id="headingFour">
-                 <h4 class="panel-title">
-                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                         <span>3</span>
-                         Payment Information
-                     </a>
-                 </h4>
-             </div>
-             <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-                 <div class="panel-body no-padding">
-                     <div class="payment-met">
-                         <form action="#" id="payment-form">
-                             <ul class="form-list">
-                                 <li class="control">
-                                     <input type="radio" class="radio" title="Check / Money order" name="payment[method]" id="p_method_checkmo">
-                                     <label for="p_method_checkmo">Check / Money order </label>
-                                 </li>
-                                 <li class="control">
-                                     <input type="radio" class="radio" title="Credit Card (saved)" name="payment[method]" id="p_method_ccsave">
-                                     <label for="p_method_ccsave">Credit Card (saved) </label>
-                                 </li>
-                             </ul>
-                         </form>
-                         <div class="buttons-set">
-                             <button class="btn btn-default">CONTINUE</button>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-         </div>-->
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingFive">
-                                <h4 class="panel-title">
-                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                                        <span>4</span>
-                                        Sipariş Özeti
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
-                                <div class="panel-body no-padding">
-                                    <div class="order-review" id="checkout-review">
-                                        @if (Session["card"] != null)
-                                        {
-                                            List<BasketItem> cardx = (List<BasketItem>)Session["card"];
-                                            var total = cardx.Sum(item => item.product.fiyat * item.quantity);
-                                            <div class="table-responsive" id="checkout-review-table-wrapper">
-                                                <table class="data-table" id="checkout-review-table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th rowspan="1">Ürün Ad</th>
-                                                            <th colspan="1">Fiyat</th>
-                                                            <th rowspan="1">Adet</th>
-                                                            <th colspan="1">Tutar</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var item in cardx)
-                                                        {
-                                                            <tr>
-                                                                <td><h3 class="product-name">@item.product.urunAdi</h3></td>
-                                                                <td><span class="cart-price"><span class="check-price">₺ @item.product.fiyat</span></span></td>
-                                                                <td>@item.quantity</td>
-                                                                <!-- sub total starts here -->
-
-                                                                <td><span class="cart-price"><span class="check-price">₺ @(item.product.fiyat * item.quantity)</span></span></td>
-                                                            </tr>
-                                                        }
-
-
-                                                    </tbody>
-                                                    <tfoot>
-                                                        <tr>
-                                                            <td colspan="3">Alt Tutar</td>
-                                                            <td><span class="check-price">₺ @total</span></td>
-                                                        </tr>
-                                                        @{var teslimat = 5;
-                                                        }
-                                                        <tr>
-                                                            <td colspan="3">Gönderim Tutar</td>
-                                                            <td><span class="check-price">$@teslimat</span></td>
-                                                        </tr>
-                                                        @{var indirim = 0;
-                                                        }
-                                                        <tr>
-                                                            <td colspan="3">İndirim</td>
-                                                            <td><span class="check-price">$@indirim</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="3"><strong>Toplam Tutar</strong></td>
-                                                            <td><strong><span class="check-price">₺ @(total - indirim + teslimat)</span></strong></td>
-                                                        </tr>
-                                                    </tfoot>
-                                                </table>
-                                            </div>
-                                        }
-
-                                        <div id="checkout-review-submit">
-                                            <div class="cart-btn-3" id="review-buttons-container">
-
-                                                <input type="submit" title="Place Order" value="Öde" class="btn btn-default" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
-            <div class="col-md-offset-1 col-md-3">
-                <div class="checkout-widget">
-                    <h2 class="widget-title">YOUR CHECKOUT PROGRESS</h2>
-                    <ul>
-                        <li><a href="#"><i class="fa fa-minus"></i> Billing Address</a></li>
-                        <li><a href="#"><i class="fa fa-minus"></i> Shipping Address</a></li>
-                        <li><a href="#"><i class="fa fa-minus"></i> Shipping Method</a></li>
-                        <li><a href="#"><i class="fa fa-minus"></i> Payment Method</a></li>
-                    </ul>
-                </div>
-                <div class="checkout-widget">
-                    @if (ViewBag.status == true)
-                    {
-                        <div class="alert alert-success">
-                            <strong>Tebrikler!</strong>@ViewBag.message
-                        </div>
-                    }
-                    else
-                    {
-                        if (ViewBag.message != null)
+    <div class="check-out-area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                      
+                        @using (Html.BeginForm("Checkout", "Shop", FormMethod.Post))
                         {
-                            <div class="alert alert-danger">
-                                <strong>Uyarı!</strong>@ViewBag.message
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.userId)
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingTwo">
+                                    <h4 class="panel-title">
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            <span>1</span>
+                                            Teslimat Bilgisi
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse @(Session["isGuest"]==null?"in":"")" role="tabpanel" aria-labelledby="headingTwo">
+                                    <div class="panel-body">
+                                        <div class="row">
+
+                                            <div class="col-md-6">
+                                                <p class="form-row">
+                                                    @Html.EditorFor(model => model.firstname, new { htmlAttributes = new { placeholder = "İsim" } })
+
+                                                </p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p class="form-row">
+                                                    @Html.EditorFor(model => model.lastname, new { htmlAttributes = new { placeholder = "Soyad" } })
+                                                </p>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <p class="form-row">
+                                                    @Html.EditorFor(model => model.address, new { htmlAttributes = new { placeholder = "Adres" } })
+                                                </p>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <p class="form-row">
+                                                    @Html.EditorFor(model => model.city, new { htmlAttributes = new { placeholder = "Şehir" } })
+                                                </p>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <p class="form-row">
+                                                    @Html.EditorFor(model => model.email, new { htmlAttributes = new { placeholder = "Eposta" } })
+                                                </p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p class="form-row">
+                                                    @Html.EditorFor(model => model.phone, new { htmlAttributes = new { placeholder = "Telefon" } })
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingThree">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            <span>2</span>
+                                            Shopping Method
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseThree" class="panel-collapse collapse  @(Session["isGuest"]!=null?"in":"")" role="tabpanel" aria-labelledby="headingThree">
+                                    <div class="panel-body">
+                                        <div class="different-address">
+                                            <div class="ship-different-title">
+                                                <h3>
+                                                    <label>Farklı bir Adrese göndermek istiyorum</label>
+                                                    <input type="checkbox" id="shipbox" name="shipBox" checked="@(Session["isGuest"]==null?false:true)"/>
+                                                </h3>
+                                            </div>
+                                            <div id="ship-box-info" class="row">
+
+                                                <div class="col-md-6">
+                                                    <p class="form-row">
+                                                        <input type="text" id="ad" name="ad" value="@(Session["ad"]??"")" placeholder="Ad *">
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p class="form-row">
+                                                        <input type="text" id="soyad" name="soyad" value="@(Session["soyad"]??"")" placeholder="Soyad *">
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <p class="form-row">
+                                                        <input type="text" id="sirket" name="sirket"  value="@(Session["sirket"]??"")" placeholder="Şirket">
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <p class="form-row">
+                                                        <input type="text" id="adres" name="adres" value="@(Session["adres"]??"")" placeholder="Adres *">
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <p class="form-row">
+                                                        <input type="text" id="sehir" name="sehir" value="@(Session["sehir"]??"")" placeholder="Şehir *">
+                                                    </p>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <p class="form-row">
+                                                        <input type="text" id="postakodu" name="postakodu"  value="@(Session["postakodu"]??"")" placeholder="Posta Kodu">
+                                                    </p>
+                                                </div>
+                                               
+                                                <div class="col-md-6">
+                                                    <p class="form-row">
+                                                        <input type="text" id="telefon" name="telefon" value="@(Session["telefon"]??"")" placeholder="Telefon *">
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="order-notes">
+                                                <label>Sipariş notu</label>
+                                                <textarea placeholder="Teslimat için özel not yazabilirsiniz" rows="10" cols="30" id="checkout-mess">@(Session["telefon"]??"")</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingFour">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                        <span>3</span>
+                                        Payment Information
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                                <div class="panel-body no-padding">
+                                    <div class="payment-met">
+                                        <form action="#" id="payment-form">
+                                            <ul class="form-list">
+                                                <li class="control">
+                                                    <input type="radio" class="radio" title="Check / Money order" name="payment[method]" id="p_method_checkmo">
+                                                    <label for="p_method_checkmo">Check / Money order </label>
+                                                </li>
+                                                <li class="control">
+                                                    <input type="radio" class="radio" title="Credit Card (saved)" name="payment[method]" id="p_method_ccsave">
+                                                    <label for="p_method_ccsave">Credit Card (saved) </label>
+                                                </li>
+                                            </ul>
+                                        </form>
+                                        <div class="buttons-set">
+                                            <button class="btn btn-default">CONTINUE</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingFive">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                            <span>4</span>
+                                            Sipariş Özeti
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                                    <div class="panel-body no-padding">
+                                        <div class="order-review" id="checkout-review">
+                                            @if (Session["card"] != null)
+                                            {
+                                                List<BasketItem> cardx = (List<BasketItem>)Session["card"];
+                                                var total = cardx.Sum(item => item.product.fiyat * item.quantity);
+                                                <div class="table-responsive" id="checkout-review-table-wrapper">
+                                                    <table class="data-table" id="checkout-review-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th rowspan="1">Ürün Ad</th>
+                                                                <th colspan="1">Fiyat</th>
+                                                                <th rowspan="1">Adet</th>
+                                                                <th colspan="1">Tutar</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var item in cardx)
+                                                            {
+                                                                <tr>
+                                                                    <td><h3 class="product-name">@item.product.urunAdi</h3></td>
+                                                                    <td><span class="cart-price"><span class="check-price">₺ @item.product.fiyat</span></span></td>
+                                                                    <td>@item.quantity</td>
+                                                                    <!-- sub total starts here -->
+
+                                                                    <td><span class="cart-price"><span class="check-price">₺ @(item.product.fiyat * item.quantity)</span></span></td>
+                                                                </tr>
+                                                            }
+
+
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td colspan="3">Alt Tutar</td>
+                                                                <td><span class="check-price">₺ @total</span></td>
+                                                            </tr>
+                                                            @{var teslimat = 5;
+                                                            }
+                                                            <tr>
+                                                                <td colspan="3">Gönderim Tutar</td>
+                                                                <td><span class="check-price">$@teslimat</span></td>
+                                                            </tr>
+                                                            @{var indirim = 0;
+                                                            }
+                                                            <tr>
+                                                                <td colspan="3">İndirim</td>
+                                                                <td><span class="check-price">$@indirim</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="3"><strong>Toplam Tutar</strong></td>
+                                                                <td><strong><span class="check-price">₺ @(total - indirim + teslimat)</span></strong></td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            }
+
+                                            <div id="checkout-review-submit">
+                                                <div class="cart-btn-3" id="review-buttons-container">
+
+                                                    <input type="submit" title="Place Order" value="Öde" class="btn btn-default" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         }
-                    }
-                </div>
-            </div>
-    </div>
-</div>
-<!-- Check Out Area End -->
-<!-- Our Team Area Start -->
-<div class="our-team-area">
-    <h2 class="section-title">OUR WRITER</h2>
-    <div class="container">
-        <div class="row">
-            <div class="team-list indicator-style">
-                <div class="col-md-3">
-                    <div class="single-team-member">
-                        <a href="#">
-                            <img src="img/about/team/1.jpg" alt="">
-                        </a>
-                        <div class="member-info">
-                            <a href="#">rokan tech</a>
-                            <p>WRITER</p>
-                        </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="single-team-member">
-                        <a href="#">
-                            <img src="img/about/team/2.jpg" alt="">
-                        </a>
-                        <div class="member-info">
-                            <a href="#">mirinda</a>
-                            <p>AUTHOR</p>
-                        </div>
+                <div class="col-md-offset-1 col-md-3">
+                    <div class="checkout-widget">
+                        <h2 class="widget-title">Ödeme Aşaması</h2>
+                        <ul>
+                            <li><a href="javascript:void(0);" id="link1"><i class="fa fa-minus"></i> Gönderim Bilgisi</a></li>
+                            <li><a href="javascript:void(0);" id="link2"><i class="fa fa-minus"></i> Başkası Adına Gönderim Bilgisi</a></li>
+                            <li><a href="javascript:void(0);" id="link3"><i class="fa fa-minus"></i> Ödeme Yöntemi</a></li>
+                            <li><a href="javascript:void(0);" id="link4"><i class="fa fa-minus"></i> Sipariş Özeti</a></li>
+                        </ul>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="single-team-member">
-                        <a href="#">
-                            <img src="img/about/team/3.jpg" alt="">
-                        </a>
-                        <div class="member-info">
-                            <a href="#">jone doe</a>
-                            <p>WRITER</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="single-team-member">
-                        <a href="#">
-                            <img src="img/about/team/4.jpg" alt="">
-                        </a>
-                        <div class="member-info">
-                            <a href="#">nick kon</a>
-                            <p>WRITER</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="single-team-member">
-                        <a href="#">
-                            <img src="img/about/team/2.jpg" alt="">
-                        </a>
-                        <div class="member-info">
-                            <a href="#">mirinda</a>
-                            <p>AUTHOR</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="single-team-member">
-                        <a href="#">
-                            <img src="img/about/team/1.jpg" alt="">
-                        </a>
-                        <div class="member-info">
-                            <a href="#">rokan tech</a>
-                            <p>WRITER</p>
-                        </div>
+                    <div class="checkout-widget">
+                        @if (ViewBag.status == true)
+                        {
+                            <div class="alert alert-success">
+                                <strong>Tebrikler!</strong>@ViewBag.message
+                            </div>
+                        }
+                        else
+                        {
+                            if (ViewBag.message != null)
+                            {
+                                <div class="alert alert-danger">
+                                    <strong>Uyarı!</strong>@ViewBag.message
+                                </div>
+                            }
+                        }
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Check Out Area End -->
+        <!-- Our Team Area Start -->
     </div>
-</div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            $(function () {
+                if ($("#shipbox").prop("checked")) {
+                    $('#ship-box-info').slideDown(1000);
+                     $("#shipbox").val("true");
+                }
+                $("#shipbox").click(function () {
+                    if ($("#shipbox").is(":checked")) {
+                        $(this).val("true");
+                    }
+                    else {
+                        $(this).val("false");
+                    }
+                });
+                $("#link1").click(function () {
+                  
+                    $("div#collapseTwo").addClass("in");
+                    $("div#collapseThree").removeClass("in");
+                     $("div#collapseFive").removeClass("in");
+                });  
+                $("#link2").click(function () {
+                 
+                    $("div#collapseTwo").removeClass("in");
+                    $("div#collapseFive").removeClass("in");
+                    $("div#collapseThree").addClass("in");
+                }); 
+                 $("#link4").click(function () {
+                 
+                     $("div#collapseTwo").removeClass("in");
+                      $("div#collapseThree").removeClass("in");
+                    $("div#collapseFive").addClass("in");
+                }); 
+
+            });
+        </script>
+
+
 

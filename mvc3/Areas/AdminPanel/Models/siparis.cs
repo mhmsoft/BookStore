@@ -25,13 +25,13 @@ namespace mvc3.Areas.AdminPanel.Models
         public Nullable<System.DateTime> siparisTarihi { get; set; }
         public string firstname { get; set; }
         public string lastname { get; set; }
-        public string company { get; set; }
         public string address { get; set; }
+        public string phone { get; set; }
+        public string company { get; set; }
         public string city { get; set; }
         public Nullable<int> postakodu { get; set; }
         public string email { get; set; }
-        public string phone { get; set; }
-    
+        public string note { get; set; }
         public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<siparisDetay> siparisDetay { get; set; }
