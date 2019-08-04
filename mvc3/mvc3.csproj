@@ -1239,6 +1239,7 @@
     <Content Include="Areas\AdminPanel\Views\template\signup.html" />
     <Content Include="Areas\AdminPanel\Views\template\stats.html" />
     <Content Include="Areas\AdminPanel\Views\template\tables.html" />
+    <Content Include="Veritabanı\BStore.sql" />
     <Content Include="Views\Sample\404.html" />
     <Content Include="Views\Sample\about.html" />
     <Content Include="Views\Sample\cart.html" />
