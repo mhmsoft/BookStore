@@ -164,7 +164,7 @@ Blog list owl active
 /*----------------------------------
  Create an account toggle function 
  ----------------------------------*/
-	 $( '#ship-box' ).on('click', function() {
+	 $( '#shipbox' ).on('click', function() {
         $( '#ship-box-info' ).slideToggle(1000);
      });	
 	 

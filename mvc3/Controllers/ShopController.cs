@@ -23,6 +23,8 @@ namespace mvc3.Controllers
         UrunRepository repo = new UrunRepository(new kitapProjesiEntities());
         UserRepository repoUser = new UserRepository(new kitapProjesiEntities());
         yorumRepository repoYorum = new yorumRepository(new kitapProjesiEntities());
+        SiparisRepository repoSiparis = new SiparisRepository(new kitapProjesiEntities());
+        SiparisDetayRepository repoSiparisDetay = new SiparisDetayRepository(new kitapProjesiEntities());
         // GET: Shop
 
         public ActionResult Index(int? categoryId, int? page, int? PageSize, int? orderBy, int? minPrice, int? maxPrice)
@@ -203,7 +205,7 @@ namespace mvc3.Controllers
             
         }
         // sepetteki elemanı silme
-        public void deleteItemInCard(int productId)
+        public string deleteItemInCard(int productId)
         {
             
             List<BasketItem> card = (List<BasketItem>)Session["card"];
@@ -213,9 +215,10 @@ namespace mvc3.Controllers
 
                 card.RemoveAt(index);
                 Session["card"] = card;
-               
+                return "silindi";
             }
-          
+            return "silinemedi";
+
         }
         [Authorize(Roles = "User")]
         public ActionResult Checkout()
@@ -227,6 +230,124 @@ namespace mvc3.Controllers
             }
             return RedirectToAction("Login", "User");
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Checkout(user _user, bool?shipbox ,string ad, string soyad, string sirket,string adres,string sehir, int?postakodu,string eposta, string telefon)
+        {
+            string message = "";
+            bool status = false;
+            siparis newOrder = new siparis();
+            // farklı adres seçilmişse
+            if (shipbox==true)
+            {
+               
+                if (string.IsNullOrEmpty(ad))
+                    message = "isim alanı boş bıraktınız";
+                else
+                    newOrder.firstname = ad;
+                if (string.IsNullOrEmpty(soyad))
+                    message = "Soyisim alanı boş bıraktınız";
+                else
+                    newOrder.lastname = soyad;
+                if (!string.IsNullOrEmpty(sirket))
+                    newOrder.company = sirket;
+                if (string.IsNullOrEmpty(adres))
+                    message = "Adres alanı boş bıraktınız";
+                else
+                    newOrder.address = adres;
+                if (string.IsNullOrEmpty(sehir))
+                    message = "Şehir alanı boş bıraktınız";
+                else
+                    newOrder.city = sehir;
+                if (postakodu!=null)
+                    newOrder.postakodu = postakodu;
+                if (!string.IsNullOrEmpty(eposta))
+                    newOrder.email = eposta;
+                if (string.IsNullOrEmpty(telefon))
+                    message = "Telefon alanı boş bıraktınız";
+                else
+                    newOrder.phone = telefon;
+
+                newOrder.siparisTarihi = DateTime.Now;
+                newOrder.user.userId = _user.userId;
+                // siparisi kaydet
+                repoSiparis.Kaydet(newOrder);
+            }
+            // farklı adress seçilmemişse
+            else
+            {
+                if(_user!=null)
+                {
+
+                   
+                    if (string.IsNullOrEmpty(_user.firstname))
+                    {
+                        message = "ad alanı boş bırakmayınız";
+                        ViewBag.message = message;
+                        return View();
+                    }
+                      
+                    if (string.IsNullOrEmpty(_user.lastname))
+                    {
+                        message = "soyad alanı boş bırakmayınız";
+                        ViewBag.message = message;
+                        return View();
+                    }
+                        
+                    if (string.IsNullOrEmpty(_user.address))
+                    {
+                        message = "adres alanı boş bırakmayınız";
+                        ViewBag.message = message;
+                        return View();
+                    }
+                       
+                    if (string.IsNullOrEmpty(_user.phone))
+                    {
+                        message = "Telefon alanı boş bırakmayınız";
+                        ViewBag.message = message;
+                        return View();
+                    }
+                      
+                    if (string.IsNullOrEmpty(_user.city))
+                    {
+                        message = "sehir alanı boş bırakmayınız";
+                        ViewBag.message = message;
+                        return View();
+                    }
+                       
+                    newOrder.siparisTarihi = DateTime.Now;
+                    newOrder.user = _user;
+
+                    repoSiparis.Kaydet(newOrder);
+                    
+                }
+            }
+            if (Session["card"] != null)
+            {
+                List<BasketItem> Basket = (List<BasketItem>)Session["card"];
+                
+                foreach (var item in Basket)
+                {
+                    siparisDetay newOrderDetail = new siparisDetay();
+                    newOrderDetail.miktar = item.quantity;
+                    newOrderDetail.siparisNo = newOrder.siparisNo;
+                    newOrderDetail.urunNo = item.product.urunNo;
+                    repoSiparisDetay.Kaydet(newOrderDetail);
+                }
+                SendOrderInfo(repoUser.Listele().Where(x=>x.email==User.Identity.Name).FirstOrDefault().email);
+                message = " Sipariş işlemi tamamlandı. siparişiniz ile ilgili bilgi mailinize gönderilmiştir. <br/>" +
+                  "Ecommerce sayfanızda sipariş detaylarını görebilirisiniz. Detay için aşağıdaki linke tıklayınız" +
+                      "<a href='/Account/MyOrders'></a> ";
+
+                status = true;
+
+
+            }
+            ViewBag.status = status;
+            ViewBag.message = message;
+            return View();
+        }
+
         [NonAction]
         public void SendOrderInfo(string emailID)
         {

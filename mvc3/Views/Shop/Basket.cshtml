@@ -3,183 +3,238 @@
     ViewBag.Title = "Basket";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
+@if (Session["card"] != null)
+{
+    List<BasketItem> cardx = (List<BasketItem>)Session["card"];
+    if (cardx.Count > 0)
+    {
+        <div class="shopping-cart-area section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="wishlist-table-area table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="product-remove">Sil</th>
+                                        <th class="product-image">Resim</th>
+                                        <th class="t-product-name">Ürün</th>
 
-<div class="shopping-cart-area section-padding">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="wishlist-table-area table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="product-remove">Sil</th>
-                                <th class="product-image">Resim</th>
-                                <th class="t-product-name">Ürün</th>
+                                        <th class="product-unit-price">Fiyat</th>
+                                        <th class="product-quantity">Adet</th>
+                                        <th class="product-subtotal">Tutar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Session["card"] != null)
+                                    {
+                                        foreach (BasketItem item in (List<BasketItem>)Session["card"])
+                                        {
 
-                                <th class="product-unit-price">Fiyat</th>
-                                <th class="product-quantity">Adet</th>
-                                <th class="product-subtotal">Tutar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                                            <tr id="@item.Id">
+                                                <td class="product-remove">
+                                                    <a href="javascript:void(0);" id="deleteItem" tr-id="@item.Id" productId="@item.product.urunNo">
+                                                        <i class="flaticon-delete"></i>
+                                                    </a>
+                                                </td>
+                                                <td class="product-image">
+                                                    <a href="@Url.Action("ProductDetails", "Shop", new { productId = item.product.urunNo })">
+                                                        <img src="@Url.Action("Thumbnail", "Shop", new { width = 90, height = 110, id = item.product.urunNo, _resimNo = item.product.resim.FirstOrDefault().resimNo })" alt="">
+                                                    </a>
+                                                </td>
+                                                <td class="t-product-name">
+                                                    <h3>
+                                                        <a href="@Url.Action("ProductDetails", "Shop", new { productId = item.product.urunNo })">@item.product.urunAdi</a>
+                                                    </h3>
+                                                </td>
+
+                                                <td class="product-unit-price">
+                                                    <p>₺ @item.product.fiyat</p>
+                                                </td>
+                                                <td class="product-quantity product-cart-details">
+                                                    <input type="number" id="quantity" value="@item.quantity" productId="@item.product.urunNo">
+                                                </td>
+                                                <td class="product-quantity">
+                                                    <p>₺ @(item.product.fiyat * item.quantity)</p>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="shopingcart-bottom-area">
+                            <a class="left-shoping-cart" href="@Url.Action("/", "Shop")">Alışverişe Devam et</a>
+                            <div class="shopingcart-bottom-area pull-right">
+                                <a class="right-shoping-cart" href="javascript:void(0);" id="clearBasket">Sepeti Temizle</a>
+                                <a class="right-shoping-cart" href="javascript:void(0);" id="updateBasket">Sepeti Güncelle</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Cart Area End -->
+        <!-- Discount Area Start -->
+        <div class="discount-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="discount-main-area">
+                            <div class="discount-top">
+                                <h3>Indirim Kuponu</h3>
+                                <p>İndirim Kupon Kodu</p>
+                            </div>
+                            <div class="discount-middle">
+                                <input type="text" placeholder="">
+                                <a class="" href="#">İndirimi Uygula</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="subtotal-main-area">
                             @if (Session["card"] != null)
                             {
-                                foreach (BasketItem item in (List<BasketItem>)Session["card"])
-                                {
 
-                                    <tr id="@item.Id">
-                                        <td class="product-remove">
-                                            <a href="javascript:void(0);" id="deleteItem" tr-id="@item.Id" productId="@item.product.urunNo">
-                                                <i class="flaticon-delete"></i>
-                                            </a>
-                                        </td>
-                                        <td class="product-image">
-                                            <a href="@Url.Action("ProductDetails","Shop",new {productId=item.product.urunNo })">
-                                                <img src="@Url.Action("Thumbnail","Shop",new {width=90,height=110,id=item.product.urunNo,_resimNo=item.product.resim.FirstOrDefault().resimNo })" alt="">
-                                            </a>
-                                        </td>
-                                        <td class="t-product-name">
-                                            <h3>
-                                                <a href="@Url.Action("ProductDetails","Shop",new {productId=item.product.urunNo })">@item.product.urunAdi</a>
-                                            </h3>
-                                        </td>
+                                List<BasketItem> card = (List<BasketItem>)Session["card"];
+                                var total = card.Sum(item => item.product.fiyat * item.quantity);
 
-                                        <td class="product-unit-price">
-                                            <p>₺ @item.product.fiyat</p>
-                                        </td>
-                                        <td class="product-quantity product-cart-details">
-                                            <input type="number" id="quantity" value="@item.quantity" productId="@item.product.urunNo">
-                                        </td>
-                                        <td class="product-quantity">
-                                            <p>₺ @(item.product.fiyat * item.quantity)</p>
-                                        </td>
-                                    </tr>
-                                }
+                                <div class="subtotal-area">
+                                    <h2>
+                                        Tutar<span>
+                                            ₺
+                                            @total
 
-                            }
-                        </tbody>
-                    </table>
-                </div>
-                <div class="shopingcart-bottom-area">
-                    <a class="left-shoping-cart" href="@Url.Action("/","Shop")">Alışverişe Devam et</a>
-                    <div class="shopingcart-bottom-area pull-right">
-                        <a class="right-shoping-cart" href="javascript:void(0);" id="clearBasket">Sepeti Temizle</a>
-                        <a class="right-shoping-cart" href="javascript:void(0);" id="updateBasket">Sepeti Güncelle</a>
+                                        </span>
+                                    </h2>
+                                </div>
+                                <div class="subtotal-area">
+                                    @{var teslimat = 5;
+                                    }
+                                    <h2>Teslimat<span>₺ @(teslimat)</span></h2>
+                                </div>
+                                <div class="subtotal-area">
+                                    @{var indirim = 0;
+                                    }
+                                    <h2>İndirim<span>₺  @(indirim)</span></h2>
+                                </div>
+                                <div class="subtotal-area">
+                                    <h2>TOPLAM TUTAR<span>₺ @(total - indirim + teslimat)</span></h2>
+                                </div>
+                                <a href="@Url.Action("Checkout", "Shop")">Öde</a>
+
+                                        }
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<!-- Cart Area End -->
-<!-- Discount Area Start -->
-<div class="discount-area">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-sm-6">
-                <div class="discount-main-area">
-                    <div class="discount-top">
-                        <h3>Indirim Kuponu</h3>
-                        <p>İndirim Kupon Kodu</p>
+     }
+     else
+     {
+        <div class="shopping-cart-area section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <div style="width:50px;height:50px;background-image: url('../../Content/image/emptyBasket.png');background-repeat:no-repeat;background-size:90% 90%;">
+
+
+                            </div>
+                            <div style="float:left" ;> Sepetiniz Boş</div>
+                        </div>
+                        <div class="col-md-4">
+
+                        </div>
                     </div>
-                    <div class="discount-middle">
-                        <input type="text" placeholder="">
-                        <a class="" href="#">İndirimi Uygula</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="subtotal-main-area">
-                    @if (Session["card"] != null)
-                    {
-
-                        List<BasketItem> card = (List<BasketItem>)Session["card"];
-                        var total = card.Sum(item => item.product.fiyat * item.quantity);
-
-                        <div class="subtotal-area">
-                            <h2>
-                                Tutar<span>
-                                    ₺
-                                    @total
-
-                                </span>
-                            </h2>
-                        </div>
-                        <div class="subtotal-area">
-                            @{var teslimat = 5;
-                            }
-                            <h2>Teslimat<span>₺ @(teslimat)</span></h2>
-                        </div>
-                        <div class="subtotal-area">
-                            @{var indirim = 0;
-                            }
-                            <h2>İndirim<span>₺  @(indirim)</span></h2>
-                        </div>
-                        <div class="subtotal-area">
-                            <h2>TOPLAM TUTAR<span>₺ @(total - indirim + teslimat)</span></h2>
-                        </div>
-                        <a href="@Url.Action("Checkout","Shop")">Öde</a>
-
-                    }
                 </div>
             </div>
         </div>
-    </div>
-</div>
+     }
+ }
+ else
+{
+        <div class="shopping-cart-area section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <div style="width:50px;height:50px;background-image: url('../../Content/image/emptyBasket.png');background-repeat:no-repeat;background-size:90% 90%;">
+
+
+                            </div>
+                            <div style="float:left" ;> Sepetiniz Boş</div>
+                        </div>
+                        <div class="col-md-4">
+                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+ }
+
+
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <script type="text/javascript">
     $(function () {
      // adeti artırma-azaltma
      $(document).on("click", "#quantity", function () {
-        
-        var productId = $(this).attr("productId");
-         var quantity = $(this).val();
-       
+
+                                                var productId = $(this).attr("productId");
+                                                var quantity = $(this).val();
+
         $.ajax({
-                url: '@Url.Action("UpdateCard", "Shop")',
+                                                url: '@Url.Action("UpdateCard", "Shop")',
             type: "POST",
             data: { productId: productId, quantity: quantity },
                 success: function (response) {
-                //alert(JSON.stringify(response));
-                location.reload();
+                                                        //alert(JSON.stringify(response));
+                                                        location.reload();
 
-                }
-        });
-     });
+                                                    }
+                                                });
+                                            });
      //Tüm sepeti Temizle
      $(document).on("click", "#clearBasket", function () {
-         
-         var answer = window.confirm("Sepetteki tüm ürünler silinecektir. Emin misiniz?");
-         if(answer) {
+
+                                                var answer = window.confirm("Sepetteki tüm ürünler silinecektir. Emin misiniz?");
+                                                if(answer) {
              $.ajax({
-                 url: '@Url.Action("ClearCard", "Shop")',
+                                                    url: '@Url.Action("ClearCard", "Shop")',
                  type: "POST",
                  success: function (response) {
-                     //alert(JSON.stringify(response));
-                     location.reload();
+                                                            //alert(JSON.stringify(response));
+                                                            location.reload();
 
-                 }
-             });
-         }
-     });
+                                                        }
+                                                    });
+                                                }
+                                            });
     // Sepetteki bir item silme
     $(document).on("click", "#deleteItem", function () {
-             var productId = $(this).attr("productId");
-             var trId = $(this).attr("tr-id");
-             var answer = window.confirm(" seçtiğiniz öğe silinecektir. Emin misiniz?");
-             if(answer) {
+                                                var productId = $(this).attr("productId");
+                                                var trId = $(this).attr("tr-id");
+                                                var answer = window.confirm(" seçtiğiniz öğe silinecektir. Emin misiniz?");
+                                                if(answer) {
                  $.ajax({
-                     url: '@Url.Action("deleteItemInCard", "Shop")',
+                                                    url: '@Url.Action("deleteItemInCard", "Shop")',
                      type: "POST",
                      data: { productId: productId},
                      success: function (response) {
                          $("tr#" + trId).fadeOut(1000);
-                         location.reload();
-                     }
-                 });
-             }
-     });
+                                                            location.reload();
+                                                        }
+                                                    });
+                                                }
+                                            });
 
- });
-</script>    
+    });
+ </script>
 

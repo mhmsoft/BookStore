@@ -57,7 +57,17 @@
           <Property Name="siparisNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="siparisTarihi" Type="datetime" />
           <Property Name="musteriNo" Type="int" />
+          <Property Name="firstname" Type="varchar" MaxLength="50" />
+          <Property Name="lastname" Type="varchar" MaxLength="50" />
+          <Property Name="company" Type="varchar" MaxLength="50" />
+          <Property Name="address" Type="varchar" MaxLength="100" />
+          <Property Name="city" Type="varchar" MaxLength="50" />
+          <Property Name="postakodu" Type="int" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="phone" Type="varchar" MaxLength="20" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'kitapProjesi.dbo.siparisDetay' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="siparisDetay">
           <Key>
             <PropertyRef Name="siparisNo" />
@@ -271,10 +281,16 @@
           <EntitySet Name="resim" EntityType="Self.resim" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="siparis" EntityType="Self.siparis" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="siparisDetay" EntityType="Self.siparisDetay" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="urun" EntityType="Self.urun" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="yorum" EntityType="Self.yorum" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="siparisDetay" EntityType="Self.siparisDetay" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [siparisDetay].[siparisNo] AS [siparisNo], 
+    [siparisDetay].[urunNo] AS [urunNo], 
+    [siparisDetay].[miktar] AS [miktar]
+    FROM [dbo].[siparisDetay] AS [siparisDetay]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK__Favorim__product__3C69FB99" Association="Self.FK__Favorim__product__3C69FB99">
             <End Role="urun" EntitySet="urun" />
             <End Role="favorim" EntitySet="favorim" />
@@ -374,6 +390,14 @@
           <Property Name="siparisTarihi" Type="DateTime" Precision="3" />
           <NavigationProperty Name="user" Relationship="Self.FK__siparis__musteri__36B12243" FromRole="siparis" ToRole="user" />
           <NavigationProperty Name="siparisDetay" Relationship="Self.siparisFK" FromRole="siparis" ToRole="siparisDetay" />
+          <Property Name="firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="company" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="postakodu" Type="Int32" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="siparisDetay">
           <Key>
@@ -676,6 +700,14 @@
           <EntitySetMapping Name="siparis">
             <EntityTypeMapping TypeName="kitapProjesiModel.siparis">
               <MappingFragment StoreEntitySet="siparis">
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="postakodu" ColumnName="postakodu" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="company" ColumnName="company" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
                 <ScalarProperty Name="siparisNo" ColumnName="siparisNo" />
                 <ScalarProperty Name="musteriNo" ColumnName="musteriNo" />
                 <ScalarProperty Name="siparisTarihi" ColumnName="siparisTarihi" />

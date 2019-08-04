@@ -1082,6 +1082,7 @@
     <Content Include="Content\Admin\bootstrap.css" />
     <Content Include="Content\Admin\bootstrap.min.css" />
     <Content Include="Content\Admin\Site.css" />
+    <Content Include="Content\image\emptyBasket.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site\css\animate.css" />
     <Content Include="Content\Site\css\bootstrap.min.css" />
@@ -1285,6 +1286,8 @@
     </Compile>
     <Compile Include="Areas\AdminPanel\Models\Repository\FavoriuteRepository.cs" />
     <Compile Include="Areas\AdminPanel\Models\Repository\KategoriRepository.cs" />
+    <Compile Include="Areas\AdminPanel\Models\Repository\Siparis.cs" />
+    <Compile Include="Areas\AdminPanel\Models\Repository\SiparisDetayRepository.cs" />
     <Compile Include="Areas\AdminPanel\Models\Repository\UrunRepository.cs" />
     <Compile Include="Areas\AdminPanel\Models\Repository\UserRepository.cs" />
     <Compile Include="Areas\AdminPanel\Models\Repository\yorumRepository.cs" />
