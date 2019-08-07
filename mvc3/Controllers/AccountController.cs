@@ -19,6 +19,8 @@ namespace mvc3.Controllers
         FavoriuteRepository repoFav = new FavoriuteRepository(new Areas.AdminPanel.Models.kitapProjesiEntities());
         KategoriRepository repoCat = new KategoriRepository(new Areas.AdminPanel.Models.kitapProjesiEntities());
         UrunRepository repoProduct = new UrunRepository(new Areas.AdminPanel.Models.kitapProjesiEntities());
+        SiparisDetayRepository repoSiparisDetay = new SiparisDetayRepository(new Areas.AdminPanel.Models.kitapProjesiEntities());
+        SiparisRepository repoSiparis = new SiparisRepository(new Areas.AdminPanel.Models.kitapProjesiEntities());
         public ActionResult PartialCategory()
         {
             return PartialView(repoCat.Listele());
@@ -136,8 +138,34 @@ namespace mvc3.Controllers
             }
             else
                 return "Favorilerime Daha önceden eklemişsiniz";
-
-
         }
+        [HttpGet]
+        public PartialViewResult MyOrders()
+        {
+            var accountOwner = User.Identity.Name;
+            int customerId = repo.Listele().Where(x => x.email == accountOwner).FirstOrDefault().userId;
+
+            var orders = repoSiparis.Listele().Where(x => x.musteriNo == customerId).ToList();
+
+            return PartialView(orders);
+        }
+
+        [HttpPost]
+        public void applyDiscount(string discountCode)
+        {
+            var accountOwner = User.Identity.Name;
+            int customerId = repo.Listele().Where(x => x.email == accountOwner).FirstOrDefault().userId;
+            var discount = repo.Bul(customerId).indirim.FirstOrDefault(i=>i.indirimDurum==true && i.indirimKodu==discountCode && DateTime.Now<i.indirimBitis).indirimTutar;
+            if (discount != null)
+            {
+                indirim _indirim = new indirim()
+                {
+                    indirimTutar = discount,
+                    indirimKodu=discountCode
+                };
+                Session["discount"] = _indirim;
+            }
+        }
+        
     }
 }

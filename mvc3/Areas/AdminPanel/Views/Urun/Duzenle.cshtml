@@ -65,7 +65,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.aciklama, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.aciklama, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.aciklama, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.aciklama, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -84,10 +84,10 @@
                 {
                     if (item != null)
                     {
-                    <div id="@item.resimNo" style="display:inline; margin:5px;">
-                        <img style="width:100px;height:90px;" src="data:image/png;base64,@Convert.ToBase64String(@item.resimAdi)" />
-                        <a href="javascript:void(0);" id="Link_Sil" resim_id="@item.resimNo">Sil</a>
-                    </div>
+                        <div id="@item.resimNo" style="display:inline; margin:5px;">
+                            <img style="width:100px;height:90px;" src="data:image/png;base64,@Convert.ToBase64String(@item.resimAdi)" />
+                            <a href="javascript:void(0);" id="Link_Sil" resim_id="@item.resimNo">Sil</a>
+                        </div>
                     }
                 }
 
@@ -112,7 +112,13 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="~/Content/Admin/js/ckeditor/ckeditor.js"></script>
+
+   
+
 <script type="text/javascript">
+
+    CKEDITOR.replace('aciklama');
 
     $(function () {
 

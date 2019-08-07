@@ -25,6 +25,7 @@ namespace mvc3.Controllers
         yorumRepository repoYorum = new yorumRepository(new kitapProjesiEntities());
         SiparisRepository repoSiparis = new SiparisRepository(new kitapProjesiEntities());
         SiparisDetayRepository repoSiparisDetay = new SiparisDetayRepository(new kitapProjesiEntities());
+        IndirimRepository repoIndirim = new IndirimRepository(new kitapProjesiEntities());
         // GET: Shop
 
         public ActionResult Index(int? categoryId, int? page, int? PageSize, int? orderBy, int? minPrice, int? maxPrice)
@@ -235,6 +236,7 @@ namespace mvc3.Controllers
         {
             string message = "";
             bool status = false;
+            bool satisTamamlandi = false;
             siparis newOrder = new siparis();
             // farklı adres seçilmişse(user başkası adına alışveriş yaparsa)
              if (shipbox==true)
@@ -362,6 +364,7 @@ namespace mvc3.Controllers
             {
                 List<BasketItem> Basket = (List<BasketItem>)Session["card"];
                 siparisDetay newOrderDetail = new siparisDetay();
+               
                 foreach (var item in Basket)
                 {
                     
@@ -370,20 +373,118 @@ namespace mvc3.Controllers
                     newOrderDetail.urunNo = item.product.urunNo;
                     repoSiparisDetay.Kaydet(newOrderDetail);
                 }
+                // 5 lira kargo üzreti
+
+                var sepetTutari = Basket.Sum(x => x.quantity * x.product.fiyat)+5m;
+                if(Session["discount"]!=null)
+                {
+                    indirim _indirim = (indirim)Session["discount"];
+                    sepetTutari -= (decimal)_indirim.indirimTutar;
+                    newOrder.indirimtutar = _indirim.indirimTutar;
+                    // indirim kullanıldığı için indirimi pasif et
+                    indirim kullanilanIndirim = repoIndirim.Listele().FirstOrDefault(x => x.indirimKodu == _indirim.indirimKodu);
+
+                    kullanilanIndirim.kullanidiMi = true;
+                    kullanilanIndirim.indirimDurum = false;
+                    repoIndirim.Guncelle(kullanilanIndirim);
+                   
+                }
+
+                // indirim uygulansn yada uygulanmasın. siparişi güncelliyoruz.
+                newOrder.siparistutar = sepetTutari;
+                repoSiparis.Guncelle(newOrder);
+                satisTamamlandi = true;
+                status = true;
+                // hediye kupon oluştur
+                if (Basket.Sum(x => x.quantity * x.product.fiyat) > 150)
+                {
+                    string couponCode = createCoupon();
+                    string subject = " Bookstore iİndirim Kuponu";
+                    string body = "Tebrikler! 150 TL alışveriş yaptığınız için % 5 indirim kuponu kazandınız." +
+                                  "İndirim kuponunuzu kullanmak için son gün:" + DateTime.Now.AddDays(10);
+                    indirim newCoupon = new indirim()
+                    {
+                        musteriNo = _user.userId,
+                        indirimDurum = true,
+                        indirimBaslangic = DateTime.Now,
+                        indirimBitis = DateTime.Now.AddDays(10),
+                        indirimKodu = couponCode,
+                        aciklama = "%5 Hediye kuponu",
+                        indirimTutar = Basket.Sum(x => x.quantity * x.product.fiyat) * 0.05m,
+                        kullanidiMi = false
+                    };
+                    repoIndirim.Kaydet(newCoupon);
+                    // kupon haketmişse mail gönderiliyor.
+                    SendCouponMail(User.Identity.Name, couponCode, subject, body);
+                }
+
+                if (satisTamamlandi)
+                {
+                    // sepeti sil
+                    Session.Remove("card");
+                    //indirim sil
+                    Session.Remove("discount");
+                }
+
+                // sipariş maili gönderiliyor.
                 SendOrderInfo(repoUser.Listele().Where(x=>x.email==User.Identity.Name).FirstOrDefault().email);
                 message = " Sipariş işlemi tamamlandı. siparişiniz ile ilgili bilgi mailinize gönderilmiştir." +
                            "Bookstore hesabım sayfasında sipariş detaylarını görebilirisiniz.";
-
-                status = true;
-
-                // sepeti sil
-                Session.Remove("card");
+               
+               
             }
             ViewBag.status = status;
             ViewBag.message = message;
             return View();
         }
+        public string createCoupon()
+        {
+            Random N = new Random();
+            string result = "";
+            char[] expression = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'V', 'Y', 'X', 'W', 'Z', '1', '2', '3', '4', '5' };
+            for (int i = 0; i < 8; i++)
+            {
+                result += expression[N.Next(expression.Length)].ToString();
+            }
+            return result;
+        }
 
+        [NonAction]
+        public void SendCouponMail(string _email,string _couponCode,string _subject,string _message)
+        {
+            SmtpSection network = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
+            try
+            {
+                var url = "/Account/MyCoupons";
+                var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, url);
+                var fromEmail = new MailAddress(network.Network.UserName, _subject);
+                var toEmail = new MailAddress(_email);
+
+                string subject = _subject;
+                string body = "<br/><br/>"+_message +
+                      " <br/><br/><a href='" + link + "'>" + link + "</a> ";
+                var smtp = new SmtpClient
+                {
+                    Host = network.Network.Host,
+                    Port = network.Network.Port,
+                    EnableSsl = network.Network.EnableSsl,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = network.Network.DefaultCredentials,
+                    Credentials = new NetworkCredential(network.Network.UserName, network.Network.Password)
+                };
+                using (var message = new MailMessage(fromEmail, toEmail)
+                {
+                    Subject = subject,
+                    Body = body,
+                    IsBodyHtml = true
+                })
+                    smtp.Send(message);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         [NonAction]
         public void SendOrderInfo(string emailID)
         {

@@ -14,6 +14,7 @@ namespace mvc3.Areas.AdminPanel.Models
     
     public partial class siparisDetay
     {
+        public int Id { get; set; }
         public int siparisNo { get; set; }
         public int urunNo { get; set; }
         public Nullable<int> miktar { get; set; }

@@ -25,7 +25,6 @@ namespace mvc3.Areas.AdminPanel.Models.Repository
             {
                 user eski = Bul(entity.userId);
                 _context.Entry(eski).State = EntityState.Detached;
-                _context.user.Attach(entity);
                 _context.Entry(entity).State = EntityState.Modified;
                 _context.SaveChanges();
             }

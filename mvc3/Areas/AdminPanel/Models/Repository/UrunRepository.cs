@@ -34,7 +34,7 @@ namespace mvc3.Areas.AdminPanel.Models.Repository
             {
                 urun eski = Bul(entity.urunNo);
                _context.Entry(eski).State = EntityState.Detached;
-                _context.urun.Attach(entity);
+               
                 _context.Entry(entity).State = EntityState.Modified;
                 _context.SaveChanges();
             }

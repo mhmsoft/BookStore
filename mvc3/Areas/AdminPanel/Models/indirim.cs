@@ -15,14 +15,14 @@ namespace mvc3.Areas.AdminPanel.Models
     public partial class indirim
     {
         public int indirimNo { get; set; }
-        public string indirimAdi { get; set; }
+        public string indirimKodu { get; set; }
         public string aciklama { get; set; }
         public Nullable<decimal> indirimTutar { get; set; }
         public Nullable<System.DateTime> indirimBaslangic { get; set; }
         public Nullable<System.DateTime> indirimBitis { get; set; }
         public Nullable<int> musteriNo { get; set; }
         public Nullable<bool> indirimDurum { get; set; }
-    
+        public Nullable<bool> kullanidiMi { get; set; }
         public virtual user user { get; set; }
     }
 }

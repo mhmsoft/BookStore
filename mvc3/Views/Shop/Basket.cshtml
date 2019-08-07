@@ -1,4 +1,5 @@
 ﻿@using mvc3.Models.ViewModel
+@using mvc3.Areas.AdminPanel.Models
 @{
     ViewBag.Title = "Basket";
     Layout = "~/Views/Shared/_Layout2.cshtml";
@@ -87,8 +88,8 @@
                                 <p>İndirim Kupon Kodu</p>
                             </div>
                             <div class="discount-middle">
-                                <input type="text" placeholder="">
-                                <a class="" href="#">İndirimi Uygula</a>
+                                <input type="text" id="discountCode" name="discountCode" placeholder="İndirim kodunuzu yazınız">
+                                <a class="" href="javascript:void(0);" id="applyDiscount">İndirimi Uygula</a>
                             </div>
                         </div>
                     </div>
@@ -110,29 +111,36 @@
                                     </h2>
                                 </div>
                                 <div class="subtotal-area">
-                                    @{var teslimat = 5;
+                                    @{decimal teslimat = 5m;
                                     }
                                     <h2>Teslimat<span>₺ @(teslimat)</span></h2>
                                 </div>
                                 <div class="subtotal-area">
-                                    @{var indirim = 0;
+                                    @{
+                                        decimal indirim_tutari = 0;
+                                        if (Session["discount"] != null)
+                                        {
+                                            indirim _indirim = (indirim)Session["discount"];
+                                            indirim_tutari = (decimal)_indirim.indirimTutar;
+                                        }
+
                                     }
-                                    <h2>İndirim<span>₺  @(indirim)</span></h2>
+                                    <h2>İndirim<span>₺  @(indirim_tutari)</span></h2>
                                 </div>
                                 <div class="subtotal-area">
-                                    <h2>TOPLAM TUTAR<span>₺ @(total - indirim + teslimat)</span></h2>
+                                    <h2>TOPLAM TUTAR<span>₺ @(total - indirim_tutari + teslimat)</span></h2>
                                 </div>
                                 <a href="@Url.Action("Checkout", "Shop")">Öde</a>
 
-                                        }
+                            }
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-     }
-     else
-     {
+    }
+    else
+    {
         <div class="shopping-cart-area section-padding">
             <div class="container">
                 <div class="row">
@@ -152,31 +160,31 @@
                 </div>
             </div>
         </div>
-     }
- }
- else
+    }
+}
+else
 {
-        <div class="shopping-cart-area section-padding">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-4"></div>
-                        <div class="col-md-4">
-                            <div style="width:50px;height:50px;background-image: url('../../Content/image/emptyBasket.png');background-repeat:no-repeat;background-size:90% 90%;">
+    <div class="shopping-cart-area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <div style="width:50px;height:50px;background-image: url('../../Content/image/emptyBasket.png');background-repeat:no-repeat;background-size:90% 90%;">
 
 
-                            </div>
-                            <div style="float:left" ;> Sepetiniz Boş</div>
                         </div>
-                        <div class="col-md-4">
-                          
-                        </div>
+                        <div style="float:left" ;> Sepetiniz Boş</div>
+                    </div>
+                    <div class="col-md-4">
+
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
- }
+}
 
 
 
@@ -184,57 +192,74 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <script type="text/javascript">
     $(function () {
-     // adeti artırma-azaltma
-     $(document).on("click", "#quantity", function () {
+        // adeti artırma-azaltma
+        $(document).on("click", "#quantity", function () {
 
-                                                var productId = $(this).attr("productId");
-                                                var quantity = $(this).val();
+            var productId = $(this).attr("productId");
+            var quantity = $(this).val();
 
-        $.ajax({
-                                                url: '@Url.Action("UpdateCard", "Shop")',
-            type: "POST",
-            data: { productId: productId, quantity: quantity },
+            $.ajax({
+                url: '@Url.Action("UpdateCard", "Shop")',
+                type: "POST",
+                data: { productId: productId, quantity: quantity },
                 success: function (response) {
-                                                        //alert(JSON.stringify(response));
-                                                        location.reload();
+                    //alert(JSON.stringify(response));
+                    location.reload();
 
-                                                    }
-                                                });
-                                            });
-     //Tüm sepeti Temizle
-     $(document).on("click", "#clearBasket", function () {
+                }
+            });
+        });
+        //Tüm sepeti Temizle
+        $(document).on("click", "#clearBasket", function () {
 
-                                                var answer = window.confirm("Sepetteki tüm ürünler silinecektir. Emin misiniz?");
-                                                if(answer) {
-             $.ajax({
-                                                    url: '@Url.Action("ClearCard", "Shop")',
-                 type: "POST",
-                 success: function (response) {
-                                                            //alert(JSON.stringify(response));
-                                                            location.reload();
+            var answer = window.confirm("Sepetteki tüm ürünler silinecektir. Emin misiniz?");
+            if (answer) {
+                $.ajax({
+                    url: '@Url.Action("ClearCard", "Shop")',
+                    type: "POST",
+                    success: function (response) {
+                        //alert(JSON.stringify(response));
+                        location.reload();
 
-                                                        }
-                                                    });
-                                                }
-                                            });
-    // Sepetteki bir item silme
-    $(document).on("click", "#deleteItem", function () {
-                                                var productId = $(this).attr("productId");
-                                                var trId = $(this).attr("tr-id");
-                                                var answer = window.confirm(" seçtiğiniz öğe silinecektir. Emin misiniz?");
-                                                if(answer) {
-                 $.ajax({
-                                                    url: '@Url.Action("deleteItemInCard", "Shop")',
-                     type: "POST",
-                     data: { productId: productId},
-                     success: function (response) {
-                         $("tr#" + trId).fadeOut(1000);
-                                                            location.reload();
-                                                        }
-                                                    });
-                                                }
-                                            });
+                    }
+                });
+            }
+        });
+        // Sepetteki bir item silme
+        $(document).on("click", "#deleteItem", function () {
+            var productId = $(this).attr("productId");
+            var trId = $(this).attr("tr-id");
+            var answer = window.confirm(" seçtiğiniz öğe silinecektir. Emin misiniz?");
+            if (answer) {
+                $.ajax({
+                    url: '@Url.Action("deleteItemInCard", "Shop")',
+                    type: "POST",
+                    data: { productId: productId },
+                    success: function (response) {
+                        $("tr#" + trId).fadeOut(1000);
+                        location.reload();
+                    }
+                });
+            }
+        });
+        // indirim uygulama
+        $("#applyDiscount").click(function () {
+            var discountCode = $("#discountCode").val();
+            alert(discountCode);
+            if (discountCode != undefined) {
 
+                $.ajax({
+                    url: '@Url.Action("applyDiscount", "Account")',
+                    type: "POST",
+                    data: { discountCode: discountCode },
+                    success: function (response) {
+
+                        location.reload();
+                    }
+                });
+            }
+
+            });
     });
- </script>
+</script>
 

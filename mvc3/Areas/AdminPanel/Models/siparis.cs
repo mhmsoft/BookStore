@@ -32,6 +32,10 @@ namespace mvc3.Areas.AdminPanel.Models
         public Nullable<int> postakodu { get; set; }
         public string email { get; set; }
         public string note { get; set; }
+        public Nullable<decimal> gonderimtutar { get; set; }
+        public Nullable<bool> farkliadres { get; set; }
+        public Nullable<decimal> indirimtutar { get; set; }
+        public Nullable<decimal> siparistutar { get; set; }
         public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<siparisDetay> siparisDetay { get; set; }

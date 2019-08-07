@@ -1,0 +1,81 @@
+﻿@model IEnumerable<mvc3.Areas.AdminPanel.Models.siparis>
+    
+
+
+
+<div class="coupon-info">
+        <h1 class="heading-title">Sipariş Geçmişi </h1>
+        <p class="coupon-text">Hesabınız açıldığından beri yaptığınız tüm siparişler.</p>
+        <div class="order-history">
+
+
+            @if (Model.Any())
+            {
+                        <div class="wishlist-table-area table-responsive">
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Sipariş Tarihi</th>
+                                        <th>Resim</th>
+                                        <th>Ürün</th>
+                                        <th>Adet</th>
+                                        <th>Birim Fiyat</th>
+                                        <th>Tutar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var m in Model)
+                                    {
+                                        foreach (var item in m.siparisDetay)
+                                        {
+                                            <tr>
+                                                <td>@string.Format("{0:dd-MM-yyyy}", (item.siparis.siparisTarihi))</td>
+                                                <td>
+                                                    <a href="@Url.Action("ProductDetails", "Shop", new { productId = item.urun.urunNo })">
+                                                        <img src="@Url.Action("Thumbnail", "Shop", new { width = 50, height = 70, id = item.urun.urunNo, _resimNo = item.urun.resim.FirstOrDefault().resimNo })" alt="">
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.Action("productDetail", "Shop", new { productId = item.urun.urunNo })">@item.urun.urunAdi</a>
+                                                </td>
+                                                <td>
+                                                    @item.miktar
+                                                </td>
+                                                <td>
+                                                    ₺ @item.urun.fiyat
+                                                </td>
+                                                <td>
+                                                    ₺ @string.Format("{0:N2}", (item.urun.fiyat * @item.miktar))
+                                                </td>
+                                            </tr>
+                                        }
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:70%;">Adres</th>
+                                                    
+                                                    <th style="width:30%;">Tutar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>@(m.farkliadres == true ? m.address + "/" + m.city : m.user.address + "/" + m.user.city)</td>
+                                                    
+                                                    <td>₺@string.Format("{0:N2}", m.siparisDetay.Sum(x => x.urun.fiyat * x.miktar) + m.gonderimtutar-m.indirimtutar)</td>
+                                                </tr>
+                                           </tbody>
+                                         </table>
+                                    }
+                                    </tbody>
+                            </table>
+                        </div>
+
+            }
+            else
+            {
+                <p class="alert">Siparişiniz bulunmamaktadır.</p>
+            }
+
+        </div>
+</div>

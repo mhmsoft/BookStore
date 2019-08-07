@@ -16,7 +16,7 @@
                             <div class="panel-heading" role="tab" id="headingOne">
                                 <h4 class="panel-title">
                                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        <i class="fa fa-building"></i>
+                                        <i class="fa fa-user"></i>
                                         <span>Kişisel Bilgiler</span>
                                     </a>
                                 </h4>
@@ -72,7 +72,7 @@
                             <div class="panel-heading" role="tab" id="headingOne">
                                 <h4 class="panel-title">
                                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        <i class="fa fa-building"></i>
+                                        <i class="fa fa-phone"></i>
                                         <span>İletişim Bilgileri</span>
                                     </a>
                                 </h4>
@@ -113,20 +113,14 @@
                             <div class="panel-heading" role="tab" id="headingThree">
                                 <h4 class="panel-title">
                                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                        <i class="fa fa-list-ol"></i>
-                                        <span>My credit slips</span>
+                                        <i class="fa fa-dollar"></i>
+                                        <span>Siparişlerim</span>
                                     </a>
                                 </h4>
                             </div>
                             <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                                 <div class="panel-body">
-                                    <div class="coupon-info">
-                                        <h1 class="heading-title">Order history </h1>
-                                        <p class="coupon-text">Here are the orders you've placed since your account was created.</p>
-                                        <div class="order-history">
-                                            <p class="alert">You have not placed any orders.</p>
-                                        </div>
-                                    </div>
+                                    @{ Html.RenderAction("MyOrders");}
                                 </div>
                             </div>
                         </div>
@@ -182,7 +176,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a href="@Url.Action("Signout","User")">
-                                        <i class="fa fa-list-ol"></i>
+                                        <i class="fa fa-sign-out"></i>
                                         <span>Güvenli Çıkış</span>
                                     </a>
                                 </h4>
