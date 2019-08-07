@@ -1,7 +1,10 @@
-﻿using mvc3.Areas.AdminPanel.Models;
+﻿using ExcelDataReader;
+using mvc3.Areas.AdminPanel.Models;
 using mvc3.Areas.AdminPanel.Models.Repository;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -15,12 +18,12 @@ namespace mvc3.Areas.AdminPanel.Controllers
         static kitapProjesiEntities db = new kitapProjesiEntities();
         KategoriRepository repo = new KategoriRepository(db);
 
-        
-        
         public ActionResult Index()
         {
             return View(repo.Listele());
         }
+
+
         public ActionResult Kaydet()
         {
             return View();

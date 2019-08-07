@@ -1,0 +1,49 @@
+﻿@model IEnumerable<mvc3.Areas.AdminPanel.Models.indirim>
+
+
+
+
+    <div class="coupon-info">
+        <h1 class="heading-title">Tüm kuponlar </h1>
+        <p class="coupon-text">Üzeri renkli satır/satırlar kullanmış olduğunuz indirim/indirimleri gösterir .</p>
+        <div class="order-history">
+            @if (Model.Any())
+            {
+                <div class="wishlist-table-area table-responsive">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Bitiş Tarihi</th>
+                                <th>Açıklama</th>
+                                <th>Kupon kodu</th>
+                                <th>Tutar</th>
+                                <th>Durum</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var m in Model)
+                            {
+                                <tr style="@(m.kullanıldiMi==true?"background-color:#ddd7d7":"")">
+                                    <td>@string.Format("{0:dd-MM-yyyy}", (m.indirimBitis))</td>
+                                    <td>@m.aciklama</td>
+                                    <td>@m.indirimKodu</td>
+                                    <td>@m.indirimTutar TL</td>
+                                    <td style="@((m.indirimDurum==true && DateTime.Now<m.indirimBitis)?"color:green;":"color:red")">@((m.indirimDurum == true && DateTime.Now < m.indirimBitis) ? "Aktif" : "Pasif")</td>
+
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            }
+            else
+            {
+                <p class="alert">indirim kuponunuz bulunmamaktadır.</p>
+            }
+
+        </div>
+    </div>

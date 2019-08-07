@@ -253,7 +253,7 @@ else
                     type: "POST",
                     data: { discountCode: discountCode },
                     success: function (response) {
-
+                        $.notify(response);
                         location.reload();
                     }
                 });

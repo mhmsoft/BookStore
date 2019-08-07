@@ -16,6 +16,7 @@ namespace mvc3.Areas.AdminPanel.Models.Repository
             _context = Context;
         }
 
+
         public kategori Bul(int id)
         {  
             return _context.kategori.Find(id);

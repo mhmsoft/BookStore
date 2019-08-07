@@ -51,6 +51,12 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="ExcelDataReader, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.3.6.0\lib\net45\ExcelDataReader.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelDataReader.DataSet, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.DataSet.3.6.0\lib\net35\ExcelDataReader.DataSet.dll</HintPath>
+    </Reference>
     <Reference Include="Iyzipay, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Iyzipay.2.1.25\lib\net45\Iyzipay.dll</HintPath>
     </Reference>
@@ -65,6 +71,7 @@
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -110,15 +117,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\AdminPanel\images\noimage.jpg" />
-    <Content Include="Areas\AdminPanel\Models\KitapProjesi.Context.tt">
+    <Content Include="Areas\AdminPanel\Models\EntityBook.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>KitapProjesi.edmx</DependentUpon>
-      <LastGenOutput>KitapProjesi.Context.cs</LastGenOutput>
+      <DependentUpon>EntityBook.edmx</DependentUpon>
+      <LastGenOutput>EntityBook.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Areas\AdminPanel\Models\KitapProjesi.tt">
+    <Content Include="Areas\AdminPanel\Models\EntityBook.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>KitapProjesi.edmx</DependentUpon>
-      <LastGenOutput>KitapProjesi.cs</LastGenOutput>
+      <DependentUpon>EntityBook.edmx</DependentUpon>
+      <LastGenOutput>EntityBook.cs</LastGenOutput>
     </Content>
     <Content Include="Content\Admin\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Content\Admin\bootstrap\css\bootstrap-theme.min.css" />
@@ -1570,6 +1577,8 @@
     <Content Include="Content\Site\js\jquery.meanmenu.js" />
     <Content Include="Content\Site\js\jquery.scrollUp.min.js" />
     <Content Include="Content\Site\js\main.js" />
+    <Content Include="Content\Site\js\notify.js" />
+    <Content Include="Content\Site\js\notify.min.js" />
     <Content Include="Content\Site\js\owl.carousel.min.js" />
     <Content Include="Content\Site\js\plugins.js" />
     <Content Include="Content\Site\js\simplemore.js" />
@@ -1627,13 +1636,6 @@
     <Content Include="Content\Site\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\Site\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Areas\AdminPanel\Views\Home\Index.cshtml" />
-    <EntityDeploy Include="Areas\AdminPanel\Models\KitapProjesi.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>KitapProjesi.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Areas\AdminPanel\Models\KitapProjesi.edmx.diagram">
-      <DependentUpon>KitapProjesi.edmx</DependentUpon>
-    </Content>
     <Content Include="Content\Admin\js\ckeditor\CHANGES.md" />
     <Content Include="Content\Admin\js\ckeditor\LICENSE.md" />
     <Content Include="Content\Admin\js\ckeditor\plugins\scayt\CHANGELOG.md" />
@@ -1649,6 +1651,13 @@
     <Content Include="Content\Admin\js\ckeditor\samples\toolbarconfigurator\font\fontello.woff" />
     <Content Include="Content\Admin\js\ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
     <Content Include="Content\Admin\js\ckeditor\skins\moono-lisa\readme.md" />
+    <EntityDeploy Include="Areas\AdminPanel\Models\EntityBook.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EntityBook.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Areas\AdminPanel\Models\EntityBook.edmx.diagram">
+      <DependentUpon>EntityBook.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1683,30 +1692,30 @@
     <Compile Include="Areas\AdminPanel\Controllers\HomeController.cs" />
     <Compile Include="Areas\AdminPanel\Controllers\KategoriController.cs" />
     <Compile Include="Areas\AdminPanel\Controllers\UrunController.cs" />
+    <Compile Include="Areas\AdminPanel\Models\EntityBook.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityBook.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\AdminPanel\Models\EntityBook.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityBook.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\AdminPanel\Models\EntityBook.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityBook.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Areas\AdminPanel\Models\favorim.cs">
-      <DependentUpon>KitapProjesi.tt</DependentUpon>
+      <DependentUpon>EntityBook.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\AdminPanel\Models\indirim.cs">
-      <DependentUpon>KitapProjesi.tt</DependentUpon>
+      <DependentUpon>EntityBook.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\AdminPanel\Models\Interface\IIslem.cs" />
     <Compile Include="Areas\AdminPanel\Models\kategori.cs">
-      <DependentUpon>KitapProjesi.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\AdminPanel\Models\KitapProjesi.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>KitapProjesi.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\AdminPanel\Models\KitapProjesi.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>KitapProjesi.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\AdminPanel\Models\KitapProjesi.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>KitapProjesi.edmx</DependentUpon>
+      <DependentUpon>EntityBook.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\AdminPanel\Models\Repository\FavoriuteRepository.cs" />
     <Compile Include="Areas\AdminPanel\Models\Repository\IndirimRepository.cs" />
@@ -1717,26 +1726,26 @@
     <Compile Include="Areas\AdminPanel\Models\Repository\UserRepository.cs" />
     <Compile Include="Areas\AdminPanel\Models\Repository\yorumRepository.cs" />
     <Compile Include="Areas\AdminPanel\Models\resim.cs">
-      <DependentUpon>KitapProjesi.tt</DependentUpon>
+      <DependentUpon>EntityBook.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\AdminPanel\Models\role.cs">
-      <DependentUpon>KitapProjesi.tt</DependentUpon>
+      <DependentUpon>EntityBook.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\AdminPanel\Models\Security\Crypto.cs" />
     <Compile Include="Areas\AdminPanel\Models\siparis.cs">
-      <DependentUpon>KitapProjesi.tt</DependentUpon>
+      <DependentUpon>EntityBook.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\AdminPanel\Models\siparisDetay.cs">
-      <DependentUpon>KitapProjesi.tt</DependentUpon>
+      <DependentUpon>EntityBook.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\AdminPanel\Models\urun.cs">
-      <DependentUpon>KitapProjesi.tt</DependentUpon>
+      <DependentUpon>EntityBook.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\AdminPanel\Models\user.cs">
-      <DependentUpon>KitapProjesi.tt</DependentUpon>
+      <DependentUpon>EntityBook.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\AdminPanel\Models\yorum.cs">
-      <DependentUpon>KitapProjesi.tt</DependentUpon>
+      <DependentUpon>EntityBook.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
@@ -1852,6 +1861,7 @@
     <Content Include="Views\Shop\Basket.cshtml" />
     <Content Include="Views\Shop\Checkout.cshtml" />
     <Content Include="Views\Account\MyOrders.cshtml" />
+    <Content Include="Views\Account\MyCoupons.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -149,6 +149,15 @@ namespace mvc3.Controllers
 
             return PartialView(orders);
         }
+        public PartialViewResult MyCoupons()
+        {
+            var accountOwner = User.Identity.Name;
+            int customerId = repo.Listele().Where(x => x.email == accountOwner).FirstOrDefault().userId;
+
+            var coupons = repo.Bul(customerId).indirim.Where(i => i.musteriNo == customerId).ToList();
+
+            return PartialView(coupons);
+        }
 
         [HttpPost]
         public void applyDiscount(string discountCode)

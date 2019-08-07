@@ -50,24 +50,18 @@
                                                 </td>
                                             </tr>
                                         }
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width:70%;">Adres</th>
-                                                    
-                                                    <th style="width:30%;">Tutar</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>@(m.farkliadres == true ? m.address + "/" + m.city : m.user.address + "/" + m.user.city)</td>
-                                                    
-                                                    <td>₺@string.Format("{0:N2}", m.siparisDetay.Sum(x => x.urun.fiyat * x.miktar) + m.gonderimtutar-m.indirimtutar)</td>
-                                                </tr>
-                                           </tbody>
-                                         </table>
+                                        <tr style="background-color:#ddd7d7">
+                                            <td colspan="4">
+                                            <strong>Adres:</strong>@(m.farkliadres == true ? m.address + "/" + m.city : m.user.address + "/" + m.user.city)
+                                            </td>
+                                           
+                                            <td colspan="2">
+                                                <strong>Tutar:</strong>₺@(m.farkliadres == true ? string.Format("{0:N2}", m.siparistutar) : string.Format("{0:N2}", m.siparisDetay.Sum(x => x.urun.fiyat * x.miktar) + m.gonderimtutar - m.indirimtutar))
+                                            </td>
+                                         </tr>
+                                                  
                                     }
-                                    </tbody>
+                                </tbody>
                             </table>
                         </div>
 

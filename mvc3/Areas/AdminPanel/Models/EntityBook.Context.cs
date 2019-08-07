@@ -16,7 +16,7 @@ namespace mvc3.Areas.AdminPanel.Models
     public partial class kitapProjesiEntities : DbContext
     {
         public kitapProjesiEntities()
-            : base("name=kitapProjesiEntities4")
+            : base("name=kitapProjesiEntities5")
         {
         }
     

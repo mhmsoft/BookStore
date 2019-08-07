@@ -176,8 +176,10 @@ namespace mvc3.Controllers
                     });
                 Session["card"] = card;
             }
-            return RedirectToAction("Index");
-           // return Json( (List<BasketItem>) Session["card"], JsonRequestBehavior.AllowGet);
+
+            return Redirect(Request.UrlReferrer.PathAndQuery);
+            // return RedirectToAction("Index");
+            // return Json( (List<BasketItem>) Session["card"], JsonRequestBehavior.AllowGet);
 
         }
 
@@ -301,7 +303,7 @@ namespace mvc3.Controllers
                     
                 else
                     newOrder.phone = telefon;
-
+                newOrder.farkliadres = true;
                 newOrder.siparisTarihi = DateTime.Now;
                 newOrder.musteriNo = _user.userId;
                 // siparisi kaydet
@@ -352,7 +354,7 @@ namespace mvc3.Controllers
                         ViewBag.message = message;
                         return View();
                     }
-                       
+                    newOrder.farkliadres = false;
                     newOrder.siparisTarihi = DateTime.Now;
                     newOrder.user = _user;
 
@@ -384,7 +386,7 @@ namespace mvc3.Controllers
                     // indirim kullanıldığı için indirimi pasif et
                     indirim kullanilanIndirim = repoIndirim.Listele().FirstOrDefault(x => x.indirimKodu == _indirim.indirimKodu);
 
-                    kullanilanIndirim.kullanidiMi = true;
+                    kullanilanIndirim.kullanıldiMi = true;
                     kullanilanIndirim.indirimDurum = false;
                     repoIndirim.Guncelle(kullanilanIndirim);
                    
@@ -411,8 +413,9 @@ namespace mvc3.Controllers
                         indirimKodu = couponCode,
                         aciklama = "%5 Hediye kuponu",
                         indirimTutar = Basket.Sum(x => x.quantity * x.product.fiyat) * 0.05m,
-                        kullanidiMi = false
+                        kullanıldiMi = false
                     };
+                    //kupon haketmişse kaydediliyor.
                     repoIndirim.Kaydet(newCoupon);
                     // kupon haketmişse mail gönderiliyor.
                     SendCouponMail(User.Identity.Name, couponCode, subject, body);

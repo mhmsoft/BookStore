@@ -125,29 +125,20 @@
                             </div>
                         </div>
                         <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingFour">
+                            <div class="panel-heading" role="tab" id="headingThree">
                                 <h4 class="panel-title">
-                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                        <i class="fa fa-file-o"></i>
-                                        <span>My addresses</span>
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+                                        <i class="fa fa-dollar"></i>
+                                        <span>İndirim Kuponlarım</span>
                                     </a>
                                 </h4>
                             </div>
                             <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                                 <div class="panel-body">
-                                    <div class="coupon-info">
-                                        <h1 class="heading-title">Order history </h1>
-                                        <p class="coupon-text">Here are the orders you've placed since your account was created.</p>
-                                        <div class="order-history">
-                                            <p class="alert">You have not placed any orders.</p>
-                                        </div>
-                                    </div>
+                                    @{ Html.RenderAction("MyCoupons");}
                                 </div>
                             </div>
                         </div>
-
-                    </div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-lg-6">

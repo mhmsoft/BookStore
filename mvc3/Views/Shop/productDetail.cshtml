@@ -219,8 +219,9 @@
                 type: "POST",
                 data: { productId: data, quantity: quantity },
                 success: function (response) {
-                    //alert(JSON.stringify(response));
-                    location.reload();
+                    $.notify(response, "success");
+                         );
+                   // location.reload();
 
                 }
             });
@@ -237,7 +238,7 @@
                 type: "POST",
                 data: { productId: urunNo },
                 success: function (response) {
-                    alert(response)
+                      $.notify(response, "info");
                 }
 
             });

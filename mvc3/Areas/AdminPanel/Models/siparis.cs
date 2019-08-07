@@ -36,6 +36,7 @@ namespace mvc3.Areas.AdminPanel.Models
         public Nullable<bool> farkliadres { get; set; }
         public Nullable<decimal> indirimtutar { get; set; }
         public Nullable<decimal> siparistutar { get; set; }
+    
         public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<siparisDetay> siparisDetay { get; set; }
