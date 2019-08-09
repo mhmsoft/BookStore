@@ -1521,6 +1521,7 @@
     <Content Include="Content\Site\css\owl.carousel.css" />
     <Content Include="Content\Site\css\pe-icon-7-stroke.css" />
     <Content Include="Content\Site\css\responsive.css" />
+    <Content Include="Content\Site\css\venobox.css" />
     <Content Include="Content\Site\fonts\Flaticon.svg" />
     <Content Include="Content\Site\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\Site\fonts\glyphicons-halflings-regular.svg" />
@@ -1584,6 +1585,7 @@
     <Content Include="Content\Site\js\simplemore.js" />
     <Content Include="Content\Site\js\vendor\jquery-1.12.0.min.js" />
     <Content Include="Content\Site\js\vendor\modernizr-2.8.3.min.js" />
+    <Content Include="Content\Site\js\venobox.min.js" />
     <Content Include="Content\Site\js\waypoints.min.js" />
     <Content Include="Content\Site\js\wow.min.js" />
     <Content Include="Content\Site\lib\css\nivo-slider.css" />

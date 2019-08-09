@@ -256,7 +256,7 @@
                     <div class="checkout-widget">
                         @if (ViewBag.status == true)
                         {
-                            <div class="alert alert-success">
+                            <div class="alert alert-success venobox">
                                 <strong>Tebrikler!</strong>@ViewBag.message
                             </div>
                         }
@@ -264,9 +264,10 @@
                         {
                             if (ViewBag.message != null)
                             {
-                                <div class="alert alert-danger">
-                                    <strong>Uyarı!</strong>@ViewBag.message
-                                </div>
+                    <div class="alert alert-danger venobox">
+                        
+                        <strong>Uyarı!</strong>@ViewBag.message
+                    </div>
                             }
                         }
                     </div>
@@ -279,6 +280,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
         <script type="text/javascript">
             $(function () {
+                $('.venobox').venobox(); 
                 if ($("#shipbox").prop("checked")) {
                     $('#ship-box-info').slideDown(1000);
                      $("#shipbox").val("true");
