@@ -1864,6 +1864,8 @@
     <Content Include="Views\Shop\Checkout.cshtml" />
     <Content Include="Views\Account\MyOrders.cshtml" />
     <Content Include="Views\Account\MyCoupons.cshtml" />
+    <Content Include="Views\Shop\BestSeller.cshtml" />
+    <Content Include="Views\Shop\NewProducts.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

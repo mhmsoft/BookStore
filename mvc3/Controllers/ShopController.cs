@@ -27,8 +27,15 @@ namespace mvc3.Controllers
         SiparisDetayRepository repoSiparisDetay = new SiparisDetayRepository(new kitapProjesiEntities());
         IndirimRepository repoIndirim = new IndirimRepository(new kitapProjesiEntities());
         // GET: Shop
-
-        public ActionResult Index(int? categoryId, int? page, int? PageSize, int? orderBy, int? minPrice, int? maxPrice)
+        public PartialViewResult NewProducts()
+        {
+            return PartialView(repo.Listele().OrderByDescending(x=>x.eklenmeTarihi).Take(5).ToList());
+        }
+        public PartialViewResult BestSeller()
+        {
+            return PartialView(repoSiparisDetay.EnCokSatanlar());     
+        }
+        public ActionResult Index(int? categoryId, string search, int? page, int? PageSize, int? orderBy, int? minPrice, int? maxPrice)
         {
             ViewBag.orderBy = new List<SelectListItem>() {
                 new SelectListItem { Text = "Fiyat", Value = "1", Selected = true },
@@ -67,6 +74,8 @@ namespace mvc3.Controllers
             // ürün minprice ve maxprice seçilmişse
             else if (minPrice != null & maxPrice != null)
                 result = result.Where(x => x.fiyat >= minPrice && x.fiyat <= maxPrice).ToList();
+            else if (search != null)
+                result = result.Where(x=>x.kategori.kategoriAdi.Contains(search)|| x.urunAdi.Contains(search)).ToList();
 
             return View(result.ToPagedList(pageNumber, pageSize));
         }

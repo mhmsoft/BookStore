@@ -13,6 +13,19 @@ namespace mvc3.Areas.AdminPanel.Models.Repository
         {
             _context = Context;
         }
+        public List<urun> EnCokSatanlar()
+        {
+           
+            List<urun> bestSellers = new List<urun>();
+            var query= _context.siparisDetay.OrderByDescending(y => y.miktar).GroupBy(x => x.urunNo).Select(x=>new {quantity=x.Sum(b=>b.miktar),Id=x.Key});
+  
+            var get10Products = query.Take(10);
+            foreach (var item in get10Products)
+            {
+                 bestSellers.Add(_context.urun.SingleOrDefault(x=>x.urunNo==item.Id));
+            }
+            return bestSellers;
+        }
         public siparisDetay Bul(int id)
         {
             return _context.siparisDetay.Find(id);

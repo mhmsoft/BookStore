@@ -1,80 +1,62 @@
 ﻿@using mvc3.Models.ViewModel
 @Html.Partial("Header");
-
-<div class="our-team-area">
-    <h2 class="section-title">OUR WRITER</h2>
-    <div class="container">
-        <div class="row">
-            <div class="team-list indicator-style">
-                <div class="col-md-3">
-                    <div class="single-team-member">
-                        <a href="#">
-                            <img src="img/about/team/1.jpg" alt="">
-                        </a>
-                        <div class="member-info">
-                            <a href="#">rokan tech</a>
-                            <p>WRITER</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="single-team-member">
-                        <a href="#">
-                            <img src="img/about/team/2.jpg" alt="">
-                        </a>
-                        <div class="member-info">
-                            <a href="#">mirinda</a>
-                            <p>AUTHOR</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="single-team-member">
-                        <a href="#">
-                            <img src="img/about/team/3.jpg" alt="">
-                        </a>
-                        <div class="member-info">
-                            <a href="#">jone doe</a>
-                            <p>WRITER</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="single-team-member">
-                        <a href="#">
-                            <img src="img/about/team/4.jpg" alt="">
-                        </a>
-                        <div class="member-info">
-                            <a href="#">nick kon</a>
-                            <p>WRITER</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="single-team-member">
-                        <a href="#">
-                            <img src="img/about/team/2.jpg" alt="">
-                        </a>
-                        <div class="member-info">
-                            <a href="#">mirinda</a>
-                            <p>AUTHOR</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="single-team-member">
-                        <a href="#">
-                            <img src="img/about/team/1.jpg" alt="">
-                        </a>
-                        <div class="member-info">
-                            <a href="#">rokan tech</a>
-                            <p>WRITER</p>
-                        </div>
-                    </div>
-                </div>
+@*<div class="slider-area">
+    <div class="bend niceties preview-1">
+        <div id="ensign-nivoslider" class="slides">
+            <img src="~/Content/Site/img/slider/1.jpg" alt="" title="#slider-direction-1" />
+            <img src="~/Content/Site/img/slider/2.jpg" alt="" title="#slider-direction-2" />
+        </div>
+        <!-- direction 1 -->
+       @*<div id="slider-direction-1" class="text-center slider-direction">
+            <!-- layer 1 -->
+            <div class="layer-1">
+                <h2 class="title-1">LET’S WRITE IMAGINE</h2>
+            </div>
+            <!-- layer 2 -->
+            <div class="layer-2">
+                <p class="title-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+            <!-- layer 3 -->
+            <div class="layer-3">
+                <a href="#" class="title-3">SEE MORE</a>
+            </div>
+            <!-- layer 4 -->
+            <div class="layer-4">
+                <form action="#" class="title-4">
+                    <input type="text" placeholder="Enter your book title here">
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
+            </div>
+        </div>
+        <!-- direction 2 -->
+        <div id="slider-direction-2" class="slider-direction">
+            <!-- layer 1 -->
+            <div class="layer-1">
+                <h2 class="title-1">LET’S WRITE IMAGINE</h2>
+            </div>
+            <!-- layer 2 -->
+            <div class="layer-2">
+                <p class="title-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+            <!-- layer 3 -->
+            <div class="layer-3">
+                <a href="#" class="title-3">SEE MORE</a>
+            </div>
+            <!-- layer 4 -->
+            <div class="layer-4">
+                <form action="~/Shop/" class="title-4">
+                    <input type="text" name="search" id="search" placeholder="Arayacağınız bir kitap adı, yazarıi yayın evi, türü vb...">
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
             </div>
         </div>
     </div>
+</div>*@
+
+<div class="our-team-area">
+     @*en çok satanlar*@
+    @{ Html.RenderAction("BestSeller"); }
+   
 </div>
 
 <!-- Shop Area Start -->
@@ -96,7 +78,7 @@
                         </aside>
                     </div>
                     <div class="shop-widget-bottom">
-                        <aside class="widget widget-tag">
+                        @*<aside class="widget widget-tag">
                             <h2 class="sidebar-title">POPULAR TAG</h2>
                             <ul class="tag-list">
                                 <li>
@@ -118,41 +100,11 @@
                                     <a href="#">author</a>
                                 </li>
                             </ul>
-                        </aside>
+                        </aside>*@
                         <aside class="widget widget-seller">
-                            <h2 class="sidebar-title">TOP SELLERS</h2>
-                            <div class="single-seller">
-                                <div class="seller-img">
-                                    <img src="img/shop/1.jpg" alt="" />
-                                </div>
-                                <div class="seller-details">
-                                    <a href="shop.html"><h5>Cold mountain</h5></a>
-                                    <h5>$ 50.00</h5>
-                                    <ul>
-                                        <li><i class="fa fa-star icolor"></i></li>
-                                        <li><i class="fa fa-star icolor"></i></li>
-                                        <li><i class="fa fa-star icolor"></i></li>
-                                        <li><i class="fa fa-star icolor"></i></li>
-                                        <li><i class="fa fa-star icolor"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="single-seller">
-                                <div class="seller-img">
-                                    <img src="img/shop/2.jpg" alt="" />
-                                </div>
-                                <div class="seller-details">
-                                    <a href=""><h5>The historian</h5></a>
-                                    <h5>$ 50.00</h5>
-                                    <ul>
-                                        <li><i class="fa fa-star icolor"></i></li>
-                                        <li><i class="fa fa-star icolor"></i></li>
-                                        <li><i class="fa fa-star icolor"></i></li>
-                                        <li><i class="fa fa-star icolor"></i></li>
-                                        <li><i class="fa fa-star icolor"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <h2 class="sidebar-title">Yeni Gelenler</h2>
+                            @{ Html.RenderAction("NewProducts"); }
+
                         </aside>
                     </div>
                 </div>

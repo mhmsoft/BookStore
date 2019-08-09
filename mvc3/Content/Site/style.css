@@ -94,7 +94,7 @@ body {
     padding: 0.2em 0;
 }
 .section-padding {
-  padding: 80px 0;
+  padding: 0px 0;
 }
 .no-padding {
   padding: 0 !important;
@@ -1105,7 +1105,7 @@ body {
 }
 .single-team-member img {
     margin-bottom: 20px;
-    width: 100%;
+   
 }
 .our-team-area .section-title {
   margin-bottom: 60px;

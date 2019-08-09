@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="kitapProjesiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="kitapProjesiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="favorim">
           <Key>
             <PropertyRef Name="id" />
@@ -93,6 +93,7 @@
           <Property Name="aciklama" Type="text" />
           <Property Name="stok" Type="int" />
           <Property Name="kategoriNo" Type="int" />
+          <Property Name="eklenmeTarihi" Type="date" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -300,8 +301,7 @@
             <End Role="siparisDetay" EntitySet="siparisDetay" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="kitapProjesiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -408,6 +408,7 @@
           <NavigationProperty Name="resim" Relationship="Self.FK__resim__urunNo__15502E78" FromRole="urun" ToRole="resim" />
           <NavigationProperty Name="siparisDetay" Relationship="Self.urunNoFK" FromRole="urun" ToRole="siparisDetay" />
           <NavigationProperty Name="yorum" Relationship="Self.FK__yorum__urunNo__182C9B23" FromRole="urun" ToRole="yorum" />
+          <Property Name="eklenmeTarihi" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -712,6 +713,7 @@
           <EntitySetMapping Name="urun">
             <EntityTypeMapping TypeName="kitapProjesiModel.urun">
               <MappingFragment StoreEntitySet="urun">
+                <ScalarProperty Name="eklenmeTarihi" ColumnName="eklenmeTarihi" />
                 <ScalarProperty Name="urunNo" ColumnName="urunNo" />
                 <ScalarProperty Name="urunAdi" ColumnName="urunAdi" />
                 <ScalarProperty Name="yazar" ColumnName="yazar" />

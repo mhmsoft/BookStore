@@ -30,6 +30,7 @@ namespace mvc3.Areas.AdminPanel.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Kaydet( urun urun,IEnumerable<HttpPostedFileBase> resim)
         {
+            urun.eklenmeTarihi = DateTime.Now;
             repo.Kaydet(urun);
             if (resim.First() != null)
             {
@@ -68,9 +69,10 @@ namespace mvc3.Areas.AdminPanel.Controllers
             return View(repo.Bul(id));
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult Duzenle(urun urun,IEnumerable<HttpPostedFileBase> resim)
         {
+            urun.eklenmeTarihi = DateTime.Now;
             repo.Guncelle(urun);
             if (resim.First() != null)
             {

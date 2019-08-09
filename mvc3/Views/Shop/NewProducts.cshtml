@@ -1,0 +1,21 @@
+﻿@model IEnumerable<mvc3.Areas.AdminPanel.Models.urun>
+
+@foreach (var item in Model)
+{
+    <div class="single-seller">
+        <div class="seller-img">
+            <img src="@Url.Action("Thumbnail", "Shop", new { width = 130, height = 170, Id =item.urunNo,_resimNo=item.resim.FirstOrDefault().resimNo })" alt="" />
+        </div>
+        <div class="seller-details">
+            <a href="@Url.Action("productDetail","Shop", new { productId = item.urunNo })"><h5>@item.urunAdi</h5></a>
+            <h5>₺ @item.fiyat</h5>
+            <ul>
+                <li><i class="fa fa-star icolor"></i></li>
+                <li><i class="fa fa-star icolor"></i></li>
+                <li><i class="fa fa-star icolor"></i></li>
+                <li><i class="fa fa-star icolor"></i></li>
+                <li><i class="fa fa-star icolor"></i></li>
+            </ul>
+        </div>
+    </div>
+}

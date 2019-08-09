@@ -8,12 +8,12 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="breadcrumbs">
-                    <h2>PRODUCT DETAILS</h2>
+                    <h2>Ürün Detayı</h2>
                     <ul class="breadcrumbs-list">
                         <li>
-                            <a title="Return to Home" href="index.html">Home</a>
+                            <a title="Return to Home" href="@Url.Action("/")">Anasayfa</a>
                         </li>
-                        <li>Product Details</li>
+                        <li>Ürün detayı</li>
                     </ul>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                     <div class="availability">
                         <span>@(Model.stok > 0 ? "Stokta Var" : "Stok Yok")</span>
                     </div>
-                    <p>@Model.aciklama </p>
+                    <p>@Model.yazar </p>
                     <div class="single-product-price">
                         <h2>₺@Model.fiyat</h2>
                     </div>
@@ -82,7 +82,7 @@
                             <span class="inc qtybutton">+</span>
                         </span>
                         <span>
-                            <a class="cart-btn btn-default" href="javascript:void(0);" id="addBasket" product="@Model.urunNo">
+                            <a class="cart-btn btn-default" href="@Url.Action("AddCard","Shop",new {productId=Model.urunNo,quantity=1 })" id="addBasket" product="@Model.urunNo">
                                 <i class="flaticon-shop"></i>
                                 Sepete Ekle
                             </a>
@@ -124,7 +124,7 @@
                     <div class="clearfix"></div>
                     <div class="tab-content review">
                         <div role="tabpanel" class="tab-pane active" id="more-info">
-                            <p>@Model.aciklama</p>
+                            <p>@Html.Raw(Model.aciklama)</p>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="data">
                             <table class="table-data-sheet">
@@ -220,7 +220,7 @@
                 data: { productId: data, quantity: quantity },
                 success: function (response) {
                     $.notify(response, "success");
-                         );
+                         
                    // location.reload();
 
                 }
