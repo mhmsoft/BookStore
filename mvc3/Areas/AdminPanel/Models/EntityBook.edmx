@@ -18,13 +18,13 @@
             <PropertyRef Name="indirimNo" />
           </Key>
           <Property Name="indirimNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="indirimKodu" Type="varchar(max)" />
+          <Property Name="indirimKodu" Type="varchar" MaxLength="50" />
           <Property Name="aciklama" Type="varchar" MaxLength="100" />
           <Property Name="indirimTutar" Type="decimal" Precision="6" Scale="2" />
           <Property Name="indirimBaslangic" Type="datetime" />
           <Property Name="indirimBitis" Type="datetime" />
-          <Property Name="musteriNo" Type="int" />
           <Property Name="indirimDurum" Type="bit" />
+          <Property Name="musteriNo" Type="int" />
           <Property Name="kullanıldiMi" Type="bit" />
         </EntityType>
         <EntityType Name="kategori">
@@ -49,27 +49,27 @@
             <PropertyRef Name="roleId" />
           </Key>
           <Property Name="roleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="roleName" Type="varchar" MaxLength="30" />
+          <Property Name="roleName" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="siparis">
           <Key>
             <PropertyRef Name="siparisNo" />
           </Key>
           <Property Name="siparisNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="musteriNo" Type="int" />
           <Property Name="siparisTarihi" Type="datetime" />
+          <Property Name="musteriNo" Type="int" />
           <Property Name="firstname" Type="varchar" MaxLength="50" />
           <Property Name="lastname" Type="varchar" MaxLength="50" />
-          <Property Name="address" Type="varchar" MaxLength="100" />
-          <Property Name="phone" Type="varchar" MaxLength="16" />
           <Property Name="company" Type="varchar" MaxLength="50" />
+          <Property Name="address" Type="varchar" MaxLength="100" />
           <Property Name="city" Type="varchar" MaxLength="50" />
           <Property Name="postakodu" Type="int" />
           <Property Name="email" Type="varchar" MaxLength="50" />
-          <Property Name="note" Type="varchar" MaxLength="200" />
-          <Property Name="gonderimtutar" Type="decimal" Precision="5" Scale="2" />
-          <Property Name="farkliadres" Type="bit" />
+          <Property Name="phone" Type="varchar" MaxLength="20" />
+          <Property Name="note" Type="varchar" MaxLength="150" />
+          <Property Name="gonderimtutar" Type="decimal" Precision="6" Scale="2" />
           <Property Name="indirimtutar" Type="decimal" Precision="6" Scale="2" />
+          <Property Name="farkliadres" Type="bit" />
           <Property Name="siparistutar" Type="decimal" Precision="7" Scale="2" />
         </EntityType>
         <EntityType Name="siparisDetay">
@@ -93,7 +93,7 @@
           <Property Name="aciklama" Type="text" />
           <Property Name="stok" Type="int" />
           <Property Name="kategoriNo" Type="int" />
-          <Property Name="eklenmeTarihi" Type="date" />
+          <Property Name="eklenmeTarihi" Type="datetime" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -109,15 +109,15 @@
           <Property Name="address" Type="text" />
           <Property Name="activationCode" Type="varchar(max)" />
           <Property Name="resetCode" Type="varchar(max)" />
-          <Property Name="hostName" Type="varchar" MaxLength="50" />
+          <Property Name="hostName" Type="varchar" MaxLength="100" />
           <Property Name="isActive" Type="bit" />
           <Property Name="loginAttempt" Type="int" />
           <Property Name="createdDate" Type="datetime" />
           <Property Name="loginTime" Type="datetime" />
           <Property Name="isMailVerified" Type="bit" />
           <Property Name="roleId" Type="int" />
-          <Property Name="subscribe" Type="bit" />
           <Property Name="city" Type="varchar" MaxLength="50" />
+          <Property Name="subscribe" Type="bit" />
         </EntityType>
         <EntityType Name="yorum">
           <Key>
@@ -129,7 +129,7 @@
           <Property Name="yorumcu" Type="varchar" MaxLength="50" />
           <Property Name="yorumTarihi" Type="datetime" />
         </EntityType>
-        <Association Name="FK__favorim__product__24927208">
+        <Association Name="FK__Favorim__product__3C69FB99">
           <End Role="urun" Type="Self.urun" Multiplicity="0..1" />
           <End Role="favorim" Type="Self.favorim" Multiplicity="*" />
           <ReferentialConstraint>
@@ -141,7 +141,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__favorim__userId__25869641">
+        <Association Name="FK__Favorim__userId__3D5E1FD2">
           <End Role="user" Type="Self.user" Multiplicity="0..1" />
           <End Role="favorim" Type="Self.favorim" Multiplicity="*" />
           <ReferentialConstraint>
@@ -153,8 +153,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__indirim__musteri__3D5E1FD2">
-          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+        <Association Name="FK__indirim__musteri__4316F928">
+          <End Role="user" Type="Self.user" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="indirim" Type="Self.indirim" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="user">
@@ -165,19 +167,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__resim__urunNo__15502E78">
-          <End Role="urun" Type="Self.urun" Multiplicity="0..1" />
-          <End Role="resim" Type="Self.resim" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="urun">
-              <PropertyRef Name="urunNo" />
-            </Principal>
-            <Dependent Role="resim">
-              <PropertyRef Name="urunNo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__siparis__musteri__36B12243">
+        <Association Name="FK__siparis__musteri__45F365D3">
           <End Role="user" Type="Self.user" Multiplicity="0..1" />
           <End Role="siparis" Type="Self.siparis" Multiplicity="*" />
           <ReferentialConstraint>
@@ -189,19 +179,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__urun__kategoriNo__1273C1CD">
-          <End Role="kategori" Type="Self.kategori" Multiplicity="0..1" />
-          <End Role="urun" Type="Self.urun" Multiplicity="*" />
+        <Association Name="FK__user__roleId__1ED998B2">
+          <End Role="role" Type="Self.role" Multiplicity="0..1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="kategori">
-              <PropertyRef Name="kategoriNo" />
+            <Principal Role="role">
+              <PropertyRef Name="roleId" />
             </Principal>
-            <Dependent Role="urun">
-              <PropertyRef Name="kategoriNo" />
+            <Dependent Role="user">
+              <PropertyRef Name="roleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__user__roleId__1FCDBCEB">
+        <Association Name="FK__user__roleId__3F466844">
           <End Role="role" Type="Self.role" Multiplicity="0..1" />
           <End Role="user" Type="Self.user" Multiplicity="*" />
           <ReferentialConstraint>
@@ -225,7 +215,47 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="siparisFK">
+        <Association Name="FK__yorum__urunNo__403A8C7D">
+          <End Role="urun" Type="Self.urun" Multiplicity="0..1" />
+          <End Role="yorum" Type="Self.yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="urun">
+              <PropertyRef Name="urunNo" />
+            </Principal>
+            <Dependent Role="yorum">
+              <PropertyRef Name="urunNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kategori">
+          <End Role="kategori" Type="Self.kategori" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="urun" Type="Self.urun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="kategori">
+              <PropertyRef Name="kategoriNo" />
+            </Principal>
+            <Dependent Role="urun">
+              <PropertyRef Name="kategoriNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UrunNo">
+          <End Role="urun" Type="Self.urun" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="resim" Type="Self.resim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="urun">
+              <PropertyRef Name="urunNo" />
+            </Principal>
+            <Dependent Role="resim">
+              <PropertyRef Name="urunNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SiparisNoFK">
           <End Role="siparis" Type="Self.siparis" Multiplicity="1" />
           <End Role="siparisDetay" Type="Self.siparisDetay" Multiplicity="*" />
           <ReferentialConstraint>
@@ -260,31 +290,27 @@
           <EntitySet Name="urun" EntityType="Self.urun" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="yorum" EntityType="Self.yorum" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__favorim__product__24927208" Association="Self.FK__favorim__product__24927208">
+          <AssociationSet Name="FK__Favorim__product__3C69FB99" Association="Self.FK__Favorim__product__3C69FB99">
             <End Role="urun" EntitySet="urun" />
             <End Role="favorim" EntitySet="favorim" />
           </AssociationSet>
-          <AssociationSet Name="FK__favorim__userId__25869641" Association="Self.FK__favorim__userId__25869641">
+          <AssociationSet Name="FK__Favorim__userId__3D5E1FD2" Association="Self.FK__Favorim__userId__3D5E1FD2">
             <End Role="user" EntitySet="user" />
             <End Role="favorim" EntitySet="favorim" />
           </AssociationSet>
-          <AssociationSet Name="FK__indirim__musteri__3D5E1FD2" Association="Self.FK__indirim__musteri__3D5E1FD2">
+          <AssociationSet Name="FK__indirim__musteri__4316F928" Association="Self.FK__indirim__musteri__4316F928">
             <End Role="user" EntitySet="user" />
             <End Role="indirim" EntitySet="indirim" />
           </AssociationSet>
-          <AssociationSet Name="FK__resim__urunNo__15502E78" Association="Self.FK__resim__urunNo__15502E78">
-            <End Role="urun" EntitySet="urun" />
-            <End Role="resim" EntitySet="resim" />
-          </AssociationSet>
-          <AssociationSet Name="FK__siparis__musteri__36B12243" Association="Self.FK__siparis__musteri__36B12243">
+          <AssociationSet Name="FK__siparis__musteri__45F365D3" Association="Self.FK__siparis__musteri__45F365D3">
             <End Role="user" EntitySet="user" />
             <End Role="siparis" EntitySet="siparis" />
           </AssociationSet>
-          <AssociationSet Name="FK__urun__kategoriNo__1273C1CD" Association="Self.FK__urun__kategoriNo__1273C1CD">
-            <End Role="kategori" EntitySet="kategori" />
-            <End Role="urun" EntitySet="urun" />
+          <AssociationSet Name="FK__user__roleId__1ED998B2" Association="Self.FK__user__roleId__1ED998B2">
+            <End Role="role" EntitySet="role" />
+            <End Role="user" EntitySet="user" />
           </AssociationSet>
-          <AssociationSet Name="FK__user__roleId__1FCDBCEB" Association="Self.FK__user__roleId__1FCDBCEB">
+          <AssociationSet Name="FK__user__roleId__3F466844" Association="Self.FK__user__roleId__3F466844">
             <End Role="role" EntitySet="role" />
             <End Role="user" EntitySet="user" />
           </AssociationSet>
@@ -292,7 +318,19 @@
             <End Role="urun" EntitySet="urun" />
             <End Role="yorum" EntitySet="yorum" />
           </AssociationSet>
-          <AssociationSet Name="siparisFK" Association="Self.siparisFK">
+          <AssociationSet Name="FK__yorum__urunNo__403A8C7D" Association="Self.FK__yorum__urunNo__403A8C7D">
+            <End Role="urun" EntitySet="urun" />
+            <End Role="yorum" EntitySet="yorum" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kategori" Association="Self.FK_Kategori">
+            <End Role="kategori" EntitySet="kategori" />
+            <End Role="urun" EntitySet="urun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UrunNo" Association="Self.FK_UrunNo">
+            <End Role="urun" EntitySet="urun" />
+            <End Role="resim" EntitySet="resim" />
+          </AssociationSet>
+          <AssociationSet Name="SiparisNoFK" Association="Self.SiparisNoFK">
             <End Role="siparis" EntitySet="siparis" />
             <End Role="siparisDetay" EntitySet="siparisDetay" />
           </AssociationSet>
@@ -314,21 +352,6 @@
           <Property Name="userId" Type="Int32" />
           <NavigationProperty Name="urun" Relationship="Self.FK__favorim__product__24927208" FromRole="favorim" ToRole="urun" />
           <NavigationProperty Name="user" Relationship="Self.FK__favorim__userId__25869641" FromRole="favorim" ToRole="user" />
-        </EntityType>
-        <EntityType Name="indirim">
-          <Key>
-            <PropertyRef Name="indirimNo" />
-          </Key>
-          <Property Name="indirimNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="indirimKodu" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="aciklama" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="indirimTutar" Type="Decimal" Precision="6" Scale="2" />
-          <Property Name="indirimBaslangic" Type="DateTime" Precision="3" />
-          <Property Name="indirimBitis" Type="DateTime" Precision="3" />
-          <Property Name="musteriNo" Type="Int32" />
-          <Property Name="indirimDurum" Type="Boolean" />
-          <Property Name="kullanıldiMi" Type="Boolean" />
-          <NavigationProperty Name="user" Relationship="Self.FK__indirim__musteri__3D5E1FD2" FromRole="indirim" ToRole="user" />
         </EntityType>
         <EntityType Name="kategori">
           <Key>
@@ -354,7 +377,7 @@
             <PropertyRef Name="roleId" />
           </Key>
           <Property Name="roleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="roleName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="roleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="user" Relationship="Self.FK__user__roleId__1FCDBCEB" FromRole="role" ToRole="user" />
         </EntityType>
         <EntityType Name="siparis">
@@ -367,13 +390,13 @@
           <Property Name="firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="phone" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="company" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="postakodu" Type="Int32" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="note" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="gonderimtutar" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="note" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="gonderimtutar" Type="Decimal" Precision="6" Scale="2" />
           <Property Name="farkliadres" Type="Boolean" />
           <Property Name="indirimtutar" Type="Decimal" Precision="6" Scale="2" />
           <Property Name="siparistutar" Type="Decimal" Precision="7" Scale="2" />
@@ -408,7 +431,7 @@
           <NavigationProperty Name="resim" Relationship="Self.FK__resim__urunNo__15502E78" FromRole="urun" ToRole="resim" />
           <NavigationProperty Name="siparisDetay" Relationship="Self.urunNoFK" FromRole="urun" ToRole="siparisDetay" />
           <NavigationProperty Name="yorum" Relationship="Self.FK__yorum__urunNo__182C9B23" FromRole="urun" ToRole="yorum" />
-          <Property Name="eklenmeTarihi" Type="DateTime" Precision="0" />
+          <Property Name="eklenmeTarihi" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -424,7 +447,7 @@
           <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="activationCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="resetCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="hostName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="hostName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="isActive" Type="Boolean" />
           <Property Name="loginAttempt" Type="Int32" />
           <Property Name="createdDate" Type="DateTime" Precision="3" />
@@ -434,9 +457,9 @@
           <Property Name="subscribe" Type="Boolean" />
           <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="favorim" Relationship="Self.FK__favorim__userId__25869641" FromRole="user" ToRole="favorim" />
-          <NavigationProperty Name="indirim" Relationship="Self.FK__indirim__musteri__3D5E1FD2" FromRole="user" ToRole="indirim" />
           <NavigationProperty Name="role" Relationship="Self.FK__user__roleId__1FCDBCEB" FromRole="user" ToRole="role" />
           <NavigationProperty Name="siparis" Relationship="Self.FK__siparis__musteri__36B12243" FromRole="user" ToRole="siparis" />
+          <NavigationProperty Name="indirim" Relationship="kitapProjesiModel.FK__indirim__musteri__4316F928" FromRole="user" ToRole="indirim" />
         </EntityType>
         <EntityType Name="yorum">
           <Key>
@@ -470,18 +493,6 @@
             </Principal>
             <Dependent Role="favorim">
               <PropertyRef Name="userId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__indirim__musteri__3D5E1FD2">
-          <End Role="user" Type="Self.user" Multiplicity="0..1" />
-          <End Role="indirim" Type="Self.indirim" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="userId" />
-            </Principal>
-            <Dependent Role="indirim">
-              <PropertyRef Name="musteriNo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -571,7 +582,6 @@
         </Association>
         <EntityContainer Name="kitapProjesiEntities5" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="favorim" EntityType="Self.favorim" />
-          <EntitySet Name="indirim" EntityType="Self.indirim" />
           <EntitySet Name="kategori" EntityType="Self.kategori" />
           <EntitySet Name="resim" EntityType="Self.resim" />
           <EntitySet Name="role" EntityType="Self.role" />
@@ -587,10 +597,6 @@
           <AssociationSet Name="FK__favorim__userId__25869641" Association="Self.FK__favorim__userId__25869641">
             <End Role="user" EntitySet="user" />
             <End Role="favorim" EntitySet="favorim" />
-          </AssociationSet>
-          <AssociationSet Name="FK__indirim__musteri__3D5E1FD2" Association="Self.FK__indirim__musteri__3D5E1FD2">
-            <End Role="user" EntitySet="user" />
-            <End Role="indirim" EntitySet="indirim" />
           </AssociationSet>
           <AssociationSet Name="FK__urun__kategoriNo__1273C1CD" Association="Self.FK__urun__kategoriNo__1273C1CD">
             <End Role="kategori" EntitySet="kategori" />
@@ -620,7 +626,41 @@
             <End Role="urun" EntitySet="urun" />
             <End Role="yorum" EntitySet="yorum" />
           </AssociationSet>
+          <EntitySet Name="indirim" EntityType="kitapProjesiModel.indirim" />
+          <AssociationSet Name="FK__indirim__musteri__4316F928" Association="kitapProjesiModel.FK__indirim__musteri__4316F928">
+            <End Role="user" EntitySet="user" />
+            <End Role="indirim" EntitySet="indirim" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="indirim">
+          <Key>
+            <PropertyRef Name="indirimNo" />
+          </Key>
+          <Property Name="indirimNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="indirimKodu" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="aciklama" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="indirimTutar" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="indirimBaslangic" Type="DateTime" Precision="3" />
+          <Property Name="indirimBitis" Type="DateTime" Precision="3" />
+          <Property Name="indirimDurum" Type="Boolean" />
+          <Property Name="musteriNo" Type="Int32" />
+          <Property Name="kullanıldiMi" Type="Boolean" />
+          <NavigationProperty Name="user" Relationship="kitapProjesiModel.FK__indirim__musteri__4316F928" FromRole="indirim" ToRole="user" />
+        </EntityType>
+        <Association Name="FK__indirim__musteri__4316F928">
+          <End Type="kitapProjesiModel.user" Role="user" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="kitapProjesiModel.indirim" Role="indirim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="indirim">
+              <PropertyRef Name="musteriNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -633,21 +673,6 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="productId" ColumnName="productId" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="indirim">
-            <EntityTypeMapping TypeName="kitapProjesiModel.indirim">
-              <MappingFragment StoreEntitySet="indirim">
-                <ScalarProperty Name="indirimNo" ColumnName="indirimNo" />
-                <ScalarProperty Name="indirimKodu" ColumnName="indirimKodu" />
-                <ScalarProperty Name="aciklama" ColumnName="aciklama" />
-                <ScalarProperty Name="indirimTutar" ColumnName="indirimTutar" />
-                <ScalarProperty Name="indirimBaslangic" ColumnName="indirimBaslangic" />
-                <ScalarProperty Name="indirimBitis" ColumnName="indirimBitis" />
-                <ScalarProperty Name="musteriNo" ColumnName="musteriNo" />
-                <ScalarProperty Name="indirimDurum" ColumnName="indirimDurum" />
-                <ScalarProperty Name="kullanıldiMi" ColumnName="kullanıldiMi" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -758,6 +783,21 @@
                 <ScalarProperty Name="yorumAdi" ColumnName="yorumAdi" />
                 <ScalarProperty Name="yorumcu" ColumnName="yorumcu" />
                 <ScalarProperty Name="yorumTarihi" ColumnName="yorumTarihi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="indirim">
+            <EntityTypeMapping TypeName="kitapProjesiModel.indirim">
+              <MappingFragment StoreEntitySet="indirim">
+                <ScalarProperty Name="kullanıldiMi" ColumnName="kullanıldiMi" />
+                <ScalarProperty Name="musteriNo" ColumnName="musteriNo" />
+                <ScalarProperty Name="indirimDurum" ColumnName="indirimDurum" />
+                <ScalarProperty Name="indirimBitis" ColumnName="indirimBitis" />
+                <ScalarProperty Name="indirimBaslangic" ColumnName="indirimBaslangic" />
+                <ScalarProperty Name="indirimTutar" ColumnName="indirimTutar" />
+                <ScalarProperty Name="aciklama" ColumnName="aciklama" />
+                <ScalarProperty Name="indirimKodu" ColumnName="indirimKodu" />
+                <ScalarProperty Name="indirimNo" ColumnName="indirimNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

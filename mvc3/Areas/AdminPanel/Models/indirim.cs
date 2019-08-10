@@ -20,8 +20,8 @@ namespace mvc3.Areas.AdminPanel.Models
         public Nullable<decimal> indirimTutar { get; set; }
         public Nullable<System.DateTime> indirimBaslangic { get; set; }
         public Nullable<System.DateTime> indirimBitis { get; set; }
-        public Nullable<int> musteriNo { get; set; }
         public Nullable<bool> indirimDurum { get; set; }
+        public Nullable<int> musteriNo { get; set; }
         public Nullable<bool> kullanıldiMi { get; set; }
     
         public virtual user user { get; set; }

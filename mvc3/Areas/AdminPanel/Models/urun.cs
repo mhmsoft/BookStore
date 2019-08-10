@@ -31,8 +31,8 @@ namespace mvc3.Areas.AdminPanel.Models
         public string aciklama { get; set; }
         public Nullable<int> stok { get; set; }
         public Nullable<int> kategoriNo { get; set; }
-        public Nullable<DateTime> eklenmeTarihi { get; set; }
-
+        public Nullable<System.DateTime> eklenmeTarihi { get; set; }
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<favorim> favorim { get; set; }
         public virtual kategori kategori { get; set; }
